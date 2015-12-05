@@ -415,7 +415,7 @@
     [self.contentScrollView addSubview:vc.view];
 }
 
-#warning BUG：滚动的时候，颜色没有还原
+
 - (void)selectLabel:(UILabel *)label
 {
     
