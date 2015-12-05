@@ -22,6 +22,7 @@
 		EC62688A1C128ACA000FB840 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268891C128ACA000FB840 /* UIView+Frame.m */; };
 		EC6268931C128F63000FB840 /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268901C128F63000FB840 /* ChildViewController.m */; };
 		EC6268941C128F63000FB840 /* FullChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268921C128F63000FB840 /* FullChildViewController.m */; };
+		ECBE97A71C1330DE00A7F2B4 /* YZTXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		EC6268901C128F63000FB840 /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
 		EC6268911C128F63000FB840 /* FullChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullChildViewController.h; sourceTree = "<group>"; };
 		EC6268921C128F63000FB840 /* FullChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullChildViewController.m; sourceTree = "<group>"; };
+		ECBE97A51C1330DE00A7F2B4 /* YZTXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTXViewController.h; sourceTree = "<group>"; };
+		ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTXViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,7 @@
 		EC01A8811C12883C00F91F25 /* YZDisplayViewControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				ECBE97A41C1330BF00A7F2B4 /* 腾讯视频 */,
 				EC62687C1C1289B7000FB840 /* 今日头条标题填充 */,
 				EC62687D1C1289B7000FB840 /* 网易新闻标题渐变 */,
 				EC62687E1C1289B7000FB840 /* 喜马拉雅下标 */,
@@ -215,6 +219,15 @@
 				EC6268921C128F63000FB840 /* FullChildViewController.m */,
 			);
 			path = TableViewController;
+			sourceTree = "<group>";
+		};
+		ECBE97A41C1330BF00A7F2B4 /* 腾讯视频 */ = {
+			isa = PBXGroup;
+			children = (
+				ECBE97A51C1330DE00A7F2B4 /* YZTXViewController.h */,
+				ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */,
+			);
+			path = "腾讯视频";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +362,7 @@
 			files = (
 				EC6268841C1289F6000FB840 /* YZWYViewController.m in Sources */,
 				EC6268811C1289E4000FB840 /* YZXiMaViewController.m in Sources */,
+				ECBE97A71C1330DE00A7F2B4 /* YZTXViewController.m in Sources */,
 				EC6268931C128F63000FB840 /* ChildViewController.m in Sources */,
 				EC01A8871C12883C00F91F25 /* AppDelegate.m in Sources */,
 				EC6268941C128F63000FB840 /* FullChildViewController.m in Sources */,

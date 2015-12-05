@@ -32,6 +32,8 @@
 
 @property (nonatomic, weak) UIView *underLine;
 
+@property (nonatomic, weak) UIView *coverView;
+
 
 // 记录上一次内容滚动视图偏移量
 @property (nonatomic, assign) CGFloat lastOffsetX;
@@ -107,6 +109,22 @@
     }
     
     _isShowUnderLine = isShowUnderLine;
+}
+
+- (UIView *)coverView
+{
+    if (_coverView == nil) {
+        UIView *coverView = [[UIView alloc] init];
+        
+        coverView.backgroundColor = _coverColor?_coverColor:[UIColor redColor];
+        
+        coverView.layer.cornerRadius = _coverCornerRadius;
+        
+        [self.titleScrollView insertSubview:coverView atIndex:0];
+        
+        _coverView = coverView;
+    }
+    return _isShowTitleCover?_coverView:nil;
 }
 
 - (UIView *)underLine
@@ -206,11 +224,16 @@
     // 字体放大
     [self setUpTitleSaceWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
     
-    // 设置角标偏移
+    // 设置下标偏移
     [self setUpUnderLineOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    
+    // 设置遮盖偏移
+    [self setUpCoverOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
     
     // 设置标题渐变
     [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    
+    
     
     // 记录上一次的偏移量
     _lastOffsetX = offsetX;
@@ -326,7 +349,7 @@
 }
 
 
-// 设置角标偏移
+// 设置下标偏移
 - (void)setUpUnderLineOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
     // 点击的时候不需要设置
@@ -353,6 +376,35 @@
     
 
 }
+
+// 设置遮盖偏移
+- (void)setUpCoverOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
+{
+    // 点击的时候不需要设置
+    if (_isClickTitle) return;
+    
+    // 获取两个标题中心点距离
+    CGFloat centerDelta = rightLabel.center.x - leftLabel.center.x;
+    
+    // 标题宽度差值
+    CGFloat widthDelta = [self widthDeltaWithRightLabel:rightLabel leftLabel:leftLabel];
+    
+    // 获取移动距离
+    CGFloat offsetDelta = offsetX - _lastOffsetX;
+    
+    // 计算当前下划线偏移量
+    CGFloat coverTransformX = offsetDelta * centerDelta / YZScreenW;
+    
+    // 宽度递增偏移量
+    CGFloat coverWidth = offsetDelta * widthDelta / YZScreenW;
+    
+    self.coverView.width += coverWidth;
+    self.coverView.x += coverTransformX;
+    
+    
+    
+}
+
 
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -442,6 +494,40 @@
     
     // 设置下标的位置
     [self setUpUnderLine:label];
+    
+    // 设置cover
+    [self setUpCoverView:label];
+}
+
+// 设置蒙版
+- (void)setUpCoverView:(UILabel *)label
+{
+    // 获取文字尺寸
+    CGRect titleBounds = [label.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:YZTitleFont} context:nil];
+    
+    CGFloat border = 5;
+    CGFloat coverH = titleBounds.size.height + 2 * border;
+    CGFloat coverW = titleBounds.size.width + 2 * border;
+    
+    self.coverView.y = (label.height - coverH) * 0.5;
+    self.coverView.height = coverH;
+    
+    
+    // 最开始不需要动画
+    if (self.coverView.x == 0) {
+        self.coverView.width = coverW;
+        
+        self.coverView.x = label.x - border;
+        return;
+    }
+    
+    // 点击时候需要动画
+    [UIView animateWithDuration:0.25 animations:^{
+        self.coverView.width = coverW;
+        
+        self.coverView.x = label.x - border;
+    }];
+
     
 }
 

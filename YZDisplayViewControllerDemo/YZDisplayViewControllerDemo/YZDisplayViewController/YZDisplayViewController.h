@@ -130,7 +130,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) YZTitleColorGradientStyle titleColorGradientStyle;
 
 /*
-开始颜色
+开始颜色,取值范围0~1
 */
 @property (nonatomic, assign) CGFloat startR;
 
@@ -139,7 +139,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat startB;
 
 /*
- 完成颜色
+ 完成颜色,取值范围0~1
 */
 @property (nonatomic, assign) CGFloat endR;
 
@@ -148,6 +148,25 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat endB;
 
 /**********************************颜色渐变************************************/
+
+/**********************************遮盖************************************/
+
+/*
+    是否显示遮盖
+ */
+@property (nonatomic, assign) BOOL isShowTitleCover;
+
+/*
+    遮盖颜色
+ */
+@property (nonatomic, strong) UIColor *coverColor;
+
+/*
+    遮盖圆角半径
+ */
+@property (nonatomic, assign) CGFloat coverCornerRadius;
+
+/**********************************遮盖************************************/
 
 
 
