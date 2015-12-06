@@ -28,8 +28,6 @@
 
 @property (nonatomic, strong) NSMutableArray *titleWidths;
 
-@property (nonatomic, weak) UILabel *selLabel;
-
 @property (nonatomic, weak) UIView *underLine;
 
 @property (nonatomic, weak) UIView *coverView;
