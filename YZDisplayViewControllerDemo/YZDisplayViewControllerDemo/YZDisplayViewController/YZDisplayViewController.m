@@ -36,8 +36,13 @@
 // 记录上一次内容滚动视图偏移量
 @property (nonatomic, assign) CGFloat lastOffsetX;
 
+
 // 记录是否点击
 @property (nonatomic, assign) BOOL isClickTitle;
+
+// 记录是否在动画
+@property (nonatomic, assign) BOOL isAniming;
+
 
 // 标题间距
 @property (nonatomic, assign) CGFloat titleMargin;
@@ -201,6 +206,8 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    // 点击和动画的时候不需要设置
+    if (_isClickTitle || _isAniming) return;
     
     // 获取偏移量
     CGFloat offsetX = scrollView.contentOffset.x;
@@ -233,7 +240,7 @@
     // 设置标题渐变
     [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
     
-    
+
     
     // 记录上一次的偏移量
     _lastOffsetX = offsetX;
@@ -311,9 +318,6 @@
     }
     
     
-    
-    
-    
 }
 
 // 标题缩放
@@ -352,8 +356,7 @@
 // 设置下标偏移
 - (void)setUpUnderLineOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
-    // 点击的时候不需要设置
-    if (_isClickTitle) return;
+    
     
     // 获取两个标题中心点距离
     CGFloat centerDelta = rightLabel.x - leftLabel.x;
@@ -380,8 +383,6 @@
 // 设置遮盖偏移
 - (void)setUpCoverOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
-    // 点击的时候不需要设置
-    if (_isClickTitle) return;
     
     // 获取两个标题中心点距离
     CGFloat centerDelta = rightLabel.x - leftLabel.x;
@@ -405,13 +406,37 @@
     
 }
 
+// 监听滚动动画是否完成
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    _isAniming = NO;
+}
+
 
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
 
-    
     CGFloat offsetX = scrollView.contentOffset.x;
+    
+    NSInteger offsetXInt = offsetX;
+    NSInteger screenWInt = YZScreenW;
+    
+    NSInteger extre = offsetXInt % screenWInt;
+    if (extre > YZScreenW * 0.5) {
+        // 往右边移动
+        offsetX = offsetX + (YZScreenW - extre);
+        _isAniming = YES;
+        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    }else if (extre < YZScreenW * 0.5 && extre > 0){
+        _isAniming = YES;
+        // 往左边移动
+        offsetX =  offsetX - extre;
+        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    }
+    
+    
+
     // 获取角标
     NSInteger i = offsetX / YZScreenW;
     
@@ -420,6 +445,8 @@
     
     // 添加控制器的view
     [self setUpVc:i];
+    
+
     
 }
 
@@ -444,7 +471,9 @@
     
     // 内容滚动视图滚动到对应位置
     CGFloat offsetX = i * YZScreenW;
+    
     self.contentScrollView.contentOffset = CGPointMake(offsetX, 0);
+    
     
     // 记录上一次偏移量,因为点击的时候不会调用scrollView代理记录，因此需要主动记录
     _lastOffsetX = offsetX;
@@ -499,6 +528,7 @@
     
     // 设置cover
     [self setUpCoverView:label];
+    
 }
 
 // 设置蒙版
@@ -529,6 +559,7 @@
         
         self.coverView.x = label.x - border;
     }];
+    
 
     
 }
@@ -549,14 +580,14 @@
     if (self.underLine.x == 0) {
         self.underLine.width = titleBounds.size.width;
         
-        self.underLine.x = label.center.x - self.underLine.width * 0.5;
+        self.underLine.x = label.x;
         return;
     }
     
     // 点击时候需要动画
     [UIView animateWithDuration:0.25 animations:^{
         self.underLine.width = titleBounds.size.width;
-        self.underLine.x = label.center.x - self.underLine.width * 0.5;
+        self.underLine.x = label.x;
     }];
     
 }
