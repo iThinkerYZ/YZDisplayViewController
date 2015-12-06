@@ -361,7 +361,7 @@
     if (_isClickTitle) return;
     
     // 获取两个标题中心点距离
-    CGFloat centerDelta = rightLabel.center.x - leftLabel.center.x;
+    CGFloat centerDelta = rightLabel.x - leftLabel.x;
     
     // 标题宽度差值
     CGFloat widthDelta = [self widthDeltaWithRightLabel:rightLabel leftLabel:leftLabel];
@@ -389,7 +389,7 @@
     if (_isClickTitle) return;
     
     // 获取两个标题中心点距离
-    CGFloat centerDelta = rightLabel.center.x - leftLabel.center.x;
+    CGFloat centerDelta = rightLabel.x - leftLabel.x;
     
     // 标题宽度差值
     CGFloat widthDelta = [self widthDeltaWithRightLabel:rightLabel leftLabel:leftLabel];
