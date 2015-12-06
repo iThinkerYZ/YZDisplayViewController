@@ -203,9 +203,6 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-
-    
-    self.titleScrollView.userInteractionEnabled = NO;
     
     // 获取偏移量
     CGFloat offsetX = scrollView.contentOffset.x;
@@ -415,7 +412,6 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
 
-    self.titleScrollView.userInteractionEnabled = YES;
     
     CGFloat offsetX = scrollView.contentOffset.x;
     // 获取角标
@@ -435,6 +431,7 @@
 // 标题按钮点击
 - (void)titleClick:(UITapGestureRecognizer *)tap
 {
+    
     // 记录是否点击标题
     _isClickTitle = YES;
     
@@ -477,23 +474,24 @@
 - (void)selectLabel:(UILabel *)label
 {
     
+    for (UILabel *label in self.titleLabels) {
+        
+        label.transform = CGAffineTransformIdentity;
+        
+        label.textColor = self.norColor;
+        
+    }
+    
     // 标题缩放
     if (_isShowTitleScale) {
         
         CGFloat scaleTransform = _titleScale?_titleScale:YZTitleTransformScale;
         
-        _selLabel.transform = CGAffineTransformIdentity;
-        
         label.transform = CGAffineTransformMakeScale(scaleTransform, scaleTransform);
     }
     
-    
-    _selLabel.textColor = self.norColor;
-    
     // 修改标题选中颜色
     label.textColor = self.selColor;
-    
-    _selLabel = label;
     
     // 设置标题居中
     [self setLabelTitleCenter:label];
