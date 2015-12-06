@@ -207,7 +207,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // 点击和动画的时候不需要设置
-    if (_isClickTitle || _isAniming) return;
+    if (_isAniming) return;
     
     // 获取偏移量
     CGFloat offsetX = scrollView.contentOffset.x;
@@ -356,7 +356,7 @@
 // 设置下标偏移
 - (void)setUpUnderLineOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
-    
+    if (_isClickTitle) return;
     
     // 获取两个标题中心点距离
     CGFloat centerDelta = rightLabel.x - leftLabel.x;
@@ -383,6 +383,7 @@
 // 设置遮盖偏移
 - (void)setUpCoverOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
+    if (_isClickTitle) return;
     
     // 获取两个标题中心点距离
     CGFloat centerDelta = rightLabel.x - leftLabel.x;
@@ -501,11 +502,11 @@
 - (void)selectLabel:(UILabel *)label
 {
     
-    for (UILabel *label in self.titleLabels) {
+    for (UILabel *labelView in self.titleLabels) {
         
-        label.transform = CGAffineTransformIdentity;
+        labelView.transform = CGAffineTransformIdentity;
         
-        label.textColor = self.norColor;
+        labelView.textColor = self.norColor;
         
     }
     
