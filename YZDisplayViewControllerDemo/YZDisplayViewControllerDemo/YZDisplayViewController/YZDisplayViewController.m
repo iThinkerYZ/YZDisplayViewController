@@ -45,6 +45,7 @@
 @property (nonatomic, assign) CGFloat titleMargin;
 
 
+
 @end
 
 @implementation YZDisplayViewController
@@ -202,6 +203,10 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+
+    
+    self.titleScrollView.userInteractionEnabled = NO;
+    
     // 获取偏移量
     CGFloat offsetX = scrollView.contentOffset.x;
     
@@ -409,7 +414,8 @@
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
+
+    self.titleScrollView.userInteractionEnabled = YES;
     
     CGFloat offsetX = scrollView.contentOffset.x;
     // 获取角标
