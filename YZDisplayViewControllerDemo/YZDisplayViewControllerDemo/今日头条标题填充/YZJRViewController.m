@@ -19,8 +19,11 @@
     // 模仿网络延迟，1秒后，才知道有多少标题
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
+        // 移除之前所有子控制器
+        [self.childViewControllers makeObjectsPerformSelector:@selector(removeFromParentViewController)];
+        
         // 把对应标题保存到控制器中，并且成为子控制器，才能刷新
-        // 添加所有子控制器
+        // 添加所有新的子控制器
         [self setUpAllViewController];
         
         // 注意：必须先确定子控制器
