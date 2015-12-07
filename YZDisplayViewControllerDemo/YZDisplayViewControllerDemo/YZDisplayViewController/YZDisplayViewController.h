@@ -170,5 +170,10 @@ typedef enum : NSUInteger {
 
 
 
+/*
+    刷新标题和整个界面，在调用之前，必须先确定所有的子控制器。
+ */
+- (void)refreshDisplay;
+
 
 @end

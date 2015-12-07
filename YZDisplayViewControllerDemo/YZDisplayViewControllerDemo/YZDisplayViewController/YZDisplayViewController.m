@@ -162,8 +162,11 @@
     // 添加顶部标签滚动视图
     [self setUpTitleScrollView];
     
+
+    
     // 添加底部内容滚动视图
     [self setUpContentScrollView];
+    
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -172,19 +175,14 @@
     self.contentScrollView.showsHorizontalScrollIndicator = NO;
     self.contentScrollView.bounces = NO;
 
+    // 初始化
+    [self setUp];
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
+// 初始化
+- (void)setUp
 {
-    [super viewWillAppear:animated];
-    
-    if (self.titleLabels.count) return;
-    
-    [self setUpTitleWidth];
-    
-    [self setUpAllTitle];
-    
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
         // 初始化颜色渐变
@@ -197,8 +195,41 @@
         // 全屏展示
         _contentScrollView.frame = CGRectMake(0, 0, YZScreenW, YZScreenH);
     }
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
+    if (self.titleLabels.count) return;
+    
+    [self setUpTitleWidth];
+    
+    [self setUpAllTitle];
+
+}
+
+// 更新界面
+- (void)refreshDisplay
+{
+    // 清空之前所有标题
+    
+    [self.titleLabels makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.titleLabels removeAllObjects];
+    
+    // 清空之前所有内容
+    for (UIView *childView in self.contentScrollView.subviews) {
+        if (childView.width == self.contentScrollView.width) {
+            [childView removeFromSuperview];
+        }
+    }
+    
+
+    // 重新设置标题
+    [self setUpTitleWidth];
+    
+    [self setUpAllTitle];
+
     
 }
 
@@ -706,6 +737,8 @@
         
         [_titleScrollView addSubview:label];
     }
+    
+
     
     // 设置标题滚动视图的内容范围
     UILabel *lastLabel = self.titleLabels.lastObject;
