@@ -56,9 +56,20 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        _titleHeight = YZTitleScrollViewH;
+        [self initial];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self initial];
+
+}
+
+- (void)initial
+{
+     _titleHeight = YZTitleScrollViewH;
 }
 
 - (UIImageView *)titleScrollViewBackgroundImageView
@@ -191,6 +202,7 @@
 // 初始化
 - (void)setUp
 {
+    
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
         // 初始化颜色渐变

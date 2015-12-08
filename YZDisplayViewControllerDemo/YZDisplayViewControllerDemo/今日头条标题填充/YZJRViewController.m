@@ -16,9 +16,9 @@
 {
     [super viewDidLoad];
     
-    // 模仿网络延迟，1秒后，才知道有多少标题
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
+    // 模仿网络延迟，0.2秒后，才知道有多少标题
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
         // 移除之前所有子控制器
         [self.childViewControllers makeObjectsPerformSelector:@selector(removeFromParentViewController)];
         
