@@ -53,6 +53,14 @@
 
 @implementation YZDisplayViewController
 
+- (instancetype)init
+{
+    if (self = [super init]) {
+        _titleHeight = YZTitleScrollViewH;
+    }
+    return self;
+}
+
 - (UIImageView *)titleScrollViewBackgroundImageView
 {
     if (_titleScrollViewBackgroundImageView == nil) {
@@ -695,7 +703,7 @@
     // 添加所有的标题
     
     CGFloat labelW = 0;
-    CGFloat labelH = YZTitleScrollViewH;
+    CGFloat labelH = self.titleHeight;
     CGFloat labelX = 0;
     CGFloat labelY = 0;
     

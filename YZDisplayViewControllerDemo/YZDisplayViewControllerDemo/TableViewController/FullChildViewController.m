@@ -19,8 +19,15 @@
     
     
     // 如果有导航控制器，顶部需要添加额外滚动区域
-    // 添加额外滚动区域 64 : 导航条高度 , 44 : 标题高度
-    self.tableView.contentInset = UIEdgeInsetsMake(64 + 44, 0, 0, 0);
+    // 添加额外滚动区域   导航条高度 + 标题高度
+    if (self.navigationController) {
+        CGFloat navBarH = self.navigationController.navigationBar.bounds.size.height;
+        
+        // 查看自己标题滚动视图设置的高度，我这里设置为44
+        CGFloat titleScrollViewH = 44;
+        
+        self.tableView.contentInset = UIEdgeInsetsMake(navBarH + titleScrollViewH, 0, 0, 0);
+    }
     
     
     // 如果有tabBarController，底部需要添加额外滚动区域
