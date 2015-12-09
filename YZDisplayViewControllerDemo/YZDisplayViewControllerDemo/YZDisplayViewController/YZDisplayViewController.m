@@ -543,7 +543,7 @@
     
     UIViewController *vc = self.childViewControllers[i];
     
-    if (vc.viewIfLoaded) return;
+    if (vc.view.superview) return;
     
     vc.view.frame = self.contentScrollView.bounds;
     [self.contentScrollView addSubview:vc.view];
