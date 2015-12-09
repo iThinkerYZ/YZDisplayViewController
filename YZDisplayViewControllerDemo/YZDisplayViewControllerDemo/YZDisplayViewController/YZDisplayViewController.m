@@ -291,6 +291,8 @@
     // 设置标题渐变
     [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
     
+
+    
     // 记录上一次的偏移量
     _lastOffsetX = offsetX;
 }
@@ -492,16 +494,30 @@
     
     // 选中标题
     [self selectLabel:self.titleLabels[i]];
-    
+
     // 添加控制器的view
     [self setUpVc:i];
     
-
+    // 解决点击状态栏无效
+    [self reSetScrollViewScrollToTopState:i];
     
 }
-
-
-
+// 解决点击状态栏无效
+- (void)reSetScrollViewScrollToTopState:(NSInteger)currentScrollviewTag {
+    if (currentScrollviewTag < 0 || currentScrollviewTag >= self.childViewControllers.count) {
+        return;
+    }
+    for (int i = 0; i<self.contentScrollView.subviews.count; i++) {
+        if ([self.contentScrollView.subviews[i] isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollView = (UIScrollView *)self.contentScrollView.subviews[i];
+            scrollView.scrollsToTop = NO;
+        }
+    }
+    if ([[self.childViewControllers[currentScrollviewTag] view] isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)[self.childViewControllers[currentScrollviewTag] view];
+        scrollView.scrollsToTop = YES;
+    }
+}
 
 // 标题按钮点击
 - (void)titleClick:(UITapGestureRecognizer *)tap
@@ -515,7 +531,7 @@
     
     // 获取当前角标
     NSInteger i = label.tag;
-    
+
     // 选中label
     [self selectLabel:label];
     
@@ -534,6 +550,9 @@
    
     // 点击事件处理完成
     _isClickTitle = NO;
+    
+    // 解决点击状态栏无效
+    [self reSetScrollViewScrollToTopState:i];
 }
 
 - (void)setUpVc:(NSInteger)i
@@ -541,7 +560,7 @@
     
     UIViewController *vc = self.childViewControllers[i];
     
-    if (vc.view.superview) return;
+    if (vc.viewIfLoaded) return;
     
     vc.view.frame = self.contentScrollView.bounds;
     [self.contentScrollView addSubview:vc.view];
@@ -551,18 +570,11 @@
 - (void)selectLabel:(UILabel *)label
 {
     
-    for (YZDisplayTitleLabel *labelView in self.titleLabels) {
-        
-        if (label == labelView) continue;
+    for (UILabel *labelView in self.titleLabels) {
         
         labelView.transform = CGAffineTransformIdentity;
         
         labelView.textColor = self.norColor;
-        
-        
-        labelView.fillColor = self.norColor;
-        
-        labelView.progress = 1;
         
     }
     
@@ -787,7 +799,7 @@
 - (void)setUpTitleScrollView
 {
     UIScrollView *titleScrollView = [[UIScrollView alloc] init];
-    
+    titleScrollView.scrollsToTop = NO;
     titleScrollView.backgroundColor = _titleScrollViewColor?_titleScrollViewColor:[UIColor colorWithWhite:1 alpha:0.7];
     
     // 计算尺寸
@@ -805,7 +817,7 @@
 - (void)setUpContentScrollView
 {
     UIScrollView *contentScrollView = [[UIScrollView alloc] init];
-    
+    contentScrollView.scrollsToTop = NO;
     // 计算尺寸
     CGFloat y = CGRectGetMaxY(_titleScrollView.frame);
     
