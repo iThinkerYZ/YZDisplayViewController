@@ -291,8 +291,6 @@
     // 设置标题渐变
     [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
     
-
-    
     // 记录上一次的偏移量
     _lastOffsetX = offsetX;
 }
@@ -553,11 +551,18 @@
 - (void)selectLabel:(UILabel *)label
 {
     
-    for (UILabel *labelView in self.titleLabels) {
+    for (YZDisplayTitleLabel *labelView in self.titleLabels) {
+        
+        if (label == labelView) continue;
         
         labelView.transform = CGAffineTransformIdentity;
         
         labelView.textColor = self.norColor;
+        
+        
+        labelView.fillColor = self.norColor;
+        
+        labelView.progress = 1;
         
     }
     
