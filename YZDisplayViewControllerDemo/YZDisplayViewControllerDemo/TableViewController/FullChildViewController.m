@@ -21,7 +21,8 @@
     // 如果有导航控制器，顶部需要添加额外滚动区域
     // 添加额外滚动区域   导航条高度 + 标题高度
     if (self.navigationController) {
-        CGFloat navBarH = self.navigationController.navigationBar.bounds.size.height;
+        // 导航条上面高度
+        CGFloat navBarH = 64;
         
         // 查看自己标题滚动视图设置的高度，我这里设置为44
         CGFloat titleScrollViewH = 44;

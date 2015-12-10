@@ -40,10 +40,7 @@ typedef enum : NSUInteger {
 
 /**************************************标题************************************/
 
-/*
- 标题滚动视图背景图片
- */
-@property (nonatomic, strong) UIImage *titleScrollViewBackgroundImage;
+
 /*
  标题滚动视图背景颜色
  */

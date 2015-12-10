@@ -174,34 +174,16 @@
     return _titleLabels;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    // 添加顶部标签滚动视图
-    [self setUpTitleScrollView];
-    
 
-    
-    // 添加底部内容滚动视图
-    [self setUpContentScrollView];
-    
-    
+// 初始化
+- (void)setUp
+{
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     // 设置内容滚动视图
     self.contentScrollView.pagingEnabled = YES;
     self.contentScrollView.showsHorizontalScrollIndicator = NO;
     self.contentScrollView.bounces = NO;
-
-    // 初始化
-    [self setUp];
-    
-}
-
-// 初始化
-- (void)setUp
-{
     
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
@@ -209,11 +191,6 @@
         if (_endR == 0 && _endG == 0 && _endB == 0) {
             _endR = 1;
         }
-    }
-    
-    if (_isfullScreen) {
-        // 全屏展示
-        _contentScrollView.frame = CGRectMake(0, 0, YZScreenW, YZScreenH);
     }
 }
 
@@ -223,9 +200,22 @@
     
     if (self.titleLabels.count) return;
     
+    // 添加顶部标签滚动视图
+    [self setUpTitleScrollView];
+
+    
+    // 添加底部内容滚动视图
+    [self setUpContentScrollView];
+    
+    // 初始化
+    [self setUp];
+    
     [self setUpTitleWidth];
     
     [self setUpAllTitle];
+    
+    
+   
 
 }
 
@@ -559,7 +549,6 @@
         
         labelView.textColor = self.norColor;
         
-        
         labelView.fillColor = self.norColor;
         
         labelView.progress = 1;
@@ -774,14 +763,6 @@
     
 }
 
-// 设置背景图片
-- (void)setTitleScrollViewBackgroundImage:(UIImage *)titleScrollViewBackgroundImage
-{
-    _titleScrollViewBackgroundImage = titleScrollViewBackgroundImage;
-    self.titleScrollViewBackgroundImageView.image = titleScrollViewBackgroundImage;
-    self.titleScrollViewBackgroundImageView.frame = _titleScrollView.bounds;
-    [_titleScrollView insertSubview:self.titleScrollViewBackgroundImageView atIndex:0];
-}
 
 // 1.添加标题滚动视图
 - (void)setUpTitleScrollView
@@ -809,7 +790,8 @@
     // 计算尺寸
     CGFloat y = CGRectGetMaxY(_titleScrollView.frame);
     
-    contentScrollView.frame = CGRectMake(0, y, YZScreenW, YZScreenH - y);
+    contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, YZScreenW, YZScreenH) :CGRectMake(0, y, YZScreenW, YZScreenH - y);
+    
     
     
     [self.view insertSubview:contentScrollView belowSubview:_titleScrollView];
