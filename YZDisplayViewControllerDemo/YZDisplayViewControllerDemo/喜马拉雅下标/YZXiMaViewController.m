@@ -22,6 +22,8 @@
     // 添加所有子控制器
     [self setUpAllViewController];
     
+    self.titleFont = [UIFont systemFontOfSize:20];
+    
     // 是否显示标签
     self.isShowUnderLine = YES;
     

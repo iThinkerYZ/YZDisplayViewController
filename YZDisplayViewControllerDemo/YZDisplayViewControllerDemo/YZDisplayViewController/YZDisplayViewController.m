@@ -621,7 +621,7 @@
 - (void)setUpUnderLine:(UILabel *)label
 {
     // 获取文字尺寸
-    CGRect titleBounds = [label.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:YZTitleFont} context:nil];
+    CGRect titleBounds = [label.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.titleFont} context:nil];
     
     CGFloat underLineH = _underLineH?_underLineH:YZUnderLineH;
     
@@ -685,7 +685,7 @@
     
     // 计算所有标题的宽度
     for (NSString *title in titles) {
-         CGRect titleBounds = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:YZTitleFont} context:nil];
+         CGRect titleBounds = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.titleFont} context:nil];
         
         CGFloat width = titleBounds.size.width;
         
@@ -704,6 +704,14 @@
     CGFloat titleMargin = (YZScreenW - totalWidth) / (count + 1);
     
     _titleMargin = titleMargin < margin? margin: titleMargin;
+}
+
+- (UIFont *)titleFont
+{
+    if (_titleFont == nil) {
+        _titleFont = YZTitleFont;
+    }
+    return _titleFont;
 }
 
 // 设置所有标题
@@ -731,7 +739,7 @@
         // 设置按钮的文字颜色
         label.textColor = self.norColor;
 
-        label.font = _titleFont?_titleFont: YZTitleFont;
+        label.font = self.titleFont;
         
         // 设置按钮标题
         label.text = vc.title;
