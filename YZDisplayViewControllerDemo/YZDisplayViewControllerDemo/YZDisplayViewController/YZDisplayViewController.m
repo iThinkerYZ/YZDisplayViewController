@@ -545,18 +545,25 @@
         
         if (label == labelView) continue;
         
-        labelView.transform = CGAffineTransformIdentity;
+        if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
+            
+            labelView.transform = CGAffineTransformIdentity;
+        }
+        
         
         labelView.textColor = self.norColor;
         
-        labelView.fillColor = self.norColor;
-        
-        labelView.progress = 1;
+        if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleFill) {
+            
+            labelView.fillColor = self.norColor;
+            
+            labelView.progress = 1;
+        }
         
     }
     
     // 标题缩放
-    if (_isShowTitleScale) {
+    if (_isShowTitleScale && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
         CGFloat scaleTransform = _titleScale?_titleScale:YZTitleTransformScale;
         

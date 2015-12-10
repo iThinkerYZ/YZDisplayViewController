@@ -22,7 +22,7 @@
     // 添加所有子控制器
     [self setUpAllViewController];
     
-    // 标题渐变
+    // 是否显示标签
     self.isShowUnderLine = YES;
     
     // 标题填充模式
