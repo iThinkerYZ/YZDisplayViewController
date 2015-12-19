@@ -194,6 +194,68 @@
     }
 }
 
+// 懒加载标题滚动视图
+- (UIScrollView *)titleScrollView
+{
+    if (_titleScrollView == nil) {
+        
+        UIScrollView *titleScrollView = [[UIScrollView alloc] init];
+        
+        titleScrollView.backgroundColor = _titleScrollViewColor?_titleScrollViewColor:[UIColor colorWithWhite:1 alpha:0.7];
+        
+        [self.view addSubview:titleScrollView];
+        
+        _titleScrollView = titleScrollView;
+        
+    }
+    return _titleScrollView;
+}
+
+
+// 懒加载内容滚动视图
+- (UIScrollView *)contentScrollView
+{
+    if (_contentScrollView == nil) {
+        
+        UIScrollView *contentScrollView = [[UIScrollView alloc] init];
+        
+        [self.view insertSubview:contentScrollView belowSubview:self.titleScrollView];
+        
+        _contentScrollView = contentScrollView;
+        
+        _contentScrollView.delegate = self;
+        
+    }
+    
+    return _contentScrollView;
+}
+
+
+
+// 1.添加标题滚动视图
+- (void)setUpTitleScrollView
+{
+    // 计算尺寸
+    CGFloat y = self.navigationController?YZNavBarH : 0;
+    
+    CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
+    
+    self.titleScrollView.frame = CGRectMake(0, y, YZScreenW, titleH);
+    
+}
+
+// 2.添加内容滚动视图
+- (void)setUpContentScrollView
+{
+    
+    // 计算尺寸
+    CGFloat y = CGRectGetMaxY(_titleScrollView.frame);
+    
+    self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, YZScreenW, YZScreenH) :CGRectMake(0, y, YZScreenW, YZScreenH - y);
+    
+}
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -245,7 +307,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // 点击和动画的时候不需要设置
-    if (_isAniming) return;
+    if (_isAniming || self.titleLabels.count == 0) return;
     
     // 获取偏移量
     CGFloat offsetX = scrollView.contentOffset.x;
@@ -779,43 +841,6 @@
 }
 
 
-// 1.添加标题滚动视图
-- (void)setUpTitleScrollView
-{
-    UIScrollView *titleScrollView = [[UIScrollView alloc] init];
-    
-    titleScrollView.backgroundColor = _titleScrollViewColor?_titleScrollViewColor:[UIColor colorWithWhite:1 alpha:0.7];
-    
-    // 计算尺寸
-    CGFloat y = self.navigationController?YZNavBarH : 0;
-    
-    CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
-    titleScrollView.frame = CGRectMake(0, y, YZScreenW, titleH);
-    
-    [self.view addSubview:titleScrollView];
-    
-    _titleScrollView = titleScrollView;
-}
-
-// 2.添加内容滚动视图
-- (void)setUpContentScrollView
-{
-    UIScrollView *contentScrollView = [[UIScrollView alloc] init];
-    
-    // 计算尺寸
-    CGFloat y = CGRectGetMaxY(_titleScrollView.frame);
-    
-    contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, YZScreenW, YZScreenH) :CGRectMake(0, y, YZScreenW, YZScreenH - y);
-    
-    
-    
-    [self.view insertSubview:contentScrollView belowSubview:_titleScrollView];
-    
-    _contentScrollView = contentScrollView;
-    
-    _contentScrollView.delegate = self;
-    
-}
 
 
 @end
