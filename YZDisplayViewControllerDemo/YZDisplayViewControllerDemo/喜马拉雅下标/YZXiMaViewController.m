@@ -30,6 +30,9 @@
     // 标题填充模式
     self.underLineColor = [UIColor redColor];
     
+    // 是否需要延迟滚动,下标不会随着拖动而改变
+    self.isDelayScroll = YES;
+    
     // 设置全屏显示
     // 如果有导航控制器或者tabBarController,需要设置tableView额外滚动区域,详情请看FullChildViewController
     self.isfullScreen = YES;

@@ -214,9 +214,6 @@
     
     [self setUpAllTitle];
     
-    
-   
-
 }
 
 // 更新界面
@@ -273,7 +270,10 @@
     [self setUpTitleSaceWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
     
     // 设置下标偏移
-    [self setUpUnderLineOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    if (_isDelayScroll == NO) { // 延迟滚动，不需要移动下标
+        
+        [self setUpUnderLineOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    }
     
     // 设置遮盖偏移
     [self setUpCoverOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];

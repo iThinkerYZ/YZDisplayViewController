@@ -82,6 +82,11 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, assign) BOOL isShowUnderLine;
 
+
+/*
+    是否延迟滚动下标
+ */
+@property (nonatomic, assign) BOOL isDelayScroll;
 /*
     下标颜色
  */
