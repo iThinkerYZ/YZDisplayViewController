@@ -178,12 +178,8 @@
 // 初始化
 - (void)setUp
 {
-    self.automaticallyAdjustsScrollViewInsets = NO;
     
-    // 设置内容滚动视图
-    self.contentScrollView.pagingEnabled = YES;
-    self.contentScrollView.showsHorizontalScrollIndicator = NO;
-    self.contentScrollView.bounces = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
@@ -223,6 +219,11 @@
         
         _contentScrollView = contentScrollView;
         
+        // 设置内容滚动视图
+        _contentScrollView.pagingEnabled = YES;
+        _contentScrollView.showsHorizontalScrollIndicator = NO;
+        _contentScrollView.bounces = NO;
+        
         _contentScrollView.delegate = self;
         
     }
@@ -260,21 +261,30 @@
 {
     [super viewWillAppear:animated];
     
-    if (self.titleLabels.count) return;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        // 添加顶部标签滚动视图frame
+        [self setUpTitleScrollView];
+        
+        // 添加底部内容滚动视图frame
+        [self setUpContentScrollView];
+        
+        // 初始化
+        [self setUp];
+        
+        
+        // 没有子控制器，不需要设置标题
+        if (self.childViewControllers.count == 0) return;
+        
+        
+        [self setUpTitleWidth];
+        
+        [self setUpAllTitle];
+        
+    });
     
-    // 添加顶部标签滚动视图
-    [self setUpTitleScrollView];
-
     
-    // 添加底部内容滚动视图
-    [self setUpContentScrollView];
-    
-    // 初始化
-    [self setUp];
-    
-    [self setUpTitleWidth];
-    
-    [self setUpAllTitle];
     
 }
 
