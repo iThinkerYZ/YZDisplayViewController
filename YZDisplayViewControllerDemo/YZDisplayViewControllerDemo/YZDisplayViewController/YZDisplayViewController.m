@@ -945,6 +945,9 @@
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
     
+    // 移除之前的子控件
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     // 添加控制器
     UIViewController *vc = self.childViewControllers[indexPath.row];
     
