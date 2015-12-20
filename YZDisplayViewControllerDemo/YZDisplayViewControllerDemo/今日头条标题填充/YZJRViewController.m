@@ -31,11 +31,29 @@
         
     });
     
-    // 标题渐变
-    self.isShowTitleGradient = YES;
+    /* 方式一 
+     
+     // 标题渐变
+     self.isShowTitleGradient = YES;
+     
+     // 标题填充模式
+     self.titleColorGradientStyle = YZTitleColorGradientStyleFill;
+     
+     */
     
-    // 标题填充模式
-    self.titleColorGradientStyle = YZTitleColorGradientStyleFill;
+   
+    
+    /*  方式二 */
+    [self setUpTitleGradient:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
+        
+        // 标题渐变
+        *isShowTitleGradient = YES;
+        
+        // 标题填充模式
+        *titleColorGradientStyle = YZTitleColorGradientStyleFill;
+        
+    }];
+    
 }
 
 // 添加所有子控制器

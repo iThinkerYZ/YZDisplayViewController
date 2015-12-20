@@ -20,17 +20,49 @@
     [self setUpAllViewController];
     
     // 标题渐变
-    self.isShowTitleGradient = YES;
+    /*
+        方式一：
+     self.isShowTitleGradient = YES;
+     
+     // 标题RGB渐变模式
+     self.titleColorGradientStyle = YZTitleColorGradientStyleRGB;
+     
+     self.endR = 1;
+     */
     
-    // 标题RGB渐变模式
-    self.titleColorGradientStyle = YZTitleColorGradientStyleRGB;
     
-    self.endR = 1;
+    // *推荐方式(设置标题渐变)
+    [self setUpTitleGradient:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
+        
+        // 不需要设置的属性，可以不管
+        *isShowTitleGradient = YES;
+        
+        *titleColorGradientStyle = YZTitleColorGradientStyleRGB;
+        
+        *endR = 1;
+        
+    }];
+    
     
     // 字体缩放
-    self.isShowTitleScale = YES;
+    /*
+        方式一:
+     
+        self.isShowTitleScale = YES;
+     
+        self.titleScale = 1.3;
+     */
     
-    self.titleScale = 1.3;
+    
+    // 推荐方式 (设置字体缩放)
+    [self setUpTitleScale:^(BOOL *isShowTitleScale, CGFloat *titleScale) {
+        
+        // 是否需要字体缩放
+        *isShowTitleScale = YES;
+        
+        // 字体缩放比例
+        *titleScale = 1.3;
+    }];
 }
 
 // 添加所有子控制器

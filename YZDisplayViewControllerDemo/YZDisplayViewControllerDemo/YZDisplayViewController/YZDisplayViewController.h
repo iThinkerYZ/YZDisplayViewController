@@ -75,6 +75,8 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, strong) UIFont *titleFont;
 
+// 一次性设置所有标题属性
+- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock;
 
 /**************************************标题************************************/
 
@@ -95,6 +97,7 @@ typedef enum : NSUInteger {
     是否延迟滚动下标
  */
 @property (nonatomic, assign) BOOL isDelayScroll;
+
 /*
     下标颜色
  */
@@ -104,6 +107,9 @@ typedef enum : NSUInteger {
     下标高度
  */
 @property (nonatomic, assign) CGFloat underLineH;
+
+// 一次性设置所有下标属性
+- (void)setUpUnderLineEffect:(void(^)(BOOL *isShowUnderLine,BOOL *isDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock;
 
 /**************************************下标************************************/
 
@@ -121,6 +127,9 @@ typedef enum : NSUInteger {
     字体缩放比例
  */
 @property (nonatomic, assign) CGFloat titleScale;
+
+// 一次性设置所有字体缩放属性
+- (void)setUpTitleScale:(void(^)(BOOL *isShowTitleScale,CGFloat *titleScale))titleScaleBlock;
 
 /**********************************字体缩放************************************/
 
@@ -157,6 +166,9 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, assign) CGFloat endB;
 
+// 一次性设置所有颜色渐变属性
+- (void)setUpTitleGradient:(void(^)(BOOL *isShowTitleGradient,YZTitleColorGradientStyle *titleColorGradientStyle,CGFloat *startR,CGFloat *startG,CGFloat *startB,CGFloat *endR,CGFloat *endG,CGFloat *endB))titleGradientBlock;
+
 /**********************************颜色渐变************************************/
 
 /**********************************遮盖************************************/
@@ -175,6 +187,9 @@ typedef enum : NSUInteger {
     遮盖圆角半径
  */
 @property (nonatomic, assign) CGFloat coverCornerRadius;
+
+// 一次性设置所有遮盖属性
+- (void)setUpCoverEffect:(void(^)(BOOL *isShowTitleCover,UIColor **coverColor,CGFloat *coverCornerRadius))coverEffectBlock;
 
 /**********************************遮盖************************************/
 

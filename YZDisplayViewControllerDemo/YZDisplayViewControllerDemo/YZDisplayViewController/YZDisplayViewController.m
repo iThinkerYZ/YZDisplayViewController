@@ -133,7 +133,7 @@
     if (_coverView == nil) {
         UIView *coverView = [[UIView alloc] init];
         
-        coverView.backgroundColor = _coverColor?_coverColor:[UIColor redColor];
+        coverView.backgroundColor = _coverColor?_coverColor:[UIColor lightGrayColor];
         
         coverView.layer.cornerRadius = _coverCornerRadius;
         
@@ -252,6 +252,66 @@
 {
     if (contentBlock) {
         contentBlock(self.contentView);
+    }
+}
+
+// 一次性设置所有颜色渐变属性
+- (void)setUpTitleGradient:(void (^)(BOOL *, YZTitleColorGradientStyle *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *))titleGradientBlock
+{
+    if (titleGradientBlock) {
+        titleGradientBlock(&_isShowTitleGradient,&_titleColorGradientStyle,&_startR,&_startG,&_startB,&_endR,&_endG,&_endB);
+    }
+}
+
+// 一次性设置所有遮盖属性
+- (void)setUpCoverEffect:(void (^)(BOOL *, UIColor **, CGFloat *))coverEffectBlock
+{
+    UIColor *color;
+    
+    if (coverEffectBlock) {
+        
+        coverEffectBlock(&_isShowTitleCover,&color,&_coverCornerRadius);
+        
+        if (color) {
+            _coverColor = color;
+        }
+        
+    }
+}
+
+// 一次性设置所有字体缩放属性
+- (void)setUpTitleScale:(void(^)(BOOL *isShowTitleScale,CGFloat *titleScale))titleScaleBlock
+{
+    if (titleScaleBlock) {
+        titleScaleBlock(&_isShowTitleScale,&_titleScale);
+    }
+}
+
+// 一次性设置所有下标属性
+- (void)setUpUnderLineEffect:(void(^)(BOOL *isShowUnderLine,BOOL *isDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock
+{
+    UIColor *underLineColor;
+    
+    if (underLineBlock) {
+        underLineBlock(&_isShowUnderLine,&_isDelayScroll,&_underLineH,&underLineColor);
+        
+        _underLineColor = underLineColor;
+    }
+    
+}
+
+// 一次性设置所有标题属性
+- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock{
+    UIColor *titleScrollViewColor;
+    UIColor *norColor;
+    UIColor *selColor;
+    UIFont *titleFont;
+    if (titleEffectBlock) {
+        titleEffectBlock(&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight);
+        _norColor = norColor;
+        _selColor = selColor;
+        _titleScrollViewColor = titleScrollViewColor;
+        _titleFont = titleFont;
     }
 }
 
