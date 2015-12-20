@@ -16,6 +16,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"网易新闻";
+    
     // 添加所有子控制器
     [self setUpAllViewController];
     

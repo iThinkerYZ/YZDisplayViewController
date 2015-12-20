@@ -207,6 +207,13 @@
     return _titleScrollView;
 }
 
+- (void)setTitleScrollViewColor:(UIColor *)titleScrollViewColor
+{
+    _titleScrollViewColor = titleScrollViewColor;
+    
+    self.titleScrollView.backgroundColor = titleScrollViewColor;
+}
+
 
 // 懒加载内容滚动视图
 - (UIScrollView *)contentScrollView
