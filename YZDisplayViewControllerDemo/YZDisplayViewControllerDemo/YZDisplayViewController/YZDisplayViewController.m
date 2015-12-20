@@ -752,7 +752,7 @@
     // 计算所有标题的宽度
     for (NSString *title in titles) {
         
-        if (title == nil) {
+        if ([title isKindOfClass:[NSNull class]]) {
             // 抛异常
             NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"没有设置Controller.title属性，应该把子标题保存到对应子控制器中" userInfo:nil];
             [excp raise];
