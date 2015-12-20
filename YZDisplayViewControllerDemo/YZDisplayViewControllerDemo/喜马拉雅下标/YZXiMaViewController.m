@@ -61,7 +61,7 @@
         *underLineColor = [UIColor redColor];
         
         // 是否需要延迟滚动,下标不会随着拖动而改变
-        *isDelayScroll = YES;
+//        *isDelayScroll = YES;
         
     }];
     
