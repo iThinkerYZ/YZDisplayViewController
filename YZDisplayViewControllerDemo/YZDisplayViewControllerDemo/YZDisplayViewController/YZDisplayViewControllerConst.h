@@ -32,5 +32,7 @@ static CGFloat const YZUnderLineH = 2;
 // 默认标题间距
 static CGFloat const margin = 20;
 
+static NSString * const ID = @"cell";
+
 
 #endif /* Const_h */

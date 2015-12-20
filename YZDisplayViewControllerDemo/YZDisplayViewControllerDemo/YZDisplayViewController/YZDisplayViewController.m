@@ -14,7 +14,11 @@
 
 #import "UIView+Frame.h"
 
-@interface YZDisplayViewController ()<UIScrollViewDelegate>
+#import "YZFlowLayout.h"
+
+
+
+@interface YZDisplayViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 /** 整体内容View 包含标题好内容滚动视图 */
 @property (nonatomic, weak) UIView *contentView;
@@ -24,7 +28,7 @@
 @property (nonatomic, weak) UIScrollView *titleScrollView;
 
 /** 内容滚动视图 */
-@property (nonatomic, weak) UIScrollView *contentScrollView;
+@property (nonatomic, weak) UICollectionView *contentScrollView;
 
 @property (nonatomic, strong) NSMutableArray *titleLabels;
 
@@ -71,6 +75,7 @@
 
 - (void)initial
 {
+    // 初始化标题高度
      _titleHeight = YZTitleScrollViewH;
 }
 
@@ -81,6 +86,7 @@
     }
     return _titleWidths;
 }
+
 - (UIColor *)norColor
 {
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
@@ -207,8 +213,14 @@
 {
     if (_contentScrollView == nil) {
         
-        UIScrollView *contentScrollView = [[UIScrollView alloc] init];
+        // 创建布局
+        YZFlowLayout *layout = [[YZFlowLayout alloc] init];
+       
+        
+        UICollectionView *contentScrollView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
 
+        contentScrollView.backgroundColor = self.view.backgroundColor;
+        
         _contentScrollView = contentScrollView;
         
         // 设置内容滚动视图
@@ -217,6 +229,7 @@
         _contentScrollView.bounces = NO;
         
         _contentScrollView.delegate = self;
+        _contentScrollView.dataSource = self;
         
          [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
         
@@ -350,6 +363,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
+        // 注册cell
+        [self.contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
+        
         // 初始化
         [self setUp];
         
@@ -368,29 +384,6 @@
     
 }
 
-// 更新界面
-- (void)refreshDisplay
-{
-    // 清空之前所有标题
-    
-    [self.titleLabels makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self.titleLabels removeAllObjects];
-    
-    // 清空之前所有内容
-    for (UIView *childView in self.contentScrollView.subviews) {
-        if (childView.width == self.contentScrollView.width) {
-            [childView removeFromSuperview];
-        }
-    }
-    
-
-    // 重新设置标题
-    [self setUpTitleWidth];
-    
-    [self setUpAllTitle];
-
-    
-}
 
 
 #pragma mark - UIScrollViewDelegate
@@ -604,92 +597,6 @@
     _isAniming = NO;
 }
 
-
-// 减速完成
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-
-    CGFloat offsetX = scrollView.contentOffset.x;
-    
-    NSInteger offsetXInt = offsetX;
-    NSInteger screenWInt = YZScreenW;
-    
-    NSInteger extre = offsetXInt % screenWInt;
-    if (extre > YZScreenW * 0.5) {
-        // 往右边移动
-        offsetX = offsetX + (YZScreenW - extre);
-        _isAniming = YES;
-        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    }else if (extre < YZScreenW * 0.5 && extre > 0){
-        _isAniming = YES;
-        // 往左边移动
-        offsetX =  offsetX - extre;
-        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    }
-    
-    
-
-    // 获取角标
-    NSInteger i = offsetX / YZScreenW;
-    
-    // 选中标题
-    [self selectLabel:self.titleLabels[i]];
-    
-    // 添加控制器的view
-    [self setUpVc:i];
-    
-
-    
-}
-
-
-
-
-// 标题按钮点击
-- (void)titleClick:(UITapGestureRecognizer *)tap
-{
-    
-    // 记录是否点击标题
-    _isClickTitle = YES;
-    
-    // 获取对应标题label
-    UILabel *label = (UILabel *)tap.view;
-    
-    // 获取当前角标
-    NSInteger i = label.tag;
-    
-    // 选中label
-    [self selectLabel:label];
-    
-    // 内容滚动视图滚动到对应位置
-    CGFloat offsetX = i * YZScreenW;
-    
-    self.contentScrollView.contentOffset = CGPointMake(offsetX, 0);
-    
-    
-    // 记录上一次偏移量,因为点击的时候不会调用scrollView代理记录，因此需要主动记录
-    _lastOffsetX = offsetX;
-    
-    // 添加对应的控制器view在对应位置上
-    [self setUpVc:i];
-    
-   
-    // 点击事件处理完成
-    _isClickTitle = NO;
-}
-
-- (void)setUpVc:(NSInteger)i
-{
-    
-    UIViewController *vc = self.childViewControllers[i];
-    
-    if (vc.view.superview) return;
-    
-    vc.view.frame = self.contentScrollView.bounds;
-    [self.contentScrollView addSubview:vc.view];
-}
-
-
 - (void)selectLabel:(UILabel *)label
 {
     
@@ -825,7 +732,7 @@
 }
 
 
-// 计算标题宽度
+// 计算所有标题宽度
 - (void)setUpTitleWidth
 {
     // 判断是否能占据整个屏幕
@@ -930,6 +837,126 @@
     
 }
 
+
+// 减速完成
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
+    CGFloat offsetX = scrollView.contentOffset.x;
+    
+    NSInteger offsetXInt = offsetX;
+    NSInteger screenWInt = YZScreenW;
+    
+    NSInteger extre = offsetXInt % screenWInt;
+    if (extre > YZScreenW * 0.5) {
+        // 往右边移动
+        offsetX = offsetX + (YZScreenW - extre);
+        _isAniming = YES;
+        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    }else if (extre < YZScreenW * 0.5 && extre > 0){
+        _isAniming = YES;
+        // 往左边移动
+        offsetX =  offsetX - extre;
+        [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    }
+    
+    
+    
+    // 获取角标
+    NSInteger i = offsetX / YZScreenW;
+    
+    // 选中标题
+    [self selectLabel:self.titleLabels[i]];
+    
+    // 添加控制器的view
+    [self setUpVc:i];
+    
+    
+    
+}
+
+
+// 标题按钮点击
+- (void)titleClick:(UITapGestureRecognizer *)tap
+{
+    
+    // 记录是否点击标题
+    _isClickTitle = YES;
+    
+    // 获取对应标题label
+    UILabel *label = (UILabel *)tap.view;
+    
+    // 获取当前角标
+    NSInteger i = label.tag;
+    
+    // 选中label
+    [self selectLabel:label];
+    
+    // 内容滚动视图滚动到对应位置
+    CGFloat offsetX = i * YZScreenW;
+    
+    self.contentScrollView.contentOffset = CGPointMake(offsetX, 0);
+    
+    // 记录上一次偏移量,因为点击的时候不会调用scrollView代理记录，因此需要主动记录
+    _lastOffsetX = offsetX;
+    
+
+    // 点击事件处理完成
+    _isClickTitle = NO;
+}
+
+
+- (void)setUpVc:(NSInteger)i
+{
+    UIViewController *vc = self.childViewControllers[i];
+    
+    vc.view.frame = self.contentView.bounds;
+    
+    // 获取对应的cell
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+    
+    UICollectionViewCell *cell = [self.contentScrollView cellForItemAtIndexPath:indexPath];
+    
+    [cell.contentView addSubview:vc.view];
+}
+
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.childViewControllers.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
+    
+    // 添加控制器
+    UIViewController *vc = self.childViewControllers[indexPath.row];
+    
+    vc.view.frame = self.contentView.bounds;
+    
+    [cell.contentView addSubview:vc.view];
+    
+    
+    return cell;
+}
+
+// 更新界面
+- (void)refreshDisplay
+{
+    // 清空之前所有标题
+    [self.titleLabels makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.titleLabels removeAllObjects];
+    
+    // 刷新表格
+    [self.contentScrollView reloadData];
+    
+    // 重新设置标题
+    [self setUpTitleWidth];
+    
+    [self setUpAllTitle];
+    
+}
 
 
 

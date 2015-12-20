@@ -58,6 +58,8 @@
         
         // 不需要设置的属性，可以不管
         *isShowTitleGradient = YES;
+        
+        // 设置结束时，RGB通道各个值
         *endR = 1;
         *endG = 130 / 255.0;
         *endB = 44 / 255.0;
