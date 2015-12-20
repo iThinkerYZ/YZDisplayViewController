@@ -16,6 +16,32 @@
 {
     [super viewDidLoad];
     
+    CGFloat y = self.navigationController?64:0;
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
+    
+    // 设置搜索框
+    CGFloat searchH = 44;
+    
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, y, screenW, searchH)];
+    
+    [self.view addSubview:searchBar];
+
+    
+    // 整体内容尺寸
+    [self setUpContentViewFrame:^(UIView *contentView) {
+       
+        CGFloat contentX = 0;
+        
+        // 整体内容往下挪动100
+        CGFloat contentY = CGRectGetMaxY(searchBar.frame);
+        
+        CGFloat contentH = screenH - contentY;
+
+        contentView.frame = CGRectMake(contentX, contentY, screenW, contentH);
+        
+    }];
+    
     // 添加所有子控制器
     [self setUpAllViewController];
     

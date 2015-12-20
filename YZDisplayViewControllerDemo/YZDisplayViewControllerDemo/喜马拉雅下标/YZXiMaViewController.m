@@ -72,7 +72,7 @@
     [self addChildViewController:videoVc];
     
     // 声音
-    ChildViewController *voiceVc = [[ChildViewController alloc] init];
+    FullChildViewController *voiceVc = [[FullChildViewController alloc] init];
     voiceVc.title = @"声音";
     [self addChildViewController:voiceVc];
     

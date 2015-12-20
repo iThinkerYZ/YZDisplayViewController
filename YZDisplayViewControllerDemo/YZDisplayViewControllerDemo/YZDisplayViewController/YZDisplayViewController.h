@@ -34,6 +34,14 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, assign) BOOL isfullScreen;
 
+
+/*
+    如果_isfullScreen = Yes，这个方法就不好使。
+ 
+    设置整体内容的frame,包含（标题滚动视图和内容滚动视图）
+ */
+- (void)setUpContentViewFrame:(void(^)(UIView *contentView))contentBlock;
+
 /**************************************内容************************************/
 
 

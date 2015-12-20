@@ -16,12 +16,14 @@
 
 @interface YZDisplayViewController ()<UIScrollViewDelegate>
 
-/** 标题滚动视图背景View */
-@property (nonatomic, strong) UIImageView *titleScrollViewBackgroundImageView;
+/** 整体内容View 包含标题好内容滚动视图 */
+@property (nonatomic, weak) UIView *contentView;
+
 
 /** 标题滚动视图 */
 @property (nonatomic, weak) UIScrollView *titleScrollView;
 
+/** 内容滚动视图 */
 @property (nonatomic, weak) UIScrollView *contentScrollView;
 
 @property (nonatomic, strong) NSMutableArray *titleLabels;
@@ -70,14 +72,6 @@
 - (void)initial
 {
      _titleHeight = YZTitleScrollViewH;
-}
-
-- (UIImageView *)titleScrollViewBackgroundImageView
-{
-    if (_titleScrollViewBackgroundImageView == nil) {
-        _titleScrollViewBackgroundImageView = [[UIImageView alloc] init];
-    }
-    return _titleScrollViewBackgroundImageView;
 }
 
 - (NSMutableArray *)titleWidths
@@ -199,7 +193,7 @@
         
         titleScrollView.backgroundColor = _titleScrollViewColor?_titleScrollViewColor:[UIColor colorWithWhite:1 alpha:0.7];
         
-        [self.view addSubview:titleScrollView];
+        [self.contentView addSubview:titleScrollView];
         
         _titleScrollView = titleScrollView;
         
@@ -214,9 +208,7 @@
     if (_contentScrollView == nil) {
         
         UIScrollView *contentScrollView = [[UIScrollView alloc] init];
-        
-        [self.view insertSubview:contentScrollView belowSubview:self.titleScrollView];
-        
+
         _contentScrollView = contentScrollView;
         
         // 设置内容滚动视图
@@ -226,33 +218,67 @@
         
         _contentScrollView.delegate = self;
         
+         [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
+        
     }
     
     return _contentScrollView;
 }
 
-
-
-// 1.添加标题滚动视图
-- (void)setUpTitleScrollView
+// 懒加载整个内容view
+- (UIView *)contentView
 {
-    // 计算尺寸
-    CGFloat y = self.navigationController?YZNavBarH : 0;
+    if (_contentView == nil) {
+        UIView *contentView = [[UIView alloc] init];
+        _contentView = contentView;
+        [self.view addSubview:contentView];
+    }
     
-    CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
+    return _contentView;
+}
+
+
+
+- (void)setIsfullScreen:(BOOL)isfullScreen
+{
+    _isfullScreen = isfullScreen;
     
-    self.titleScrollView.frame = CGRectMake(0, y, YZScreenW, titleH);
+    self.contentView.frame = CGRectMake(0, 0, YZScreenW, YZScreenH);
     
 }
 
-// 2.添加内容滚动视图
-- (void)setUpContentScrollView
+// 设置整体内容的尺寸
+- (void)setUpContentViewFrame:(void (^)(UIView *))contentBlock
 {
+    if (contentBlock) {
+        contentBlock(self.contentView);
+    }
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
     
+    CGFloat contentY = self.navigationController?YZNavBarH : 0;
+    CGFloat contentW = YZScreenW;
+    CGFloat contentH = YZScreenH - contentY;
+    // 设置整个内容的尺寸
+    if (self.contentView.height == 0) {
+        // 没有设置内容尺寸，才需要设置内容尺寸
+        self.contentView.frame = CGRectMake(0, contentY, contentW, contentH);
+    }
+    
+    // 设置标题滚动视图frame
     // 计算尺寸
-    CGFloat y = CGRectGetMaxY(_titleScrollView.frame);
+    CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
+    CGFloat titleY = _isfullScreen?contentY:0;
+    self.titleScrollView.frame = CGRectMake(0, titleY, contentW, titleH);
+
     
-    self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, YZScreenW, YZScreenH) :CGRectMake(0, y, YZScreenW, YZScreenH - y);
+    // 设置内容滚动视图frame
+    CGFloat contentScrollY = CGRectGetMaxY(self.titleScrollView.frame);
+    
+    self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, contentW, YZScreenH) :CGRectMake(0, contentScrollY, contentW, self.contentView.height - contentScrollY);
     
 }
 
@@ -263,12 +289,6 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
-        // 添加顶部标签滚动视图frame
-        [self setUpTitleScrollView];
-        
-        // 添加底部内容滚动视图frame
-        [self setUpContentScrollView];
         
         // 初始化
         [self setUp];
