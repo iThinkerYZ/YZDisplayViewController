@@ -226,7 +226,7 @@
         
         UICollectionView *contentScrollView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
 
-        contentScrollView.backgroundColor = self.view.backgroundColor;
+        
         
         _contentScrollView = contentScrollView;
         
@@ -372,7 +372,7 @@
         
         // 注册cell
         [self.contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
-        
+        self.contentScrollView.backgroundColor = self.view.backgroundColor;
         // 初始化
         [self setUp];
         
