@@ -607,6 +607,8 @@
 - (void)selectLabel:(UILabel *)label
 {
     
+    
+    
     for (YZDisplayTitleLabel *labelView in self.titleLabels) {
         
         if (label == labelView) continue;
@@ -830,7 +832,9 @@
         // 监听标题的点击
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleClick:)];
         [label addGestureRecognizer:tap];
-        
+ 
+#warning 不要在这点击第0个
+ 
         if (i == 0) {
             [self titleClick:tap];
         }
@@ -856,6 +860,9 @@
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    NSLog(@"发出通知");
+    // 发出通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:nil];
     
     CGFloat offsetX = scrollView.contentOffset.x;
     
@@ -888,12 +895,17 @@
     
     
     
+    
+    
+    
 }
 
 
 // 标题按钮点击
 - (void)titleClick:(UITapGestureRecognizer *)tap
 {
+    // 发出通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:nil];
     
     // 记录是否点击标题
     _isClickTitle = YES;
@@ -918,6 +930,8 @@
 
     // 点击事件处理完成
     _isClickTitle = NO;
+    
+    
 }
 
 

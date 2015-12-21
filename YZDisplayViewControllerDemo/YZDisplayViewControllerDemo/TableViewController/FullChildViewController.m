@@ -8,6 +8,8 @@
 
 #import "FullChildViewController.h"
 
+#import "YZDisplayViewControllerConst.h"
+
 @implementation FullChildViewController
 
 
@@ -34,6 +36,22 @@
     // 如果有tabBarController，底部需要添加额外滚动区域
 //    self.tableView.contentInset = UIEdgeInsetsMake(64 + 44, 0, 49, 0);
     
+    // 监听滚动完成或者点击标题
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:YZDisplayViewClickOrScrollDidFinsh object:nil];
+    
+}
+
+
+// 加载数据
+- (void)loadData
+{
+    
+    NSLog(@"请求数据");
+    
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
