@@ -226,8 +226,6 @@
         
         UICollectionView *contentScrollView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
 
-        
-        
         _contentScrollView = contentScrollView;
         
         // 设置内容滚动视图
@@ -536,9 +534,9 @@
 // 获取两个标题按钮宽度差值
 - (CGFloat)widthDeltaWithRightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
-    CGRect titleBoundsR = [rightLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:YZTitleFont} context:nil];
+    CGRect titleBoundsR = [rightLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.titleFont} context:nil];
     
-    CGRect titleBoundsL = [leftLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:YZTitleFont} context:nil];
+    CGRect titleBoundsL = [leftLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.titleFont} context:nil];
     
     return titleBoundsR.size.width - titleBoundsL.size.width;
 }
@@ -656,7 +654,7 @@
 - (void)setUpCoverView:(UILabel *)label
 {
     // 获取文字尺寸
-    CGRect titleBounds = [label.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:YZTitleFont} context:nil];
+    CGRect titleBounds = [label.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.titleFont} context:nil];
     
     CGFloat border = 5;
     CGFloat coverH = titleBounds.size.height + 2 * border;
@@ -780,6 +778,8 @@
     CGFloat titleMargin = (YZScreenW - totalWidth) / (count + 1);
     
     _titleMargin = titleMargin < margin? margin: titleMargin;
+    
+    self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
 }
 
 - (UIFont *)titleFont
