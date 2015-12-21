@@ -8,7 +8,7 @@
 
 #import "FullChildViewController.h"
 
-#import "YZDisplayViewControllerConst.h"
+#import "YZDisplayViewHeader.h"
 
 @implementation FullChildViewController
 
@@ -19,7 +19,7 @@
     
     self.view.backgroundColor = [UIColor colorWithRed:arc4random_uniform(256) / 255.0 green:arc4random_uniform(256) / 255.0 blue:arc4random_uniform(256) / 255.0 alpha:1];
     
-    
+    // 设置额外滚动区域,如果当前是全屏
     // 如果有导航控制器，顶部需要添加额外滚动区域
     // 添加额外滚动区域   导航条高度 + 标题高度
     if (self.navigationController) {
@@ -37,7 +37,7 @@
 //    self.tableView.contentInset = UIEdgeInsetsMake(64 + 44, 0, 49, 0);
     
     // 监听滚动完成或者点击标题
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:YZDisplayViewClickOrScrollDidFinsh object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:YZDisplayViewClickOrScrollDidFinsh object:self];
     
 }
 
@@ -45,10 +45,10 @@
 // 加载数据
 - (void)loadData
 {
-    
     NSLog(@"请求数据");
     
 }
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

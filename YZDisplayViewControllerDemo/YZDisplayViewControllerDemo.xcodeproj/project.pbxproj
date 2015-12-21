@@ -22,6 +22,8 @@
 		EC62688A1C128ACA000FB840 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268891C128ACA000FB840 /* UIView+Frame.m */; };
 		EC6268931C128F63000FB840 /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268901C128F63000FB840 /* ChildViewController.m */; };
 		EC6268941C128F63000FB840 /* FullChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268921C128F63000FB840 /* FullChildViewController.m */; };
+		ECB332311C28435900876DA6 /* RequesCover.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB332301C28435900876DA6 /* RequesCover.m */; };
+		ECB332331C28436900876DA6 /* RequesCover.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB332321C28436900876DA6 /* RequesCover.xib */; };
 		ECBE97A71C1330DE00A7F2B4 /* YZTXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */; };
 		ECD99D051C268BA30006F17C /* YZFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD99D041C268BA30006F17C /* YZFlowLayout.m */; };
 /* End PBXBuildFile section */
@@ -62,7 +64,7 @@
 		EC01A8B71C12887200F91F25 /* YZDisplayTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDisplayTitleLabel.m; sourceTree = "<group>"; };
 		EC01A8B81C12887200F91F25 /* YZDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayViewController.h; sourceTree = "<group>"; };
 		EC01A8B91C12887200F91F25 /* YZDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDisplayViewController.m; sourceTree = "<group>"; };
-		EC01A8BA1C12887200F91F25 /* YZDisplayViewControllerConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayViewControllerConst.h; sourceTree = "<group>"; };
+		EC01A8BA1C12887200F91F25 /* YZDisplayViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayViewHeader.h; sourceTree = "<group>"; };
 		EC62687F1C1289E4000FB840 /* YZXiMaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZXiMaViewController.h; sourceTree = "<group>"; };
 		EC6268801C1289E4000FB840 /* YZXiMaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZXiMaViewController.m; sourceTree = "<group>"; };
 		EC6268821C1289F6000FB840 /* YZWYViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZWYViewController.h; sourceTree = "<group>"; };
@@ -75,6 +77,9 @@
 		EC6268901C128F63000FB840 /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
 		EC6268911C128F63000FB840 /* FullChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullChildViewController.h; sourceTree = "<group>"; };
 		EC6268921C128F63000FB840 /* FullChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullChildViewController.m; sourceTree = "<group>"; };
+		ECB3322F1C28435900876DA6 /* RequesCover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequesCover.h; sourceTree = "<group>"; };
+		ECB332301C28435900876DA6 /* RequesCover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequesCover.m; sourceTree = "<group>"; };
+		ECB332321C28436900876DA6 /* RequesCover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequesCover.xib; sourceTree = "<group>"; };
 		ECBE97A51C1330DE00A7F2B4 /* YZTXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTXViewController.h; sourceTree = "<group>"; };
 		ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTXViewController.m; sourceTree = "<group>"; };
 		ECD99D031C268BA30006F17C /* YZFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZFlowLayout.h; sourceTree = "<group>"; };
@@ -129,6 +134,7 @@
 		EC01A8811C12883C00F91F25 /* YZDisplayViewControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				ECB3322E1C28434D00876DA6 /* 蒙版 */,
 				ECBE97A41C1330BF00A7F2B4 /* 腾讯视频 */,
 				EC62687C1C1289B7000FB840 /* 今日头条标题填充 */,
 				EC62687D1C1289B7000FB840 /* 网易新闻标题渐变 */,
@@ -181,7 +187,7 @@
 				EC6268891C128ACA000FB840 /* UIView+Frame.m */,
 				EC01A8B61C12887200F91F25 /* YZDisplayTitleLabel.h */,
 				EC01A8B71C12887200F91F25 /* YZDisplayTitleLabel.m */,
-				EC01A8BA1C12887200F91F25 /* YZDisplayViewControllerConst.h */,
+				EC01A8BA1C12887200F91F25 /* YZDisplayViewHeader.h */,
 				ECD99D031C268BA30006F17C /* YZFlowLayout.h */,
 				ECD99D041C268BA30006F17C /* YZFlowLayout.m */,
 			);
@@ -224,6 +230,16 @@
 				EC6268921C128F63000FB840 /* FullChildViewController.m */,
 			);
 			path = TableViewController;
+			sourceTree = "<group>";
+		};
+		ECB3322E1C28434D00876DA6 /* 蒙版 */ = {
+			isa = PBXGroup;
+			children = (
+				ECB3322F1C28435900876DA6 /* RequesCover.h */,
+				ECB332301C28435900876DA6 /* RequesCover.m */,
+				ECB332321C28436900876DA6 /* RequesCover.xib */,
+			);
+			path = "蒙版";
 			sourceTree = "<group>";
 		};
 		ECBE97A41C1330BF00A7F2B4 /* 腾讯视频 */ = {
@@ -338,6 +354,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECB332331C28436900876DA6 /* RequesCover.xib in Resources */,
 				EC01A8921C12883C00F91F25 /* LaunchScreen.storyboard in Resources */,
 				EC01A88F1C12883C00F91F25 /* Assets.xcassets in Resources */,
 				EC01A88D1C12883C00F91F25 /* Main.storyboard in Resources */,
@@ -375,6 +392,7 @@
 				EC62688A1C128ACA000FB840 /* UIView+Frame.m in Sources */,
 				EC01A8841C12883C00F91F25 /* main.m in Sources */,
 				EC01A8BB1C12887200F91F25 /* YZDisplayTitleLabel.m in Sources */,
+				ECB332311C28435900876DA6 /* RequesCover.m in Sources */,
 				EC01A8BC1C12887200F91F25 /* YZDisplayViewController.m in Sources */,
 				EC6268871C128A0A000FB840 /* YZJRViewController.m in Sources */,
 			);

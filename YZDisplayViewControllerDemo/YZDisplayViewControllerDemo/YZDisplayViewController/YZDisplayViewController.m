@@ -10,7 +10,7 @@
 
 #import "YZDisplayTitleLabel.h"
 
-#import "YZDisplayViewControllerConst.h"
+#import "YZDisplayViewHeader.h"
 
 #import "UIView+Frame.h"
 
@@ -833,8 +833,6 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleClick:)];
         [label addGestureRecognizer:tap];
  
-#warning 不要在这点击第0个
- 
         if (i == 0) {
             [self titleClick:tap];
         }
@@ -860,9 +858,6 @@
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"发出通知");
-    // 发出通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:nil];
     
     CGFloat offsetX = scrollView.contentOffset.x;
     
@@ -882,31 +877,24 @@
         [self.contentScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
     }
     
-    
-    
     // 获取角标
     NSInteger i = offsetX / YZScreenW;
     
     // 选中标题
     [self selectLabel:self.titleLabels[i]];
     
-    // 添加控制器的view
-    [self setUpVc:i];
+    // 取出对应控制器发出通知
+    UIViewController *vc = self.childViewControllers[i];
     
-    
-    
-    
-    
-    
+    // 发出通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh object:vc];
+
 }
 
 
 // 标题按钮点击
 - (void)titleClick:(UITapGestureRecognizer *)tap
 {
-    // 发出通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:nil];
-    
     // 记录是否点击标题
     _isClickTitle = YES;
     
@@ -927,27 +915,8 @@
     // 记录上一次偏移量,因为点击的时候不会调用scrollView代理记录，因此需要主动记录
     _lastOffsetX = offsetX;
     
-
-    // 点击事件处理完成
-    _isClickTitle = NO;
-    
-    
 }
 
-
-- (void)setUpVc:(NSInteger)i
-{
-    UIViewController *vc = self.childViewControllers[i];
-    
-    vc.view.frame = self.contentView.bounds;
-    
-    // 获取对应的cell
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-    
-    UICollectionViewCell *cell = [self.contentScrollView cellForItemAtIndexPath:indexPath];
-    
-    [cell.contentView addSubview:vc.view];
-}
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -968,6 +937,15 @@
     vc.view.frame = self.contentView.bounds;
     
     [cell.contentView addSubview:vc.view];
+    
+    if (_isClickTitle) { // 当子控制器的view加载完成，才发出点击通知，才能监听到
+        
+        // 发出通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:vc];
+        
+        // 点击事件处理完成
+        _isClickTitle = NO;
+    }
     
     
     return cell;
