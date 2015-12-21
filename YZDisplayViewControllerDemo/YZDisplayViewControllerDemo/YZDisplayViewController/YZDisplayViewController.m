@@ -935,7 +935,7 @@
     // 添加控制器
     UIViewController *vc = self.childViewControllers[indexPath.row];
     
-    vc.view.frame = self.contentView.bounds;
+    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.width, self.contentScrollView.height);
     
     [cell.contentView addSubview:vc.view];
     
