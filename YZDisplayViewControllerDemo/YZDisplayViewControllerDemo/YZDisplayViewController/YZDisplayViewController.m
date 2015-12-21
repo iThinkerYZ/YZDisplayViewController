@@ -723,7 +723,7 @@
     }
     
     // 计算下最大的标题视图滚动区域
-    CGFloat maxOffsetX = self.titleScrollView.contentSize.width - YZScreenW;
+    CGFloat maxOffsetX = self.titleScrollView.contentSize.width - YZScreenW + _titleMargin;
     
     if (maxOffsetX < 0) {
         maxOffsetX = 0;
@@ -772,6 +772,7 @@
         
         _titleMargin = margin;
         
+        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
         return;
     }
     
