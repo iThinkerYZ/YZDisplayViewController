@@ -50,7 +50,7 @@
      // 是否需要延迟滚动,下标不会随着拖动而改变
      self.isDelayScroll = YES;
      */
-   
+
     // 推荐方式（设置下标）
     [self setUpUnderLineEffect:^(BOOL *isShowUnderLine, BOOL *isDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor) {
         
