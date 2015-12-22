@@ -25,6 +25,16 @@
 		ECB332311C28435900876DA6 /* RequesCover.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB332301C28435900876DA6 /* RequesCover.m */; };
 		ECB332331C28436900876DA6 /* RequesCover.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB332321C28436900876DA6 /* RequesCover.xib */; };
 		ECBE97A71C1330DE00A7F2B4 /* YZTXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */; };
+		ECC29F901C293799004AAD22 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F861C293799004AAD22 /* 1.jpg */; };
+		ECC29F911C293799004AAD22 /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F871C293799004AAD22 /* 10.jpg */; };
+		ECC29F921C293799004AAD22 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F881C293799004AAD22 /* 2.jpg */; };
+		ECC29F931C293799004AAD22 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F891C293799004AAD22 /* 3.jpg */; };
+		ECC29F941C293799004AAD22 /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F8A1C293799004AAD22 /* 4.jpg */; };
+		ECC29F951C293799004AAD22 /* 5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F8B1C293799004AAD22 /* 5.jpg */; };
+		ECC29F961C293799004AAD22 /* 6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F8C1C293799004AAD22 /* 6.jpg */; };
+		ECC29F971C293799004AAD22 /* 7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F8D1C293799004AAD22 /* 7.jpg */; };
+		ECC29F981C293799004AAD22 /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F8E1C293799004AAD22 /* 8.jpg */; };
+		ECC29F991C293799004AAD22 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ECC29F8F1C293799004AAD22 /* 9.jpg */; };
 		ECD99D051C268BA30006F17C /* YZFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD99D041C268BA30006F17C /* YZFlowLayout.m */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +92,16 @@
 		ECB332321C28436900876DA6 /* RequesCover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequesCover.xib; sourceTree = "<group>"; };
 		ECBE97A51C1330DE00A7F2B4 /* YZTXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTXViewController.h; sourceTree = "<group>"; };
 		ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTXViewController.m; sourceTree = "<group>"; };
+		ECC29F861C293799004AAD22 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
+		ECC29F871C293799004AAD22 /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
+		ECC29F881C293799004AAD22 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
+		ECC29F891C293799004AAD22 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
+		ECC29F8A1C293799004AAD22 /* 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4.jpg; sourceTree = "<group>"; };
+		ECC29F8B1C293799004AAD22 /* 5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5.jpg; sourceTree = "<group>"; };
+		ECC29F8C1C293799004AAD22 /* 6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 6.jpg; sourceTree = "<group>"; };
+		ECC29F8D1C293799004AAD22 /* 7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpg; sourceTree = "<group>"; };
+		ECC29F8E1C293799004AAD22 /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
+		ECC29F8F1C293799004AAD22 /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
 		ECD99D031C268BA30006F17C /* YZFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZFlowLayout.h; sourceTree = "<group>"; };
 		ECD99D041C268BA30006F17C /* YZFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +175,7 @@
 		EC01A8821C12883C00F91F25 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ECC29F851C293799004AAD22 /* 萌萌哒_gif */,
 				EC01A8831C12883C00F91F25 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -249,6 +270,23 @@
 				ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */,
 			);
 			path = "腾讯视频";
+			sourceTree = "<group>";
+		};
+		ECC29F851C293799004AAD22 /* 萌萌哒_gif */ = {
+			isa = PBXGroup;
+			children = (
+				ECC29F861C293799004AAD22 /* 1.jpg */,
+				ECC29F871C293799004AAD22 /* 10.jpg */,
+				ECC29F881C293799004AAD22 /* 2.jpg */,
+				ECC29F891C293799004AAD22 /* 3.jpg */,
+				ECC29F8A1C293799004AAD22 /* 4.jpg */,
+				ECC29F8B1C293799004AAD22 /* 5.jpg */,
+				ECC29F8C1C293799004AAD22 /* 6.jpg */,
+				ECC29F8D1C293799004AAD22 /* 7.jpg */,
+				ECC29F8E1C293799004AAD22 /* 8.jpg */,
+				ECC29F8F1C293799004AAD22 /* 9.jpg */,
+			);
+			path = "萌萌哒_gif";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,10 +392,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC29F961C293799004AAD22 /* 6.jpg in Resources */,
 				ECB332331C28436900876DA6 /* RequesCover.xib in Resources */,
+				ECC29F951C293799004AAD22 /* 5.jpg in Resources */,
+				ECC29F971C293799004AAD22 /* 7.jpg in Resources */,
 				EC01A8921C12883C00F91F25 /* LaunchScreen.storyboard in Resources */,
+				ECC29F981C293799004AAD22 /* 8.jpg in Resources */,
+				ECC29F921C293799004AAD22 /* 2.jpg in Resources */,
 				EC01A88F1C12883C00F91F25 /* Assets.xcassets in Resources */,
 				EC01A88D1C12883C00F91F25 /* Main.storyboard in Resources */,
+				ECC29F991C293799004AAD22 /* 9.jpg in Resources */,
+				ECC29F911C293799004AAD22 /* 10.jpg in Resources */,
+				ECC29F941C293799004AAD22 /* 4.jpg in Resources */,
+				ECC29F901C293799004AAD22 /* 1.jpg in Resources */,
+				ECC29F931C293799004AAD22 /* 3.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
