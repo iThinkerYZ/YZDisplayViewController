@@ -337,7 +337,7 @@
 {
     [super viewDidLayoutSubviews];
     
-    CGFloat contentY = self.navigationController?YZNavBarH : 0;
+    CGFloat contentY = self.navigationController?YZNavBarH : [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat contentW = YZScreenW;
     CGFloat contentH = YZScreenH - contentY;
     // 设置整个内容的尺寸
@@ -417,7 +417,7 @@
     }
     
     // 字体放大
-    [self setUpTitleSaceWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    [self setUpTitleScaleWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
     
     // 设置下标偏移
     if (_isDelayScroll == NO) { // 延迟滚动，不需要移动下标
@@ -510,7 +510,7 @@
 }
 
 // 标题缩放
-- (void)setUpTitleSaceWithOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
+- (void)setUpTitleScaleWithOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
     if (_isShowTitleScale == NO) return;
     
