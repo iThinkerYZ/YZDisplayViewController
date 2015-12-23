@@ -916,6 +916,18 @@
     // 记录上一次偏移量,因为点击的时候不会调用scrollView代理记录，因此需要主动记录
     _lastOffsetX = offsetX;
     
+    // 添加控制器
+    UIViewController *vc = self.childViewControllers[i];
+    
+    // 判断控制器的view有没有加载，没有就加载，加载完在发送通知
+    if (vc.view) {
+        // 发出通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:vc];
+        
+    }
+    // 点击事件处理完成
+    _isClickTitle = NO;
+    
 }
 
 
@@ -939,14 +951,6 @@
     
     [cell.contentView addSubview:vc.view];
     
-    if (_isClickTitle) { // 当子控制器的view加载完成，才发出点击通知，才能监听到
-        
-        // 发出通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:vc];
-        
-        // 点击事件处理完成
-        _isClickTitle = NO;
-    }
     
     
     return cell;
