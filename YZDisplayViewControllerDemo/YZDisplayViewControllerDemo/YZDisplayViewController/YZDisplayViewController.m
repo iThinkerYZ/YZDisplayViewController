@@ -7,16 +7,10 @@
 //
 
 #import "YZDisplayViewController.h"
-
 #import "YZDisplayTitleLabel.h"
-
 #import "YZDisplayViewHeader.h"
-
 #import "UIView+Frame.h"
-
 #import "YZFlowLayout.h"
-
-
 
 @interface YZDisplayViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -53,6 +47,8 @@
 // 标题间距
 @property (nonatomic, assign) CGFloat titleMargin;
 
+// 计算上一次选中角标
+@property (nonatomic, assign) NSInteger selIndex;
 
 
 @end
@@ -888,7 +884,7 @@
     UIViewController *vc = self.childViewControllers[i];
     
     // 发出通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh object:vc];
+    [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinshNote object:vc];
 
 }
 
@@ -905,6 +901,8 @@
     // 获取当前角标
     NSInteger i = label.tag;
     
+    
+    
     // 选中label
     [self selectLabel:label];
     
@@ -919,10 +917,19 @@
     // 添加控制器
     UIViewController *vc = self.childViewControllers[i];
     
+    // 发出重复点击标题通知
+    
+    
+    
     // 判断控制器的view有没有加载，没有就加载，加载完在发送通知
     if (vc.view) {
-        // 发出通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinsh  object:vc];
+        // 发出通知点击标题通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinshNote  object:vc];
+        
+        if (_selIndex == i) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewRepeatClickTitleNote object:vc];
+            _selIndex = i;
+        }
         
     }
     // 点击事件处理完成
@@ -950,8 +957,6 @@
     vc.view.frame = CGRectMake(0, 0, self.contentScrollView.width, self.contentScrollView.height);
     
     [cell.contentView addSubview:vc.view];
-    
-    
     
     return cell;
 }

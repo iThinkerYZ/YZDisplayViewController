@@ -36,7 +36,10 @@ static CGFloat const margin = 20;
 static NSString * const ID = @"cell";
 
 // 标题被点击或者内容滚动完成，会发出这个通知，监听这个通知，可以做自己想要做的事情，比如加载数据
-static NSString * const YZDisplayViewClickOrScrollDidFinsh = @"YZDisplayViewClickOrScrollDidFinsh";
+static NSString * const YZDisplayViewClickOrScrollDidFinshNote = @"YZDisplayViewClickOrScrollDidFinshNote";
+
+// 重复点击通知
+static NSString * const YZDisplayViewRepeatClickTitleNote = @"YZDisplayViewRepeatClickTitleNote";
 
 
 #endif /* Const_h */

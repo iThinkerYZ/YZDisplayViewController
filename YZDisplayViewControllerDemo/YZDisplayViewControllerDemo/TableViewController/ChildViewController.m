@@ -35,7 +35,7 @@
     // 监听滚动完成或者点击标题，只要滚动完成，当前控制器就会发出通知
     
     // 只需要监听自己发出的，不需要监听所有对象发出的通知，否则会导致一个控制器发出，所有控制器都能监听,造成所有控制器请求数据
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:YZDisplayViewClickOrScrollDidFinsh object:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:YZDisplayViewClickOrScrollDidFinshNote object:self];
     
    
     // 开发中可以搞个蒙版，一开始遮住当前界面，等请求成功，在把蒙版隐藏.
