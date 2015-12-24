@@ -17,43 +17,44 @@
 /** 整体内容View 包含标题好内容滚动视图 */
 @property (nonatomic, weak) UIView *contentView;
 
-
 /** 标题滚动视图 */
 @property (nonatomic, weak) UIScrollView *titleScrollView;
 
 /** 内容滚动视图 */
 @property (nonatomic, weak) UICollectionView *contentScrollView;
 
+/** 所以标题数组 */
 @property (nonatomic, strong) NSMutableArray *titleLabels;
 
+/** 所以标题宽度数组 */
 @property (nonatomic, strong) NSMutableArray *titleWidths;
 
+/** 下标视图 */
 @property (nonatomic, weak) UIView *underLine;
 
+/** 标题遮盖视图 */
 @property (nonatomic, weak) UIView *coverView;
 
-
-// 记录上一次内容滚动视图偏移量
+/** 记录上一次内容滚动视图偏移量 */
 @property (nonatomic, assign) CGFloat lastOffsetX;
 
-
-// 记录是否点击
+/** 记录是否点击 */
 @property (nonatomic, assign) BOOL isClickTitle;
 
-// 记录是否在动画
+/** 记录是否在动画 */
 @property (nonatomic, assign) BOOL isAniming;
 
-
-// 标题间距
+/** 标题间距 */
 @property (nonatomic, assign) CGFloat titleMargin;
 
-// 计算上一次选中角标
+/** 计算上一次选中角标 */
 @property (nonatomic, assign) NSInteger selIndex;
-
 
 @end
 
 @implementation YZDisplayViewController
+
+#pragma mark - 初始化方法
 
 - (instancetype)init
 {
@@ -66,14 +67,40 @@
 - (void)awakeFromNib
 {
     [self initial];
-
+    
 }
 
 - (void)initial
 {
     // 初始化标题高度
-     _titleHeight = YZTitleScrollViewH;
+    _titleHeight = YZTitleScrollViewH;
 }
+
+- (void)setUp
+{
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
+        
+        // 初始化颜色渐变
+        if (_endR == 0 && _endG == 0 && _endB == 0) {
+            _endR = 1;
+        }
+    }
+}
+
+
+#pragma mark - 懒加载
+
+- (UIFont *)titleFont
+{
+    if (_titleFont == nil) {
+        _titleFont = YZTitleFont;
+    }
+    return _titleFont;
+}
+
 
 - (NSMutableArray *)titleWidths
 {
@@ -106,28 +133,6 @@
     if (_selColor == nil) _selColor = [UIColor redColor];
     
     return _selColor;
-}
-
-- (void)setIsShowTitleScale:(BOOL)isShowTitleScale
-{
-    if (_isShowUnderLine) {
-        // 抛异常
-        NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"字体放大效果和角标不能同时使用。" userInfo:nil];
-        [excp raise];
-    }
-    
-    _isShowTitleScale = isShowTitleScale;
-}
-
-- (void)setIsShowUnderLine:(BOOL)isShowUnderLine
-{
-    if (_isShowTitleScale) {
-        // 抛异常
-        NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"字体放大效果和角标不能同时使用。" userInfo:nil];
-        [excp raise];
-    }
-    
-    _isShowUnderLine = isShowUnderLine;
 }
 
 - (UIView *)coverView
@@ -170,22 +175,6 @@
     return _titleLabels;
 }
 
-
-// 初始化
-- (void)setUp
-{
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-        
-        // 初始化颜色渐变
-        if (_endR == 0 && _endG == 0 && _endB == 0) {
-            _endR = 1;
-        }
-    }
-}
-
 // 懒加载标题滚动视图
 - (UIScrollView *)titleScrollView
 {
@@ -203,36 +192,23 @@
     return _titleScrollView;
 }
 
-- (void)setTitleScrollViewColor:(UIColor *)titleScrollViewColor
-{
-    _titleScrollViewColor = titleScrollViewColor;
-    
-    self.titleScrollView.backgroundColor = titleScrollViewColor;
-}
-
-
 // 懒加载内容滚动视图
 - (UIScrollView *)contentScrollView
 {
     if (_contentScrollView == nil) {
-        
+
         // 创建布局
         YZFlowLayout *layout = [[YZFlowLayout alloc] init];
-       
         
         UICollectionView *contentScrollView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-
         _contentScrollView = contentScrollView;
-        
         // 设置内容滚动视图
         _contentScrollView.pagingEnabled = YES;
         _contentScrollView.showsHorizontalScrollIndicator = NO;
         _contentScrollView.bounces = NO;
-        
         _contentScrollView.delegate = self;
         _contentScrollView.dataSource = self;
-        
-         [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
+        [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
         
     }
     
@@ -243,15 +219,47 @@
 - (UIView *)contentView
 {
     if (_contentView == nil) {
+        
         UIView *contentView = [[UIView alloc] init];
         _contentView = contentView;
         [self.view addSubview:contentView];
+        
     }
     
     return _contentView;
 }
 
 
+
+#pragma mark - 属性setter方法
+- (void)setIsShowTitleScale:(BOOL)isShowTitleScale
+{
+    if (_isShowUnderLine) {
+        // 抛异常
+        NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"字体放大效果和角标不能同时使用。" userInfo:nil];
+        [excp raise];
+    }
+    
+    _isShowTitleScale = isShowTitleScale;
+}
+
+- (void)setIsShowUnderLine:(BOOL)isShowUnderLine
+{
+    if (_isShowTitleScale) {
+        // 抛异常
+        NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"字体放大效果和角标不能同时使用。" userInfo:nil];
+        [excp raise];
+    }
+    
+    _isShowUnderLine = isShowUnderLine;
+}
+
+- (void)setTitleScrollViewColor:(UIColor *)titleScrollViewColor
+{
+    _titleScrollViewColor = titleScrollViewColor;
+    
+    self.titleScrollView.backgroundColor = titleScrollViewColor;
+}
 
 - (void)setIsfullScreen:(BOOL)isfullScreen
 {
@@ -329,6 +337,9 @@
     }
 }
 
+
+#pragma mark - 控制器view生命周期方法
+
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
@@ -348,14 +359,11 @@
     CGFloat titleY = _isfullScreen?contentY:0;
     self.titleScrollView.frame = CGRectMake(0, titleY, contentW, titleH);
 
-    
     // 设置内容滚动视图frame
     CGFloat contentScrollY = CGRectGetMaxY(self.titleScrollView.frame);
-    
     self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, contentW, YZScreenH) :CGRectMake(0, contentScrollY, contentW, self.contentView.height - contentScrollY);
     
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -367,70 +375,127 @@
         // 注册cell
         [self.contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
         self.contentScrollView.backgroundColor = self.view.backgroundColor;
+        
         // 初始化
         [self setUp];
         
-        
         // 没有子控制器，不需要设置标题
         if (self.childViewControllers.count == 0) return;
-        
         
         [self setUpTitleWidth];
         
         [self setUpAllTitle];
         
     });
-    
-    
-    
 }
 
-
-
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+#pragma mark - 添加标题方法
+// 计算所有标题宽度
+- (void)setUpTitleWidth
 {
-    // 点击和动画的时候不需要设置
-    if (_isAniming || self.titleLabels.count == 0) return;
+    // 判断是否能占据整个屏幕
+    NSUInteger count = self.childViewControllers.count;
     
-    // 获取偏移量
-    CGFloat offsetX = scrollView.contentOffset.x;
+    NSArray *titles = [self.childViewControllers valueForKeyPath:@"title"];
     
-    // 获取左边角标
-    NSInteger leftIndex = offsetX / YZScreenW;
+    CGFloat totalWidth = 0;
     
-    // 左边按钮
-    YZDisplayTitleLabel *leftLabel = self.titleLabels[leftIndex];
-    
-    // 右边角标
-    NSInteger rightIndex = leftIndex + 1;
-    
-    // 右边按钮
-    YZDisplayTitleLabel *rightLabel = nil;
-    
-    if (rightIndex < self.titleLabels.count) {
-        rightLabel = self.titleLabels[rightIndex];
-    }
-    
-    // 字体放大
-    [self setUpTitleScaleWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
-    
-    // 设置下标偏移
-    if (_isDelayScroll == NO) { // 延迟滚动，不需要移动下标
+    // 计算所有标题的宽度
+    for (NSString *title in titles) {
         
-        [self setUpUnderLineOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+        if ([title isKindOfClass:[NSNull class]]) {
+            // 抛异常
+            NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"没有设置Controller.title属性，应该把子标题保存到对应子控制器中" userInfo:nil];
+            [excp raise];
+            
+        }
+        
+        CGRect titleBounds = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.titleFont} context:nil];
+        
+        CGFloat width = titleBounds.size.width;
+        
+        [self.titleWidths addObject:@(width)];
+        
+        totalWidth += width;
     }
     
-    // 设置遮盖偏移
-    [self setUpCoverOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    if (totalWidth > YZScreenW) {
+        
+        _titleMargin = margin;
+        
+        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
+        return;
+    }
     
-    // 设置标题渐变
-    [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    CGFloat titleMargin = (YZScreenW - totalWidth) / (count + 1);
     
-    // 记录上一次的偏移量
-    _lastOffsetX = offsetX;
+    _titleMargin = titleMargin < margin? margin: titleMargin;
+    
+    self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
 }
 
+
+// 设置所有标题
+- (void)setUpAllTitle
+{
+    
+    // 遍历所有的子控制器
+    NSUInteger count = self.childViewControllers.count;
+    
+    // 添加所有的标题
+    CGFloat labelW = 0;
+    CGFloat labelH = self.titleHeight;
+    CGFloat labelX = 0;
+    CGFloat labelY = 0;
+    
+    for (int i = 0; i < count; i++) {
+        
+        UIViewController *vc = self.childViewControllers[i];
+        
+        UILabel *label = [[YZDisplayTitleLabel alloc] init];
+        
+        label.tag = i;
+        
+        // 设置按钮的文字颜色
+        label.textColor = self.norColor;
+        
+        label.font = self.titleFont;
+        
+        // 设置按钮标题
+        label.text = vc.title;
+        
+        labelW = [self.titleWidths[i] floatValue];
+        
+        // 设置按钮位置
+        UILabel *lastLabel = [self.titleLabels lastObject];
+        
+        labelX = _titleMargin + CGRectGetMaxX(lastLabel.frame);
+        
+        label.frame = CGRectMake(labelX, labelY, labelW, labelH);
+        
+        // 监听标题的点击
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleClick:)];
+        [label addGestureRecognizer:tap];
+        
+        if (i == 0) {
+            [self titleClick:tap];
+        }
+        
+        // 保存到数组
+        [self.titleLabels addObject:label];
+        
+        [_titleScrollView addSubview:label];
+    }
+    
+    // 设置标题滚动视图的内容范围
+    UILabel *lastLabel = self.titleLabels.lastObject;
+    _titleScrollView.contentSize = CGSizeMake(CGRectGetMaxX(lastLabel.frame), 0);
+    _titleScrollView.showsHorizontalScrollIndicator = NO;
+    _contentScrollView.contentSize = CGSizeMake(count * YZScreenW, 0);
+    
+}
+
+#pragma mark - 标题效果渐变方法
 // 设置标题颜色渐变
 - (void)setUpTitleColorGradientWithOffset:(CGFloat)offsetX rightLabel:(YZDisplayTitleLabel *)rightLabel leftLabel:(YZDisplayTitleLabel *)leftLabel
 {
@@ -444,7 +509,6 @@
     
     // RGB渐变
     if (_titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-        
         
         CGFloat r = _endR - _startR;
         CGFloat g = _endG - _startG;
@@ -471,8 +535,6 @@
     // 填充渐变
     if (_titleColorGradientStyle == YZTitleColorGradientStyleFill) {
         
-        
-        
         // 获取移动距离
         CGFloat offsetDelta = offsetX - _lastOffsetX;
         
@@ -485,24 +547,18 @@
             leftLabel.fillColor = self.norColor;
             leftLabel.progress = rightSacle;
             
-        }else if(offsetDelta < 0){ // 往左边
+        } else if(offsetDelta < 0){ // 往左边
 
             rightLabel.textColor = self.norColor;
             rightLabel.fillColor = self.selColor;
             rightLabel.progress = rightSacle;
-            
             
             leftLabel.textColor = self.selColor;
             leftLabel.fillColor = self.norColor;
             leftLabel.progress = rightSacle;
             
         }
-        
-        
-        
     }
-    
-    
 }
 
 // 标题缩放
@@ -526,7 +582,6 @@
     rightLabel.transform = CGAffineTransformMakeScale(rightSacle * scaleTransform + 1, rightSacle * scaleTransform + 1);
 }
 
-
 // 获取两个标题按钮宽度差值
 - (CGFloat)widthDeltaWithRightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
 {
@@ -536,7 +591,6 @@
     
     return titleBoundsR.size.width - titleBoundsL.size.width;
 }
-
 
 // 设置下标偏移
 - (void)setUpUnderLineOffset:(CGFloat)offsetX rightLabel:(UILabel *)rightLabel leftLabel:(UILabel *)leftLabel
@@ -560,8 +614,6 @@
     
     self.underLine.width += underLineWidth;
     self.underLine.x += underLineTransformX;
-    
-    
 
 }
 
@@ -588,21 +640,54 @@
     self.coverView.width += coverWidth;
     self.coverView.x += coverTransformX;
     
-    
-    
 }
 
-// 监听滚动动画是否完成
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+#pragma mark - 标题点击处理
+// 标题按钮点击
+- (void)titleClick:(UITapGestureRecognizer *)tap
 {
-    _isAniming = NO;
+    // 记录是否点击标题
+    _isClickTitle = YES;
+    
+    // 获取对应标题label
+    UILabel *label = (UILabel *)tap.view;
+    
+    // 获取当前角标
+    NSInteger i = label.tag;
+    
+    // 选中label
+    [self selectLabel:label];
+    
+    // 内容滚动视图滚动到对应位置
+    CGFloat offsetX = i * YZScreenW;
+    
+    self.contentScrollView.contentOffset = CGPointMake(offsetX, 0);
+    
+    // 记录上一次偏移量,因为点击的时候不会调用scrollView代理记录，因此需要主动记录
+    _lastOffsetX = offsetX;
+    
+    // 添加控制器
+    UIViewController *vc = self.childViewControllers[i];
+    
+    // 判断控制器的view有没有加载，没有就加载，加载完在发送通知
+    if (vc.view) {
+        // 发出通知点击标题通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinshNote  object:vc];
+        
+        // 发出重复点击标题通知
+        if (_selIndex == i) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewRepeatClickTitleNote object:vc];
+            _selIndex = i;
+        }
+    }
+    
+    // 点击事件处理完成
+    _isClickTitle = NO;
 }
 
 - (void)selectLabel:(UILabel *)label
 {
-    
-    
-    
+
     for (YZDisplayTitleLabel *labelView in self.titleLabels) {
         
         if (label == labelView) continue;
@@ -611,7 +696,6 @@
             
             labelView.transform = CGAffineTransformIdentity;
         }
-        
         
         labelView.textColor = self.norColor;
         
@@ -734,130 +818,53 @@
     
 }
 
-
-// 计算所有标题宽度
-- (void)setUpTitleWidth
+#pragma mark - 刷新界面方法
+// 更新界面
+- (void)refreshDisplay
 {
-    // 判断是否能占据整个屏幕
-    NSUInteger count = self.childViewControllers.count;
+    // 清空之前所有标题
+    [self.titleLabels makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.titleLabels removeAllObjects];
     
-    NSArray *titles = [self.childViewControllers valueForKeyPath:@"title"];
+    // 刷新表格
+    [self.contentScrollView reloadData];
     
-    CGFloat totalWidth = 0;
+    // 重新设置标题
+    [self setUpTitleWidth];
     
-    // 计算所有标题的宽度
-    for (NSString *title in titles) {
-        
-        if ([title isKindOfClass:[NSNull class]]) {
-            // 抛异常
-            NSException *excp = [NSException exceptionWithName:@"YZDisplayViewControllerException" reason:@"没有设置Controller.title属性，应该把子标题保存到对应子控制器中" userInfo:nil];
-            [excp raise];
-
-        }
-        
-         CGRect titleBounds = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, 0) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.titleFont} context:nil];
-        
-        CGFloat width = titleBounds.size.width;
-        
-        [self.titleWidths addObject:@(width)];
-        
-        totalWidth += width;
-    }
-    
-    if (totalWidth > YZScreenW) {
-        
-        _titleMargin = margin;
-        
-        self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
-        return;
-    }
-    
-    CGFloat titleMargin = (YZScreenW - totalWidth) / (count + 1);
-    
-    _titleMargin = titleMargin < margin? margin: titleMargin;
-    
-    self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
-}
-
-- (UIFont *)titleFont
-{
-    if (_titleFont == nil) {
-        _titleFont = YZTitleFont;
-    }
-    return _titleFont;
-}
-
-// 设置所有标题
-- (void)setUpAllTitle
-{
-    
-    // 遍历所有的子控制器
-    NSUInteger count = self.childViewControllers.count;
-    
-    // 添加所有的标题
-    
-    CGFloat labelW = 0;
-    CGFloat labelH = self.titleHeight;
-    CGFloat labelX = 0;
-    CGFloat labelY = 0;
-    
-    for (int i = 0; i < count; i++) {
-        
-        UIViewController *vc = self.childViewControllers[i];
-        
-        UILabel *label = [[YZDisplayTitleLabel alloc] init];
-        
-        label.tag = i;
-        
-        // 设置按钮的文字颜色
-        label.textColor = self.norColor;
-
-        label.font = self.titleFont;
-        
-        // 设置按钮标题
-        label.text = vc.title;
-
-        labelW = [self.titleWidths[i] floatValue];
-        
-        // 设置按钮位置
-        UILabel *lastLabel = [self.titleLabels lastObject];
-        
-        labelX = _titleMargin + CGRectGetMaxX(lastLabel.frame);
-        
-        label.frame = CGRectMake(labelX, labelY, labelW, labelH);
-        
-        // 监听标题的点击
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleClick:)];
-        [label addGestureRecognizer:tap];
- 
-        if (i == 0) {
-            [self titleClick:tap];
-        }
-        
-        // 保存到数组
-        [self.titleLabels addObject:label];
-        
-        [_titleScrollView addSubview:label];
-    }
-    
-
-    
-    // 设置标题滚动视图的内容范围
-    UILabel *lastLabel = self.titleLabels.lastObject;
-    _titleScrollView.contentSize = CGSizeMake(CGRectGetMaxX(lastLabel.frame), 0);
-    _titleScrollView.showsHorizontalScrollIndicator = NO;
-
-    _contentScrollView.contentSize = CGSizeMake(count * YZScreenW, 0);
+    [self setUpAllTitle];
     
 }
 
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.childViewControllers.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
+    
+    // 移除之前的子控件
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    // 添加控制器
+    UIViewController *vc = self.childViewControllers[indexPath.row];
+    
+    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.width, self.contentScrollView.height);
+    
+    [cell.contentView addSubview:vc.view];
+    
+    return cell;
+}
+
+#pragma mark - UIScrollViewDelegate
 
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    
     CGFloat offsetX = scrollView.contentOffset.x;
-    
     NSInteger offsetXInt = offsetX;
     NSInteger screenWInt = YZScreenW;
     
@@ -885,98 +892,59 @@
     
     // 发出通知
     [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinshNote object:vc];
-
 }
 
 
-// 标题按钮点击
-- (void)titleClick:(UITapGestureRecognizer *)tap
+// 监听滚动动画是否完成
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    // 记录是否点击标题
-    _isClickTitle = YES;
+    _isAniming = NO;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    // 点击和动画的时候不需要设置
+    if (_isAniming || self.titleLabels.count == 0) return;
     
-    // 获取对应标题label
-    UILabel *label = (UILabel *)tap.view;
+    // 获取偏移量
+    CGFloat offsetX = scrollView.contentOffset.x;
     
-    // 获取当前角标
-    NSInteger i = label.tag;
+    // 获取左边角标
+    NSInteger leftIndex = offsetX / YZScreenW;
     
+    // 左边按钮
+    YZDisplayTitleLabel *leftLabel = self.titleLabels[leftIndex];
     
+    // 右边角标
+    NSInteger rightIndex = leftIndex + 1;
     
-    // 选中label
-    [self selectLabel:label];
+    // 右边按钮
+    YZDisplayTitleLabel *rightLabel = nil;
     
-    // 内容滚动视图滚动到对应位置
-    CGFloat offsetX = i * YZScreenW;
-    
-    self.contentScrollView.contentOffset = CGPointMake(offsetX, 0);
-    
-    // 记录上一次偏移量,因为点击的时候不会调用scrollView代理记录，因此需要主动记录
-    _lastOffsetX = offsetX;
-    
-    // 添加控制器
-    UIViewController *vc = self.childViewControllers[i];
-    
-    // 发出重复点击标题通知
-    
-    
-    
-    // 判断控制器的view有没有加载，没有就加载，加载完在发送通知
-    if (vc.view) {
-        // 发出通知点击标题通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewClickOrScrollDidFinshNote  object:vc];
-        
-        if (_selIndex == i) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewRepeatClickTitleNote object:vc];
-            _selIndex = i;
-        }
-        
+    if (rightIndex < self.titleLabels.count) {
+        rightLabel = self.titleLabels[rightIndex];
     }
-    // 点击事件处理完成
-    _isClickTitle = NO;
     
+    // 字体放大
+    [self setUpTitleScaleWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    
+    // 设置下标偏移
+    if (_isDelayScroll == NO) { // 延迟滚动，不需要移动下标
+        
+        [self setUpUnderLineOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    }
+    
+    // 设置遮盖偏移
+    [self setUpCoverOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    
+    // 设置标题渐变
+    [self setUpTitleColorGradientWithOffset:offsetX rightLabel:rightLabel leftLabel:leftLabel];
+    
+    // 记录上一次的偏移量
+    _lastOffsetX = offsetX;
 }
 
 
-#pragma mark - UICollectionViewDataSource
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.childViewControllers.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
-    
-    // 移除之前的子控件
-    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    // 添加控制器
-    UIViewController *vc = self.childViewControllers[indexPath.row];
-    
-    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.width, self.contentScrollView.height);
-    
-    [cell.contentView addSubview:vc.view];
-    
-    return cell;
-}
-
-// 更新界面
-- (void)refreshDisplay
-{
-    // 清空之前所有标题
-    [self.titleLabels makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self.titleLabels removeAllObjects];
-    
-    // 刷新表格
-    [self.contentScrollView reloadData];
-    
-    // 重新设置标题
-    [self setUpTitleWidth];
-    
-    [self setUpAllTitle];
-    
-}
 
 
 
