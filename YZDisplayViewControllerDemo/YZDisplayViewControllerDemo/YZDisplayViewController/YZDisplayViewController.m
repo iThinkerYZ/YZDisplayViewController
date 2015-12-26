@@ -44,6 +44,9 @@
 /** 记录是否在动画 */
 @property (nonatomic, assign) BOOL isAniming;
 
+/* 是否初始化 */
+@property (nonatomic, assign) BOOL isInitial;
+
 /** 标题间距 */
 @property (nonatomic, assign) CGFloat titleMargin;
 
@@ -74,12 +77,14 @@
 {
     // 初始化标题高度
     _titleHeight = YZTitleScrollViewH;
+    
+     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)setUp
 {
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
+   
     
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
@@ -369,8 +374,7 @@
 {
     [super viewWillAppear:animated];
     
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    if (_isInitial == NO) {
         
         // 注册cell
         [self.contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
@@ -386,7 +390,11 @@
         
         [self setUpAllTitle];
         
-    });
+        _isInitial = YES;
+        
+    }
+    
+    
 }
 
 #pragma mark - 添加标题方法
@@ -943,9 +951,5 @@
     // 记录上一次的偏移量
     _lastOffsetX = offsetX;
 }
-
-
-
-
 
 @end
