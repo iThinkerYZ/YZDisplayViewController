@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC0169BD1C2EB399009616E9 /* YZMainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC0169BC1C2EB399009616E9 /* YZMainTableViewController.m */; };
 		EC01A8841C12883C00F91F25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC01A8831C12883C00F91F25 /* main.m */; };
 		EC01A8871C12883C00F91F25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC01A8861C12883C00F91F25 /* AppDelegate.m */; };
 		EC01A88D1C12883C00F91F25 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC01A88B1C12883C00F91F25 /* Main.storyboard */; };
@@ -56,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EC0169BB1C2EB399009616E9 /* YZMainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZMainTableViewController.h; sourceTree = "<group>"; };
+		EC0169BC1C2EB399009616E9 /* YZMainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZMainTableViewController.m; sourceTree = "<group>"; };
 		EC01A87F1C12883C00F91F25 /* YZDisplayViewControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YZDisplayViewControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC01A8831C12883C00F91F25 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EC01A8851C12883C00F91F25 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -131,6 +134,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC0169BA1C2EB381009616E9 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				EC0169BB1C2EB399009616E9 /* YZMainTableViewController.h */,
+				EC0169BC1C2EB399009616E9 /* YZMainTableViewController.m */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		EC01A8761C12883B00F91F25 = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +166,7 @@
 		EC01A8811C12883C00F91F25 /* YZDisplayViewControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				EC0169BA1C2EB381009616E9 /* Main */,
 				ECB3322E1C28434D00876DA6 /* 蒙版 */,
 				ECBE97A41C1330BF00A7F2B4 /* 腾讯视频 */,
 				EC62687C1C1289B7000FB840 /* 今日头条标题填充 */,
@@ -437,6 +450,7 @@
 				EC6268931C128F63000FB840 /* ChildViewController.m in Sources */,
 				EC01A8871C12883C00F91F25 /* AppDelegate.m in Sources */,
 				EC6268941C128F63000FB840 /* FullChildViewController.m in Sources */,
+				EC0169BD1C2EB399009616E9 /* YZMainTableViewController.m in Sources */,
 				EC62688A1C128ACA000FB840 /* UIView+Frame.m in Sources */,
 				EC01A8841C12883C00F91F25 /* main.m in Sources */,
 				EC01A8BB1C12887200F91F25 /* YZDisplayTitleLabel.m in Sources */,
