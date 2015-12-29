@@ -58,6 +58,13 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.selectIndex = 2;
+}
+
 // 添加所有子控制器
 - (void)setUpAllViewController
 {

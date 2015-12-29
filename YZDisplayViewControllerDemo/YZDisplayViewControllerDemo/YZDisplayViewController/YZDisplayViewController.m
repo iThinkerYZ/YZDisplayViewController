@@ -485,14 +485,14 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleClick:)];
         [label addGestureRecognizer:tap];
         
-        if (i == 0) {
-            [self titleClick:tap];
-        }
-        
         // 保存到数组
         [self.titleLabels addObject:label];
         
         [_titleScrollView addSubview:label];
+        
+        if (i == _selectIndex) {
+            [self titleClick:tap];
+        }
     }
     
     // 设置标题滚动视图的内容范围
@@ -651,6 +651,17 @@
 }
 
 #pragma mark - 标题点击处理
+- (void)setSelectIndex:(BOOL)selectIndex
+{
+    _selectIndex = selectIndex;
+    if (self.titleLabels.count) {
+        
+        UILabel *label = self.titleLabels[selectIndex];
+        
+        [self titleClick:[label.gestureRecognizers lastObject]];
+    }
+}
+
 // 标题按钮点击
 - (void)titleClick:(UITapGestureRecognizer *)tap
 {
