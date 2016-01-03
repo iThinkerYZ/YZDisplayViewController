@@ -325,7 +325,7 @@
     }
 }
 
-#warning 加强
+
 // 一次性设置所有颜色渐变属性
 - (void)setUpTitleColor:(void (^)(BOOL *, YZTitleColorGradientStyle *,UIColor **,UIColor **))titleColorBlock
 {
