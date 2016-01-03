@@ -153,7 +153,7 @@
 - (UIColor *)norColor
 {
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-//         _norColor = [UIColor colorWithRed:_startR green:_startG blue:_startB alpha:1];
+         _norColor = [UIColor colorWithRed:_startR green:_startG blue:_startB alpha:1];
     }
     
     if (_norColor == nil){
@@ -167,7 +167,7 @@
 - (UIColor *)selColor
 {
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-//        _selColor = [UIColor colorWithRed:_endR green:_endG blue:_endB alpha:1];
+        _selColor = [UIColor colorWithRed:_endR green:_endG blue:_endB alpha:1];
     }
     
     if (_selColor == nil) _selColor = [UIColor redColor];
@@ -602,8 +602,7 @@
         // 获取移动距离
         CGFloat offsetDelta = offsetX - _lastOffsetX;
         
-        if (offsetDelta > 0) { // 往右边
-            
+        if (offsetDelta > 0 && rightSacle!= 0) { // 往右边
             
             rightLabel.fillColor = self.selColor;
             rightLabel.progress = rightSacle;
@@ -939,11 +938,13 @@
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    
     CGFloat offsetX = scrollView.contentOffset.x;
     NSInteger offsetXInt = offsetX;
     NSInteger screenWInt = YZScreenW;
     
     NSInteger extre = offsetXInt % screenWInt;
+
     if (extre > YZScreenW * 0.5) {
         // 往右边移动
         offsetX = offsetX + (YZScreenW - extre);
