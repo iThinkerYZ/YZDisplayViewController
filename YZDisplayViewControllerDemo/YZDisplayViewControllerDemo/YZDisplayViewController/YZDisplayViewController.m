@@ -57,6 +57,9 @@
 
 @implementation YZDisplayViewController
 
+@synthesize norColor = _norColor;
+@synthesize selColor = _selColor;
+
 #pragma mark - 初始化方法
 
 - (instancetype)init
@@ -115,10 +118,42 @@
     return _titleWidths;
 }
 
+
+- (void)colorsComponent:(UIColor *)color isStart:(BOOL)isStart{
+
+    CGColorRef cgColor = [color CGColor];
+    size_t fromNumComponents = CGColorGetNumberOfComponents(cgColor);
+    if (fromNumComponents == 4) {
+        const CGFloat *components = CGColorGetComponents(cgColor);
+        if (isStart) {
+            self.startR = components[0];
+            self.startG = components[1];
+            self.startB = components[2];
+        }
+        else{
+            self.endR = components[0];
+            self.endG = components[1];
+            self.endB = components[2];
+        }
+    }
+}
+
+- (void)setNorColor:(UIColor *)norColor{
+    _norColor = norColor;
+    [self colorsComponent:norColor isStart:YES];
+}
+
+- (void)setSelColor:(UIColor *)selColor{
+
+    _selColor = selColor;
+    [self colorsComponent:selColor isStart:NO];
+}
+
+
 - (UIColor *)norColor
 {
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-         _norColor = [UIColor colorWithRed:_startR green:_startG blue:_startB alpha:1];
+//         _norColor = [UIColor colorWithRed:_startR green:_startG blue:_startB alpha:1];
     }
     
     if (_norColor == nil){
@@ -132,7 +167,7 @@
 - (UIColor *)selColor
 {
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-        _selColor = [UIColor colorWithRed:_endR green:_endG blue:_endB alpha:1];
+//        _selColor = [UIColor colorWithRed:_endR green:_endG blue:_endB alpha:1];
     }
     
     if (_selColor == nil) _selColor = [UIColor redColor];
@@ -289,6 +324,27 @@
         titleGradientBlock(&_isShowTitleGradient,&_titleColorGradientStyle,&_startR,&_startG,&_startB,&_endR,&_endG,&_endB);
     }
 }
+
+#warning 加强
+// 一次性设置所有颜色渐变属性
+- (void)setUpTitleColor:(void (^)(BOOL *, YZTitleColorGradientStyle *,UIColor **,UIColor **))titleColorBlock
+{
+    if (titleColorBlock) {
+        
+        UIColor *norColor;
+        UIColor *selColor;
+        
+        titleColorBlock(&_isShowTitleGradient,&_titleColorGradientStyle,&norColor,&selColor);
+        
+        if (norColor) {
+            self.norColor = norColor;
+        }
+        if (selColor) {
+            self.selColor = selColor;
+        }
+    }
+}
+
 
 // 一次性设置所有遮盖属性
 - (void)setUpCoverEffect:(void (^)(BOOL *, UIColor **, CGFloat *))coverEffectBlock

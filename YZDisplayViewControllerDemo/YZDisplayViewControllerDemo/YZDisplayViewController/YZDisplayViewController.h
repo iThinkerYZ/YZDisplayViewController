@@ -132,6 +132,8 @@ typedef enum : NSUInteger {
 
 // 一次性设置所有下标属性
 - (void)setUpUnderLineEffect:(void(^)(BOOL *isShowUnderLine,BOOL *isDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock;
+#warning 加强
+- (void)setUpTitleColor:(void (^)(BOOL *, YZTitleColorGradientStyle *,UIColor **,UIColor **))titleColorBlock;
 
 /**************************************下标************************************/
 
