@@ -55,6 +55,7 @@
 //        *titleColorGradientStyle = YZTitleColorGradientStyleRGB;
 //    }];
     
+    /*  方式三 */
     [self setUpTitleColor:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *startColor, UIColor *__autoreleasing *endColor) {
         
         // 标题渐变
@@ -63,8 +64,8 @@
         // 标题填充模式
         *titleColorGradientStyle = YZTitleColorGradientStyleFill;
 
-        *startColor = [UIColor redColor];
-        *endColor = [UIColor greenColor];
+        *startColor = [UIColor blackColor];
+        *endColor = [UIColor orangeColor];
         
     }];
     
