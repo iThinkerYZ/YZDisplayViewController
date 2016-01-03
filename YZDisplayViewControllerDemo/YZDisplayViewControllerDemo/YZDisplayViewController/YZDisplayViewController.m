@@ -376,6 +376,8 @@
     
     if (_isInitial == NO) {
         
+         _isInitial = YES;
+        
         // 注册cell
         [self.contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
         self.contentScrollView.backgroundColor = self.view.backgroundColor;
@@ -389,8 +391,6 @@
         [self setUpTitleWidth];
         
         [self setUpAllTitle];
-        
-        _isInitial = YES;
         
     }
     
