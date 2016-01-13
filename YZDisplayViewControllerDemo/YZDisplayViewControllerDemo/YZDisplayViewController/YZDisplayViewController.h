@@ -55,7 +55,7 @@ typedef enum : NSUInteger {
 /**
     根据角标，选中对应的控制器
  */
-@property (nonatomic, assign) BOOL selectIndex;
+@property (nonatomic, assign) NSInteger selectIndex;
 
 /**
     如果_isfullScreen = Yes，这个方法就不好使。
