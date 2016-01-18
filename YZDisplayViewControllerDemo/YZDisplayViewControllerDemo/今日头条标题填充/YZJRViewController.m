@@ -62,7 +62,7 @@
         *isShowTitleGradient = YES;
 
         // 标题填充模式
-        *titleColorGradientStyle = YZTitleColorGradientStyleFill;
+        *titleColorGradientStyle = YZTitleColorGradientStyleRGB;
 
         *startColor = [UIColor blackColor];
         *endColor = [UIColor orangeColor];
