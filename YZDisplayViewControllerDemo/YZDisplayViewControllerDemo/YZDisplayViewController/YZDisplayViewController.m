@@ -751,9 +751,10 @@
         // 发出重复点击标题通知
         if (_selIndex == i) {
             [[NSNotificationCenter defaultCenter] postNotificationName:YZDisplayViewRepeatClickTitleNote object:vc];
-            _selIndex = i;
         }
     }
+    
+    _selIndex = i;
     
     // 点击事件处理完成
     _isClickTitle = NO;
