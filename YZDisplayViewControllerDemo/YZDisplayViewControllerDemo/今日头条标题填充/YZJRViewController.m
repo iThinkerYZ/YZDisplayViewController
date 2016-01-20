@@ -46,13 +46,26 @@
    
     
     /*  方式二 */
-    [self setUpTitleGradient:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
+//    [self setUpTitleGradient:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
+//        
+//        // 标题渐变
+//        *isShowTitleGradient = YES;
+//        
+//        // 标题填充模式
+//        *titleColorGradientStyle = YZTitleColorGradientStyleRGB;
+//    }];
+    
+    /*  方式三 */
+    [self setUpTitleColor:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *startColor, UIColor *__autoreleasing *endColor) {
         
         // 标题渐变
         *isShowTitleGradient = YES;
-        
+
         // 标题填充模式
-        *titleColorGradientStyle = YZTitleColorGradientStyleFill;
+        *titleColorGradientStyle = YZTitleColorGradientStyleRGB;
+
+        *startColor = [UIColor blackColor];
+        *endColor = [UIColor orangeColor];
         
     }];
     

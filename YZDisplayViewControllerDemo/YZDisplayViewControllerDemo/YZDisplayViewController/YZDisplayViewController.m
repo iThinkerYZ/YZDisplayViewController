@@ -57,6 +57,9 @@
 
 @implementation YZDisplayViewController
 
+@synthesize norColor = _norColor;
+@synthesize selColor = _selColor;
+
 #pragma mark - 初始化方法
 
 - (instancetype)init
@@ -114,6 +117,38 @@
     }
     return _titleWidths;
 }
+
+
+- (void)colorsComponent:(UIColor *)color isStart:(BOOL)isStart{
+
+    CGColorRef cgColor = [color CGColor];
+    size_t fromNumComponents = CGColorGetNumberOfComponents(cgColor);
+    if (fromNumComponents == 4) {
+        const CGFloat *components = CGColorGetComponents(cgColor);
+        if (isStart) {
+            self.startR = components[0];
+            self.startG = components[1];
+            self.startB = components[2];
+        }
+        else{
+            self.endR = components[0];
+            self.endG = components[1];
+            self.endB = components[2];
+        }
+    }
+}
+
+- (void)setNorColor:(UIColor *)norColor{
+    _norColor = norColor;
+    [self colorsComponent:norColor isStart:YES];
+}
+
+- (void)setSelColor:(UIColor *)selColor{
+
+    _selColor = selColor;
+    [self colorsComponent:selColor isStart:NO];
+}
+
 
 - (UIColor *)norColor
 {
@@ -289,6 +324,27 @@
         titleGradientBlock(&_isShowTitleGradient,&_titleColorGradientStyle,&_startR,&_startG,&_startB,&_endR,&_endG,&_endB);
     }
 }
+
+
+// 一次性设置所有颜色渐变属性
+- (void)setUpTitleColor:(void (^)(BOOL *, YZTitleColorGradientStyle *,UIColor **,UIColor **))titleColorBlock
+{
+    if (titleColorBlock) {
+        
+        UIColor *norColor;
+        UIColor *selColor;
+        
+        titleColorBlock(&_isShowTitleGradient,&_titleColorGradientStyle,&norColor,&selColor);
+        
+        if (norColor) {
+            self.norColor = norColor;
+        }
+        if (selColor) {
+            self.selColor = selColor;
+        }
+    }
+}
+
 
 // 一次性设置所有遮盖属性
 - (void)setUpCoverEffect:(void (^)(BOOL *, UIColor **, CGFloat *))coverEffectBlock
@@ -546,8 +602,7 @@
         // 获取移动距离
         CGFloat offsetDelta = offsetX - _lastOffsetX;
         
-        if (offsetDelta > 0) { // 往右边
-            
+        if (offsetDelta > 0 && rightSacle!= 0) { // 往右边
             
             rightLabel.fillColor = self.selColor;
             rightLabel.progress = rightSacle;
@@ -651,7 +706,7 @@
 }
 
 #pragma mark - 标题点击处理
-- (void)setSelectIndex:(BOOL)selectIndex
+- (void)setSelectIndex:(NSInteger)selectIndex
 {
     _selectIndex = selectIndex;
     if (self.titleLabels.count) {
@@ -884,11 +939,13 @@
 // 减速完成
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    
     CGFloat offsetX = scrollView.contentOffset.x;
     NSInteger offsetXInt = offsetX;
     NSInteger screenWInt = YZScreenW;
     
     NSInteger extre = offsetXInt % screenWInt;
+
     if (extre > YZScreenW * 0.5) {
         // 往右边移动
         offsetX = offsetX + (YZScreenW - extre);

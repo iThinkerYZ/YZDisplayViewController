@@ -25,7 +25,7 @@
 {
     NSMutableArray *images = [NSMutableArray array];
     for (int i = 1; i <= 10; i++) {
-        NSString *imageName = [NSString stringWithFormat:@"%d",i];
+        NSString *imageName = [NSString stringWithFormat:@"%d.jpg",i];
         UIImage *image = [UIImage imageNamed:imageName];
         [images addObject:image];
     }
