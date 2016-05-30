@@ -211,7 +211,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat coverCornerRadius;
 
 // 一次性设置所有遮盖属性
-- (void)setUpCoverEffect:(void(^)(BOOL *isShowTitleCover,UIColor **coverColor,CGFloat *coverCornerRadius))coverEffectBlock;
+- (void)setUpCoverEffect:(void(^)(BOOL *isShowTitleCover,UIColor *coverColor,CGFloat *coverCornerRadius))coverEffectBlock;
 
 /**********************************遮盖************************************/
 
