@@ -12,7 +12,38 @@
 #import "UIView+Frame.h"
 #import "YZFlowLayout.h"
 
+static NSString * const ID = @"CONTENTCELL";
+
 @interface YZDisplayViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+{
+    UIColor *_norColor;
+    UIColor *_selColor;
+}
+/**
+ 标题滚动视图背景颜色
+ */
+@property (nonatomic, strong) UIColor *titleScrollViewColor;
+
+
+/**
+ 标题高度
+ */
+@property (nonatomic, assign) CGFloat titleHeight;
+
+/**
+ 正常标题颜色
+ */
+@property (nonatomic, strong) UIColor *norColor;
+
+/**
+ 选中标题颜色
+ */
+@property (nonatomic, strong) UIColor *selColor;
+
+/**
+ 标题字体
+ */
+@property (nonatomic, strong) UIFont *titleFont;
 
 /** 整体内容View 包含标题好内容滚动视图 */
 @property (nonatomic, weak) UIView *contentView;
@@ -36,6 +67,18 @@
  是否需要下标
  */
 @property (nonatomic, assign) BOOL isShowUnderLine;
+/**
+ 字体是否渐变
+ */
+@property (nonatomic, assign) BOOL isShowTitleGradient;
+/**
+ 字体放大
+ */
+@property (nonatomic, assign) BOOL isShowTitleScale;
+/**
+ 是否显示遮盖
+ */
+@property (nonatomic, assign) BOOL isShowTitleCover;
 
 /** 标题遮盖视图 */
 @property (nonatomic, weak) UIView *coverView;
@@ -57,13 +100,63 @@
 
 /** 计算上一次选中角标 */
 @property (nonatomic, assign) NSInteger selIndex;
+/**
+ 颜色渐变样式
+ */
+@property (nonatomic, assign) YZTitleColorGradientStyle titleColorGradientStyle;
+
+/**
+ 字体缩放比例
+ */
+@property (nonatomic, assign) CGFloat titleScale;
+/**
+ 是否延迟滚动下标
+ */
+@property (nonatomic, assign) BOOL isDelayScroll;
+/**
+ 遮盖颜色
+ */
+@property (nonatomic, strong) UIColor *coverColor;
+
+/**
+ 遮盖圆角半径
+ */
+@property (nonatomic, assign) CGFloat coverCornerRadius;
+
+/**
+ 下标颜色
+ */
+@property (nonatomic, strong) UIColor *underLineColor;
+
+/**
+ 下标高度
+ */
+@property (nonatomic, assign) CGFloat underLineH;
+
+
+/**
+ 开始颜色,取值范围0~1
+ */
+@property (nonatomic, assign) CGFloat startR;
+
+@property (nonatomic, assign) CGFloat startG;
+
+@property (nonatomic, assign) CGFloat startB;
+
+/**
+ 完成颜色,取值范围0~1
+ */
+@property (nonatomic, assign) CGFloat endR;
+
+@property (nonatomic, assign) CGFloat endG;
+
+@property (nonatomic, assign) CGFloat endB;
 
 @end
 
 @implementation YZDisplayViewController
 
 #pragma mark - 初始化方法
-
 - (instancetype)init
 {
     if (self = [super init]) {
@@ -88,7 +181,6 @@
 
 - (void)setUp
 {
-    
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
         // 初始化颜色渐变
@@ -97,7 +189,6 @@
         }
     }
 }
-
 
 #pragma mark - 懒加载
 
@@ -120,25 +211,14 @@
 
 - (UIColor *)norColor
 {
-    if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-         _norColor = [UIColor colorWithRed:_startR green:_startG blue:_startB alpha:1];
-    }
-    
-    if (_norColor == nil){
-        _norColor = [UIColor blackColor];
-    }
-    
+    if (_norColor == nil) self.norColor = [UIColor blackColor];
     
     return _norColor;
 }
 
 - (UIColor *)selColor
 {
-    if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-        _selColor = [UIColor colorWithRed:_endR green:_endG blue:_endB alpha:1];
-    }
-    
-    if (_selColor == nil) _selColor = [UIColor redColor];
+    if (_selColor == nil) self.selColor = [UIColor redColor];
     
     return _selColor;
 }
@@ -237,7 +317,6 @@
     return _contentView;
 }
 
-
 #pragma mark - 属性setter方法
 - (void)setIsShowTitleScale:(BOOL)isShowTitleScale
 {
@@ -285,12 +364,15 @@
 }
 
 // 一次性设置所有颜色渐变属性
-- (void)setUpTitleGradient:(void (^)(YZTitleColorGradientStyle *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *))titleGradientBlock
+- (void)setUpTitleGradient:(void(^)(YZTitleColorGradientStyle *titleColorGradientStyle,UIColor **norColor,UIColor **selColor))titleGradientBlock;
 {
     _isShowTitleGradient = YES;
-    
+    UIColor *norColor;
+    UIColor *selColor;
     if (titleGradientBlock) {
-        titleGradientBlock(&_titleColorGradientStyle,&_startR,&_startG,&_startB,&_endR,&_endG,&_endB);
+        titleGradientBlock(&_titleColorGradientStyle,&norColor,&selColor);
+        self.norColor = norColor;
+        self.selColor = selColor;
     }
 }
 
@@ -352,8 +434,8 @@
     UIFont *titleFont;
     if (titleEffectBlock) {
         titleEffectBlock(&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight);
-        _norColor = norColor;
-        _selColor = selColor;
+        self.norColor = norColor;
+        self.selColor = selColor;
         _titleScrollViewColor = titleScrollViewColor;
         _titleFont = titleFont;
     }
@@ -559,7 +641,7 @@
         
         // 左边颜色
         leftLabel.textColor = leftColor;
-        
+        NSLog(@"%f %f",rightSacle,leftScale);
         return;
     }
     
@@ -570,8 +652,7 @@
         CGFloat offsetDelta = offsetX - _lastOffsetX;
         
         if (offsetDelta > 0) { // 往右边
-            
-            
+    
             rightLabel.fillColor = self.selColor;
             rightLabel.progress = rightSacle;
             
@@ -740,7 +821,7 @@
         
         if (label == labelView) continue;
         
-        if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
+        if (_isShowTitleGradient) {
             
             labelView.transform = CGAffineTransformIdentity;
         }
@@ -757,7 +838,7 @@
     }
     
     // 标题缩放
-    if (_isShowTitleScale && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
+    if (_isShowTitleScale) {
         
         CGFloat scaleTransform = _titleScale?_titleScale:YZTitleTransformScale;
         
@@ -771,10 +852,14 @@
     [self setLabelTitleCenter:label];
     
     // 设置下标的位置
-    [self setUpUnderLine:label];
+    if (_isShowUnderLine) {
+        [self setUpUnderLine:label];
+    }
     
     // 设置cover
-    [self setUpCoverView:label];
+    if (_isShowTitleCover) {
+        [self setUpCoverView:label];
+    }
     
 }
 
@@ -845,9 +930,7 @@
     
     // 设置标题滚动区域的偏移量
     CGFloat offsetX = label.center.x - YZScreenW * 0.5;
-    // 193.712891
-    NSLog(@"%f",offsetX);
-    
+
     if (offsetX < 0) {
         offsetX = 0;
     }
@@ -1000,5 +1083,71 @@
     // 记录上一次的偏移量
     _lastOffsetX = offsetX;
 }
+
+#pragma mark - 颜色操作
+
+- (void)setNorColor:(UIColor *)norColor
+{
+    _norColor = norColor;
+    [self setupStartColor:norColor];
+    
+}
+
+- (void)setSelColor:(UIColor *)selColor
+{
+    _selColor = selColor;
+    [self setupEndColor:selColor];
+}
+
+- (void)setupStartColor:(UIColor *)color
+{
+    CGFloat components[3];
+    
+    [self getRGBComponents:components forColor:color];
+    
+    _startR = components[0];
+    _startG = components[1];
+    _startB = components[2];
+}
+
+- (void)setupEndColor:(UIColor *)color
+{
+    CGFloat components[3];
+    
+    [self getRGBComponents:components forColor:color];
+    
+    _endR = components[0];
+    _endG = components[1];
+    _endB = components[2];
+     NSLog(@"%f %f %f",components[0],components[1],components[2]);
+}
+
+
+
+/**
+ *  指定颜色，获取颜色的RGB值
+ *
+ *  @param components RGB数组
+ *  @param color      颜色
+ */
+- (void)getRGBComponents:(CGFloat [3])components forColor:(UIColor *)color {
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    unsigned char resultingPixel[4];
+    CGContextRef context = CGBitmapContextCreate(&resultingPixel,
+                                                 1,
+                                                 1,
+                                                 8,
+                                                 4,
+                                                 rgbColorSpace,
+                                                 1);
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+    CGContextRelease(context);
+    CGColorSpaceRelease(rgbColorSpace);
+    for (int component = 0; component < 3; component++) {
+        components[component] = resultingPixel[component] / 255.0f;
+    }
+}
+
 
 @end

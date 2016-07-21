@@ -34,25 +34,14 @@
     });
     
     /* 方式一 
-     
-     // 标题渐变
-     self.isShowTitleGradient = YES;
-     
-     // 标题填充模式
-     self.titleColorGradientStyle = YZTitleColorGradientStyleFill;
-     
-     */
     
    
     
     /*  方式二 */
-    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
-        
+    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor) {
         // 标题填充模式
         *titleColorGradientStyle = YZTitleColorGradientStyleFill;
-        
     }];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated

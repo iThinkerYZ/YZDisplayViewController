@@ -18,19 +18,17 @@
     
     self.title = @"腾讯视频";
     
-    
     CGFloat y = self.navigationController?64:0;
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenH = [UIScreen mainScreen].bounds.size.height;
     
     // 设置搜索框
     CGFloat searchH = 44;
-    
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, y, screenW, searchH)];
-    
     [self.view addSubview:searchBar];
 
-
+    // 添加所有子控制器
+    [self setUpAllViewController];
     
     // 设置整体内容尺寸（包含标题滚动视图和底部内容滚动视图）
     [self setUpContentViewFrame:^(UIView *contentView) {
@@ -45,38 +43,14 @@
         
     }];
     
-    // 添加所有子控制器
-    [self setUpAllViewController];
-    
-    self.selectIndex = 6;
-    
     /****** 标题渐变 ******/
-    /*
-            方式一
-    self.isShowTitleGradient = YES;
-    self.endR = 1;
-    self.endG = 130 / 255.0;
-    self.endB = 44 / 255.0;
-    */
-    
-    // *推荐方式(设置标题渐变)
-    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
-                
-        // 设置结束时，RGB通道各个值
-        *endR = 1;
-        *endG = 130 / 255.0;
-        *endB = 44 / 255.0;
-        
+    // 推荐方式(设置标题颜色渐变) // 默认RGB样式
+    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor) {
+        *norColor = [UIColor greenColor];
+        *selColor = [UIColor redColor];
     }];
-    
 
-    
-    
     /****** 设置遮盖 ******/
-//    self.isShowTitleCover = YES;
-//    self.coverColor = [UIColor colorWithWhite:0.7 alpha:0.4];
-//    self.coverCornerRadius = 13;
-    
     // *推荐方式(设置遮盖)
     [self setUpCoverEffect:^(UIColor **coverColor, CGFloat *coverCornerRadius) {
         

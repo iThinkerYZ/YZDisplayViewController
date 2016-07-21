@@ -22,40 +22,15 @@
     [self setUpAllViewController];
     
     // 标题渐变
-    /*
-        方式一：
-     self.isShowTitleGradient = YES;
-     
-     // 标题RGB渐变模式
-     self.titleColorGradientStyle = YZTitleColorGradientStyleRGB;
-     
-     self.endR = 1;
-     */
-    
-    
     // *推荐方式(设置标题渐变)
-    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
-        
-        *titleColorGradientStyle = YZTitleColorGradientStyleRGB;
-        
-        *endR = 1;
+    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor) {
         
     }];
     
-    
     // 字体缩放
-    /*
-        方式一:
-     
-        self.isShowTitleScale = YES;
-     
-        self.titleScale = 1.3;
-     */
-    
     
     // 推荐方式 (设置字体缩放)
     [self setUpTitleScale:^(CGFloat *titleScale) {
-                
         // 字体缩放比例
         *titleScale = 1.3;
     }];

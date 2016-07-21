@@ -24,12 +24,7 @@
     // 添加所有子控制器
     [self setUpAllViewController];
     
-    
     // 设置标题字体
-    /*
-        方式一：
-     self.titleFont = [UIFont systemFontOfSize:20];
-     */
     // 推荐方式
     [self setUpTitleEffect:^(UIColor *__autoreleasing *titleScrollViewColor, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor, UIFont *__autoreleasing *titleFont, CGFloat *titleHeight) {
         
@@ -37,25 +32,7 @@
             *titleFont = [UIFont systemFontOfSize:20];
         
     }];
-    
-    [self setUpTitleScale:^( CGFloat *titleScale) {
-        *titleScale = 2;
-    }];
-    
  
-    // 设置下标
-    /*
-        方式一
-     // 是否显示标签
-     self.isShowUnderLine = YES;
-     
-     // 标题填充模式
-     self.underLineColor = [UIColor redColor];
-     
-     // 是否需要延迟滚动,下标不会随着拖动而改变
-     self.isDelayScroll = YES;
-     */
-
     // 推荐方式（设置下标）
     [self setUpUnderLineEffect:^(BOOL *isUnderLineDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor) {
         // 标题填充模式
