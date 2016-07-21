@@ -32,6 +32,11 @@
 /** 下标视图 */
 @property (nonatomic, weak) UIView *underLine;
 
+/**
+ 是否需要下标
+ */
+@property (nonatomic, assign) BOOL isShowUnderLine;
+
 /** 标题遮盖视图 */
 @property (nonatomic, weak) UIView *coverView;
 
@@ -83,8 +88,6 @@
 
 - (void)setUp
 {
-    
-   
     
     if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
         
@@ -235,7 +238,6 @@
 }
 
 
-
 #pragma mark - 属性setter方法
 - (void)setIsShowTitleScale:(BOOL)isShowTitleScale
 {
@@ -283,21 +285,25 @@
 }
 
 // 一次性设置所有颜色渐变属性
-- (void)setUpTitleGradient:(void (^)(BOOL *, YZTitleColorGradientStyle *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *))titleGradientBlock
+- (void)setUpTitleGradient:(void (^)(YZTitleColorGradientStyle *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *, CGFloat *))titleGradientBlock
 {
+    _isShowTitleGradient = YES;
+    
     if (titleGradientBlock) {
-        titleGradientBlock(&_isShowTitleGradient,&_titleColorGradientStyle,&_startR,&_startG,&_startB,&_endR,&_endG,&_endB);
+        titleGradientBlock(&_titleColorGradientStyle,&_startR,&_startG,&_startB,&_endR,&_endG,&_endB);
     }
 }
 
 // 一次性设置所有遮盖属性
-- (void)setUpCoverEffect:(void (^)(BOOL *, UIColor **, CGFloat *))coverEffectBlock
+- (void)setUpCoverEffect:(void (^)(UIColor **, CGFloat *))coverEffectBlock
 {
     UIColor *color;
     
+    _isShowTitleCover = YES;
+    
     if (coverEffectBlock) {
         
-        coverEffectBlock(&_isShowTitleCover,&color,&_coverCornerRadius);
+        coverEffectBlock(&color,&_coverCornerRadius);
         
         if (color) {
             _coverColor = color;
@@ -307,20 +313,31 @@
 }
 
 // 一次性设置所有字体缩放属性
-- (void)setUpTitleScale:(void(^)(BOOL *isShowTitleScale,CGFloat *titleScale))titleScaleBlock
+- (void)setUpTitleScale:(void(^)(CGFloat *titleScale))titleScaleBlock
 {
+    _isShowTitleScale = YES;
+    if (_isShowUnderLine) {
+        @throw [NSException exceptionWithName:@"YZ_Error" reason:@"当前框架下标和字体缩放不能一起用" userInfo:nil];
+    }
+    
     if (titleScaleBlock) {
-        titleScaleBlock(&_isShowTitleScale,&_titleScale);
+        titleScaleBlock(&_titleScale);
     }
 }
 
 // 一次性设置所有下标属性
-- (void)setUpUnderLineEffect:(void(^)(BOOL *isShowUnderLine,BOOL *isDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock
+- (void)setUpUnderLineEffect:(void(^)(BOOL *isUnderLineDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock
 {
+    _isShowUnderLine = YES;
+    
+    if (_isShowTitleScale) {
+        @throw [NSException exceptionWithName:@"YZ_Error" reason:@"当前框架下标和字体缩放不能一起用" userInfo:nil];
+    }
+
     UIColor *underLineColor;
     
     if (underLineBlock) {
-        underLineBlock(&_isShowUnderLine,&_isDelayScroll,&_underLineH,&underLineColor);
+        underLineBlock(&_isDelayScroll,&_underLineH,&underLineColor);
         
         _underLineColor = underLineColor;
     }
@@ -349,24 +366,31 @@
 {
     [super viewDidLayoutSubviews];
     
-    CGFloat contentY = self.navigationController?YZNavBarH : [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat contentW = YZScreenW;
-    CGFloat contentH = YZScreenH - contentY;
-    // 设置整个内容的尺寸
-    if (self.contentView.height == 0) {
-        // 没有设置内容尺寸，才需要设置内容尺寸
-        self.contentView.frame = CGRectMake(0, contentY, contentW, contentH);
+    if (_isInitial == NO) {
+        self.selectIndex = self.selectIndex;
+        
+        CGFloat contentY = self.navigationController.navigationBarHidden == NO ?YZNavBarH : [UIApplication sharedApplication].statusBarFrame.size.height;
+        CGFloat contentW = YZScreenW;
+        CGFloat contentH = YZScreenH - contentY;
+        
+        // 设置整个内容的尺寸
+        if (self.contentView.yz_height == 0) {
+            // 没有设置内容尺寸，才需要设置内容尺寸
+            self.contentView.frame = CGRectMake(0, contentY, contentW, contentH);
+        }
+        
+        // 设置标题滚动视图frame
+        // 计算尺寸
+        CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
+        CGFloat titleY = _isfullScreen?contentY:0;
+        self.titleScrollView.frame = CGRectMake(0, titleY, contentW, titleH);
+        
+        // 设置内容滚动视图frame
+        CGFloat contentScrollY = CGRectGetMaxY(self.titleScrollView.frame);
+        self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, contentW, YZScreenH) :CGRectMake(0, contentScrollY, contentW, self.contentView.yz_height - contentScrollY);
+        
+        _isInitial = YES;
     }
-    
-    // 设置标题滚动视图frame
-    // 计算尺寸
-    CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
-    CGFloat titleY = _isfullScreen?contentY:0;
-    self.titleScrollView.frame = CGRectMake(0, titleY, contentW, titleH);
-
-    // 设置内容滚动视图frame
-    CGFloat contentScrollY = CGRectGetMaxY(self.titleScrollView.frame);
-    self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, contentW, YZScreenH) :CGRectMake(0, contentScrollY, contentW, self.contentView.height - contentScrollY);
     
 }
 
@@ -375,8 +399,6 @@
     [super viewWillAppear:animated];
     
     if (_isInitial == NO) {
-        
-         _isInitial = YES;
         
         // 注册cell
         [self.contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
@@ -432,6 +454,7 @@
         _titleMargin = margin;
         
         self.titleScrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, _titleMargin);
+        
         return;
     }
     
@@ -606,7 +629,7 @@
     if (_isClickTitle) return;
     
     // 获取两个标题中心点距离
-    CGFloat centerDelta = rightLabel.x - leftLabel.x;
+    CGFloat centerDelta = rightLabel.yz_x - leftLabel.yz_x;
     
     // 标题宽度差值
     CGFloat widthDelta = [self widthDeltaWithRightLabel:rightLabel leftLabel:leftLabel];
@@ -620,8 +643,8 @@
     // 宽度递增偏移量
     CGFloat underLineWidth = offsetDelta * widthDelta / YZScreenW;
     
-    self.underLine.width += underLineWidth;
-    self.underLine.x += underLineTransformX;
+    self.underLine.yz_width += underLineWidth;
+    self.underLine.yz_x += underLineTransformX;
 
 }
 
@@ -631,7 +654,7 @@
     if (_isClickTitle) return;
     
     // 获取两个标题中心点距离
-    CGFloat centerDelta = rightLabel.x - leftLabel.x;
+    CGFloat centerDelta = rightLabel.yz_x - leftLabel.yz_x;
     
     // 标题宽度差值
     CGFloat widthDelta = [self widthDeltaWithRightLabel:rightLabel leftLabel:leftLabel];
@@ -645,20 +668,25 @@
     // 宽度递增偏移量
     CGFloat coverWidth = offsetDelta * widthDelta / YZScreenW;
     
-    self.coverView.width += coverWidth;
-    self.coverView.x += coverTransformX;
+    self.coverView.yz_width += coverWidth;
+    self.coverView.yz_x += coverTransformX;
     
 }
 
 #pragma mark - 标题点击处理
-- (void)setSelectIndex:(BOOL)selectIndex
+- (void)setSelectIndex:(NSInteger)selectIndex
 {
     _selectIndex = selectIndex;
+    
     if (self.titleLabels.count) {
         
         UILabel *label = self.titleLabels[selectIndex];
         
-        [self titleClick:[label.gestureRecognizers lastObject]];
+        if (_selectIndex >= self.titleLabels.count) {
+            @throw [NSException exceptionWithName:@"YZ_ERROR" reason:@"选中控制器的角标越界" userInfo:nil];
+        }
+        
+        [self titleClick:[label.gestureRecognizers firstObject]];
     }
 }
 
@@ -760,23 +788,23 @@
     CGFloat coverH = titleBounds.size.height + 2 * border;
     CGFloat coverW = titleBounds.size.width + 2 * border;
     
-    self.coverView.y = (label.height - coverH) * 0.5;
-    self.coverView.height = coverH;
+    self.coverView.yz_y = (label.yz_height - coverH) * 0.5;
+    self.coverView.yz_height = coverH;
     
     
     // 最开始不需要动画
-    if (self.coverView.x == 0) {
-        self.coverView.width = coverW;
+    if (self.coverView.yz_x == 0) {
+        self.coverView.yz_width = coverW;
         
-        self.coverView.x = label.x - border;
+        self.coverView.yz_x = label.yz_x - border;
         return;
     }
     
     // 点击时候需要动画
     [UIView animateWithDuration:0.25 animations:^{
-        self.coverView.width = coverW;
+        self.coverView.yz_width = coverW;
         
-        self.coverView.x = label.x - border;
+        self.coverView.yz_x = label.yz_x - border;
     }];
     
 
@@ -791,22 +819,22 @@
     
     CGFloat underLineH = _underLineH?_underLineH:YZUnderLineH;
     
-    self.underLine.y = label.height - underLineH;
-    self.underLine.height = underLineH;
+    self.underLine.yz_y = label.yz_height - underLineH;
+    self.underLine.yz_height = underLineH;
 
     
     // 最开始不需要动画
-    if (self.underLine.x == 0) {
-        self.underLine.width = titleBounds.size.width;
+    if (self.underLine.yz_x == 0) {
+        self.underLine.yz_width = titleBounds.size.width;
         
-        self.underLine.x = label.x;
+        self.underLine.yz_x = label.yz_x;
         return;
     }
     
     // 点击时候需要动画
     [UIView animateWithDuration:0.25 animations:^{
-        self.underLine.width = titleBounds.size.width;
-        self.underLine.x = label.x;
+        self.underLine.yz_width = titleBounds.size.width;
+        self.underLine.yz_x = label.yz_x;
     }];
     
 }
@@ -817,6 +845,8 @@
     
     // 设置标题滚动区域的偏移量
     CGFloat offsetX = label.center.x - YZScreenW * 0.5;
+    // 193.712891
+    NSLog(@"%f",offsetX);
     
     if (offsetX < 0) {
         offsetX = 0;
@@ -842,6 +872,10 @@
 // 更新界面
 - (void)refreshDisplay
 {
+    if (self.childViewControllers.count == 0) {
+        @throw [NSException exceptionWithName:@"YZ_ERROR" reason:@"请确定添加了所有子控制器" userInfo:nil];
+    }
+    
     // 清空之前所有标题
     [self.titleLabels makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.titleLabels removeAllObjects];
@@ -853,6 +887,9 @@
     [self setUpTitleWidth];
     
     [self setUpAllTitle];
+    
+    // 默认选中标题
+    self.selectIndex = self.selectIndex;
     
 }
 
@@ -872,7 +909,7 @@
     // 添加控制器
     UIViewController *vc = self.childViewControllers[indexPath.row];
     
-    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.width, self.contentScrollView.height);
+    vc.view.frame = CGRectMake(0, 0, self.contentScrollView.yz_width, self.contentScrollView.yz_height);
     
     [cell.contentView addSubview:vc.view];
     

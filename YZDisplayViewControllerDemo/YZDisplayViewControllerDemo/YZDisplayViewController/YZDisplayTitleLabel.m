@@ -14,7 +14,6 @@
 {
     [super drawRect:rect];
     
-    
     [_fillColor set];
     
     rect.size.width = rect.size.width * _progress;
@@ -25,6 +24,9 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
+        
+        self.backgroundColor = [UIColor clearColor];
+        
         self.userInteractionEnabled = YES;
         
         self.textAlignment = NSTextAlignmentCenter;

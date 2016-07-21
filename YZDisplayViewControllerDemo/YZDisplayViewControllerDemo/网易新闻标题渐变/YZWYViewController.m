@@ -34,10 +34,7 @@
     
     
     // *推荐方式(设置标题渐变)
-    [self setUpTitleGradient:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
-        
-        // 不需要设置的属性，可以不管
-        *isShowTitleGradient = YES;
+    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
         
         *titleColorGradientStyle = YZTitleColorGradientStyleRGB;
         
@@ -57,11 +54,8 @@
     
     
     // 推荐方式 (设置字体缩放)
-    [self setUpTitleScale:^(BOOL *isShowTitleScale, CGFloat *titleScale) {
-        
-        // 是否需要字体缩放
-        *isShowTitleScale = YES;
-        
+    [self setUpTitleScale:^(CGFloat *titleScale) {
+                
         // 字体缩放比例
         *titleScale = 1.3;
     }];

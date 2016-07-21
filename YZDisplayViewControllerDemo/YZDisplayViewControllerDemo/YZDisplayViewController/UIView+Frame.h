@@ -10,13 +10,12 @@
 
 @interface UIView (Frame)
 
+@property (nonatomic, assign) CGFloat yz_centerX;
+@property (nonatomic, assign) CGFloat yz_centerY;
 
-@property (nonatomic, assign) CGFloat centerX;
-@property (nonatomic, assign) CGFloat centerY;
-
-@property (nonatomic, assign) CGFloat x;
-@property (nonatomic, assign) CGFloat y;
-@property (nonatomic, assign) CGFloat width;
-@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGFloat yz_x;
+@property (nonatomic, assign) CGFloat yz_y;
+@property (nonatomic, assign) CGFloat yz_width;
+@property (nonatomic, assign) CGFloat yz_height;
 
 @end

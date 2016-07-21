@@ -38,6 +38,11 @@
         
     }];
     
+    [self setUpTitleScale:^( CGFloat *titleScale) {
+        *titleScale = 2;
+    }];
+    
+ 
     // 设置下标
     /*
         方式一
@@ -52,17 +57,9 @@
      */
 
     // 推荐方式（设置下标）
-    [self setUpUnderLineEffect:^(BOOL *isShowUnderLine, BOOL *isDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor) {
-        
-        // 是否显示标签
-        *isShowUnderLine = YES;
-        
+    [self setUpUnderLineEffect:^(BOOL *isUnderLineDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor) {
         // 标题填充模式
         *underLineColor = [UIColor redColor];
-        
-        // 是否需要延迟滚动,下标不会随着拖动而改变
-//        *isDelayScroll = YES;
-        
     }];
     
     // 设置全屏显示

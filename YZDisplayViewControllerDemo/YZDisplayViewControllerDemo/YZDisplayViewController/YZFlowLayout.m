@@ -13,16 +13,17 @@
 - (void)prepareLayout
 {
     [super prepareLayout];
+    
     self.minimumInteritemSpacing = 0;
+    
     self.minimumLineSpacing = 0;
+    
     if (self.collectionView.bounds.size.height) {
         
         self.itemSize = self.collectionView.bounds.size;
     }
 
-    
-    self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    
+    self.scrollDirection = UICollectionViewScrollDirectionHorizontal;    
 }
 
 @end

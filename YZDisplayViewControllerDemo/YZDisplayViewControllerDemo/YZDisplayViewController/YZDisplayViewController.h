@@ -8,43 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-/* 
-**************用法*****************
-
-    一、导入YZDisplayViewHeader.h
-    二、自定义YZDisplayViewController
-    三、添加所有子控制器，保存标题在子控制器中
-    四、查看YZDisplayViewController头文件，找需要的效果设置
-    五、标题被点击或者内容滚动完成，会发出这个通知【"YZDisplayViewClickOrScrollDidFinsh"】，监听这个通知，可以做自己想要做的事情，比如加载数据
- 
-**************用法*****************
- 
- */
-
-
 // 颜色渐变样式
 typedef enum : NSUInteger {
-    YZTitleColorGradientStyleRGB,
-    YZTitleColorGradientStyleFill,
+    YZTitleColorGradientStyleRGB , // RGB
+    YZTitleColorGradientStyleFill, // 填充
 } YZTitleColorGradientStyle;
-
-
-
-/*
-    使用注意：
-    1.字体放大效果和角标不能同时使用。
-    2.网易效果：颜色渐变 + 字体缩放
-    3.进入头条效果：颜色填充渐变
-    4.展示tableView的时候，如果有UITabBarController,UINavgationController,需要自己给tableView添加额外滚动区域。
- 
- */
 
 @interface YZDisplayViewController : UIViewController
 
+/**************************************【内容】************************************/
 
-
-
-/**************************************内容************************************/
 /**
     内容是否需要全屏展示
     YES :  全屏：内容占据整个屏幕，会有穿透导航栏效果，需要手动设置tableView额外滚动区域
@@ -64,11 +37,12 @@ typedef enum : NSUInteger {
  */
 - (void)setUpContentViewFrame:(void(^)(UIView *contentView))contentBlock;
 
-/**************************************内容************************************/
+/**
+ 刷新标题和整个界面，在调用之前，必须先确定所有的子控制器。
+ */
+- (void)refreshDisplay;
 
-
-
-/**************************************标题************************************/
+/**************************************【标题】************************************/
 
 
 /**
@@ -100,20 +74,9 @@ typedef enum : NSUInteger {
 // 一次性设置所有标题属性
 - (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock;
 
-/**************************************标题************************************/
 
 
-
-
-
-
-/**************************************下标************************************/
-
-/**
-    是否需要下标
- */
-@property (nonatomic, assign) BOOL isShowUnderLine;
-
+/**************************************【下标】************************************/
 
 /**
     是否延迟滚动下标
@@ -130,16 +93,11 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, assign) CGFloat underLineH;
 
-// 一次性设置所有下标属性
-- (void)setUpUnderLineEffect:(void(^)(BOOL *isShowUnderLine,BOOL *isDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock;
-
-/**************************************下标************************************/
+- (void)setUpUnderLineEffect:(void(^)(BOOL *isUnderLineDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock;
 
 
 
-
-
-/**********************************字体缩放************************************/
+/**********************************【字体缩放】************************************/
 /**
     字体放大
  */
@@ -151,14 +109,11 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat titleScale;
 
 // 一次性设置所有字体缩放属性
-- (void)setUpTitleScale:(void(^)(BOOL *isShowTitleScale,CGFloat *titleScale))titleScaleBlock;
-
-/**********************************字体缩放************************************/
+- (void)setUpTitleScale:(void(^)(CGFloat *titleScale))titleScaleBlock;
 
 
 
-
-/**********************************颜色渐变************************************/
+/**********************************【颜色渐变】************************************/
 
 /**
     字体是否渐变
@@ -189,11 +144,12 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat endB;
 
 // 一次性设置所有颜色渐变属性
-- (void)setUpTitleGradient:(void(^)(BOOL *isShowTitleGradient,YZTitleColorGradientStyle *titleColorGradientStyle,CGFloat *startR,CGFloat *startG,CGFloat *startB,CGFloat *endR,CGFloat *endG,CGFloat *endB))titleGradientBlock;
+- (void)setUpTitleGradient:(void(^)(YZTitleColorGradientStyle *titleColorGradientStyle,CGFloat *startR,CGFloat *startG,CGFloat *startB,CGFloat *endR,CGFloat *endG,CGFloat *endB))titleGradientBlock;
 
-/**********************************颜色渐变************************************/
 
-/**********************************遮盖************************************/
+
+
+/**********************************【遮盖】************************************/
 
 /**
     是否显示遮盖
@@ -211,16 +167,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat coverCornerRadius;
 
 // 一次性设置所有遮盖属性
-- (void)setUpCoverEffect:(void(^)(BOOL *isShowTitleCover,UIColor **coverColor,CGFloat *coverCornerRadius))coverEffectBlock;
-
-/**********************************遮盖************************************/
-
-
-
-/**
-    刷新标题和整个界面，在调用之前，必须先确定所有的子控制器。
- */
-- (void)refreshDisplay;
+- (void)setUpCoverEffect:(void(^)(UIColor **coverColor,CGFloat *coverCornerRadius))coverEffectBlock;
 
 
 @end

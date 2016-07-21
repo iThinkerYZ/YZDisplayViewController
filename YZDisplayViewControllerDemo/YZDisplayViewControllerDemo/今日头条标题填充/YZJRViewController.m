@@ -46,10 +46,7 @@
    
     
     /*  方式二 */
-    [self setUpTitleGradient:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
-        
-        // 标题渐变
-        *isShowTitleGradient = YES;
+    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
         
         // 标题填充模式
         *titleColorGradientStyle = YZTitleColorGradientStyleFill;

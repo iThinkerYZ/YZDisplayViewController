@@ -30,6 +30,7 @@
     
     [self.view addSubview:searchBar];
 
+
     
     // 设置整体内容尺寸（包含标题滚动视图和底部内容滚动视图）
     [self setUpContentViewFrame:^(UIView *contentView) {
@@ -47,6 +48,8 @@
     // 添加所有子控制器
     [self setUpAllViewController];
     
+    self.selectIndex = 6;
+    
     /****** 标题渐变 ******/
     /*
             方式一
@@ -57,17 +60,16 @@
     */
     
     // *推荐方式(设置标题渐变)
-    [self setUpTitleGradient:^(BOOL *isShowTitleGradient, YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
-        
-        // 不需要设置的属性，可以不管
-        *isShowTitleGradient = YES;
-        
+    [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, CGFloat *startR, CGFloat *startG, CGFloat *startB, CGFloat *endR, CGFloat *endG, CGFloat *endB) {
+                
         // 设置结束时，RGB通道各个值
         *endR = 1;
         *endG = 130 / 255.0;
         *endB = 44 / 255.0;
         
     }];
+    
+
     
     
     /****** 设置遮盖 ******/
@@ -76,9 +78,7 @@
 //    self.coverCornerRadius = 13;
     
     // *推荐方式(设置遮盖)
-    [self setUpCoverEffect:^(BOOL *isShowTitleCover, UIColor **coverColor, CGFloat *coverCornerRadius) {
-        // 设置是否显示标题蒙版
-        *isShowTitleCover = YES;
+    [self setUpCoverEffect:^(UIColor **coverColor, CGFloat *coverCornerRadius) {
         
         // 设置蒙版颜色
         *coverColor = [UIColor colorWithWhite:0.7 alpha:0.4];

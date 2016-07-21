@@ -10,6 +10,27 @@
 #ifndef Const_h
 #define Const_h
 
+/*
+ **************用法*****************
+ 
+ 一、导入YZDisplayViewHeader.h
+ 二、自定义YZDisplayViewController
+ 三、添加所有子控制器，保存标题在子控制器中
+ 四、查看YZDisplayViewController头文件，找需要的效果设置
+ 五、标题被点击或者内容滚动完成，会发出这个通知【"YZDisplayViewClickOrScrollDidFinsh"】，监听这个通知，可以做自己想要做的事情，比如加载数据
+ 
+ **************用法*****************
+ */
+
+
+/*
+ 使用注意：
+ 1.字体放大效果和角标不能同时使用。
+ 2.网易效果：颜色渐变 + 字体缩放
+ 3.进入头条效果：颜色填充渐变
+ 4.展示tableView的时候，如果有UITabBarController,UINavgationController,需要自己给tableView添加额外滚动区域。
+ */
+
 #import "YZDisplayViewController.h"
 
 // 导航条高度
