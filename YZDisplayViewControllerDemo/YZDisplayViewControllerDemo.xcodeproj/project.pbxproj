@@ -15,18 +15,18 @@
 		EC01A8921C12883C00F91F25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC01A8901C12883C00F91F25 /* LaunchScreen.storyboard */; };
 		EC01A89D1C12883C00F91F25 /* YZDisplayViewControllerDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC01A89C1C12883C00F91F25 /* YZDisplayViewControllerDemoTests.m */; };
 		EC01A8A81C12883C00F91F25 /* YZDisplayViewControllerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EC01A8A71C12883C00F91F25 /* YZDisplayViewControllerDemoUITests.m */; };
-		EC01A8BB1C12887200F91F25 /* YZDisplayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC01A8B71C12887200F91F25 /* YZDisplayTitleLabel.m */; };
-		EC01A8BC1C12887200F91F25 /* YZDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC01A8B91C12887200F91F25 /* YZDisplayViewController.m */; };
+		EC2E6E881D411083002B1A8A /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2E6E801D411083002B1A8A /* UIView+Frame.m */; };
+		EC2E6E891D411083002B1A8A /* YZDisplayTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2E6E821D411083002B1A8A /* YZDisplayTitleLabel.m */; };
+		EC2E6E8A1D411083002B1A8A /* YZDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2E6E841D411083002B1A8A /* YZDisplayViewController.m */; };
+		EC2E6E8B1D411083002B1A8A /* YZFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2E6E871D411083002B1A8A /* YZFlowLayout.m */; };
 		EC6268811C1289E4000FB840 /* YZXiMaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268801C1289E4000FB840 /* YZXiMaViewController.m */; };
 		EC6268841C1289F6000FB840 /* YZWYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268831C1289F6000FB840 /* YZWYViewController.m */; };
 		EC6268871C128A0A000FB840 /* YZJRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268861C128A0A000FB840 /* YZJRViewController.m */; };
-		EC62688A1C128ACA000FB840 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268891C128ACA000FB840 /* UIView+Frame.m */; };
 		EC6268931C128F63000FB840 /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268901C128F63000FB840 /* ChildViewController.m */; };
 		EC6268941C128F63000FB840 /* FullChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC6268921C128F63000FB840 /* FullChildViewController.m */; };
 		ECB332311C28435900876DA6 /* RequesCover.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB332301C28435900876DA6 /* RequesCover.m */; };
 		ECB332331C28436900876DA6 /* RequesCover.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB332321C28436900876DA6 /* RequesCover.xib */; };
 		ECBE97A71C1330DE00A7F2B4 /* YZTXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */; };
-		ECD99D051C268BA30006F17C /* YZFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = ECD99D041C268BA30006F17C /* YZFlowLayout.m */; };
 		ECE6747A1C2A45810026C7EF /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = ECE674701C2A45810026C7EF /* 1.png */; };
 		ECE6747B1C2A45810026C7EF /* 10.png in Resources */ = {isa = PBXBuildFile; fileRef = ECE674711C2A45810026C7EF /* 10.png */; };
 		ECE6747C1C2A45810026C7EF /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = ECE674721C2A45810026C7EF /* 2.png */; };
@@ -73,19 +73,21 @@
 		EC01A8A31C12883C00F91F25 /* YZDisplayViewControllerDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YZDisplayViewControllerDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC01A8A71C12883C00F91F25 /* YZDisplayViewControllerDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YZDisplayViewControllerDemoUITests.m; sourceTree = "<group>"; };
 		EC01A8A91C12883C00F91F25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EC01A8B61C12887200F91F25 /* YZDisplayTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayTitleLabel.h; sourceTree = "<group>"; };
-		EC01A8B71C12887200F91F25 /* YZDisplayTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDisplayTitleLabel.m; sourceTree = "<group>"; };
-		EC01A8B81C12887200F91F25 /* YZDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayViewController.h; sourceTree = "<group>"; };
-		EC01A8B91C12887200F91F25 /* YZDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDisplayViewController.m; sourceTree = "<group>"; };
-		EC01A8BA1C12887200F91F25 /* YZDisplayViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayViewHeader.h; sourceTree = "<group>"; };
+		EC2E6E7F1D411083002B1A8A /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
+		EC2E6E801D411083002B1A8A /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
+		EC2E6E811D411083002B1A8A /* YZDisplayTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayTitleLabel.h; sourceTree = "<group>"; };
+		EC2E6E821D411083002B1A8A /* YZDisplayTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDisplayTitleLabel.m; sourceTree = "<group>"; };
+		EC2E6E831D411083002B1A8A /* YZDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayViewController.h; sourceTree = "<group>"; };
+		EC2E6E841D411083002B1A8A /* YZDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZDisplayViewController.m; sourceTree = "<group>"; };
+		EC2E6E851D411083002B1A8A /* YZDisplayViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZDisplayViewHeader.h; sourceTree = "<group>"; };
+		EC2E6E861D411083002B1A8A /* YZFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZFlowLayout.h; sourceTree = "<group>"; };
+		EC2E6E871D411083002B1A8A /* YZFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZFlowLayout.m; sourceTree = "<group>"; };
 		EC62687F1C1289E4000FB840 /* YZXiMaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZXiMaViewController.h; sourceTree = "<group>"; };
 		EC6268801C1289E4000FB840 /* YZXiMaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZXiMaViewController.m; sourceTree = "<group>"; };
 		EC6268821C1289F6000FB840 /* YZWYViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZWYViewController.h; sourceTree = "<group>"; };
 		EC6268831C1289F6000FB840 /* YZWYViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZWYViewController.m; sourceTree = "<group>"; };
 		EC6268851C128A0A000FB840 /* YZJRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZJRViewController.h; sourceTree = "<group>"; };
 		EC6268861C128A0A000FB840 /* YZJRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZJRViewController.m; sourceTree = "<group>"; };
-		EC6268881C128ACA000FB840 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
-		EC6268891C128ACA000FB840 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		EC62688F1C128F63000FB840 /* ChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
 		EC6268901C128F63000FB840 /* ChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
 		EC6268911C128F63000FB840 /* FullChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullChildViewController.h; sourceTree = "<group>"; };
@@ -95,8 +97,6 @@
 		ECB332321C28436900876DA6 /* RequesCover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequesCover.xib; sourceTree = "<group>"; };
 		ECBE97A51C1330DE00A7F2B4 /* YZTXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZTXViewController.h; sourceTree = "<group>"; };
 		ECBE97A61C1330DE00A7F2B4 /* YZTXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZTXViewController.m; sourceTree = "<group>"; };
-		ECD99D031C268BA30006F17C /* YZFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZFlowLayout.h; sourceTree = "<group>"; };
-		ECD99D041C268BA30006F17C /* YZFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZFlowLayout.m; sourceTree = "<group>"; };
 		ECE674701C2A45810026C7EF /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		ECE674711C2A45810026C7EF /* 10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 10.png; sourceTree = "<group>"; };
 		ECE674721C2A45810026C7EF /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
@@ -146,6 +146,7 @@
 		EC01A8761C12883B00F91F25 = {
 			isa = PBXGroup;
 			children = (
+				EC2E6E7E1D411083002B1A8A /* YZDisplayViewController */,
 				EC01A8811C12883C00F91F25 /* YZDisplayViewControllerDemo */,
 				EC01A89B1C12883C00F91F25 /* YZDisplayViewControllerDemoTests */,
 				EC01A8A61C12883C00F91F25 /* YZDisplayViewControllerDemoUITests */,
@@ -173,7 +174,6 @@
 				EC62687D1C1289B7000FB840 /* 网易新闻标题渐变 */,
 				EC62687E1C1289B7000FB840 /* 喜马拉雅下标 */,
 				EC62688E1C128F63000FB840 /* TableViewController */,
-				EC01A8B51C12887200F91F25 /* YZDisplayViewController */,
 				EC01A8851C12883C00F91F25 /* AppDelegate.h */,
 				EC01A8861C12883C00F91F25 /* AppDelegate.m */,
 				EC01A88B1C12883C00F91F25 /* Main.storyboard */,
@@ -212,18 +212,18 @@
 			path = YZDisplayViewControllerDemoUITests;
 			sourceTree = "<group>";
 		};
-		EC01A8B51C12887200F91F25 /* YZDisplayViewController */ = {
+		EC2E6E7E1D411083002B1A8A /* YZDisplayViewController */ = {
 			isa = PBXGroup;
 			children = (
-				EC01A8B81C12887200F91F25 /* YZDisplayViewController.h */,
-				EC01A8B91C12887200F91F25 /* YZDisplayViewController.m */,
-				EC6268881C128ACA000FB840 /* UIView+Frame.h */,
-				EC6268891C128ACA000FB840 /* UIView+Frame.m */,
-				EC01A8B61C12887200F91F25 /* YZDisplayTitleLabel.h */,
-				EC01A8B71C12887200F91F25 /* YZDisplayTitleLabel.m */,
-				EC01A8BA1C12887200F91F25 /* YZDisplayViewHeader.h */,
-				ECD99D031C268BA30006F17C /* YZFlowLayout.h */,
-				ECD99D041C268BA30006F17C /* YZFlowLayout.m */,
+				EC2E6E7F1D411083002B1A8A /* UIView+Frame.h */,
+				EC2E6E801D411083002B1A8A /* UIView+Frame.m */,
+				EC2E6E811D411083002B1A8A /* YZDisplayTitleLabel.h */,
+				EC2E6E821D411083002B1A8A /* YZDisplayTitleLabel.m */,
+				EC2E6E831D411083002B1A8A /* YZDisplayViewController.h */,
+				EC2E6E841D411083002B1A8A /* YZDisplayViewController.m */,
+				EC2E6E851D411083002B1A8A /* YZDisplayViewHeader.h */,
+				EC2E6E861D411083002B1A8A /* YZFlowLayout.h */,
+				EC2E6E871D411083002B1A8A /* YZFlowLayout.m */,
 			);
 			path = YZDisplayViewController;
 			sourceTree = "<group>";
@@ -446,18 +446,18 @@
 			files = (
 				EC6268841C1289F6000FB840 /* YZWYViewController.m in Sources */,
 				EC6268811C1289E4000FB840 /* YZXiMaViewController.m in Sources */,
-				ECD99D051C268BA30006F17C /* YZFlowLayout.m in Sources */,
 				ECBE97A71C1330DE00A7F2B4 /* YZTXViewController.m in Sources */,
 				EC6268931C128F63000FB840 /* ChildViewController.m in Sources */,
+				EC2E6E8B1D411083002B1A8A /* YZFlowLayout.m in Sources */,
 				EC01A8871C12883C00F91F25 /* AppDelegate.m in Sources */,
 				EC6268941C128F63000FB840 /* FullChildViewController.m in Sources */,
+				EC2E6E8A1D411083002B1A8A /* YZDisplayViewController.m in Sources */,
 				EC0169BD1C2EB399009616E9 /* YZMainTableViewController.m in Sources */,
-				EC62688A1C128ACA000FB840 /* UIView+Frame.m in Sources */,
+				EC2E6E891D411083002B1A8A /* YZDisplayTitleLabel.m in Sources */,
 				EC01A8841C12883C00F91F25 /* main.m in Sources */,
-				EC01A8BB1C12887200F91F25 /* YZDisplayTitleLabel.m in Sources */,
 				ECB332311C28435900876DA6 /* RequesCover.m in Sources */,
-				EC01A8BC1C12887200F91F25 /* YZDisplayViewController.m in Sources */,
 				EC6268871C128A0A000FB840 /* YZJRViewController.m in Sources */,
+				EC2E6E881D411083002B1A8A /* UIView+Frame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
