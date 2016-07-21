@@ -369,6 +369,7 @@
 				TargetAttributes = {
 					EC01A87E1C12883B00F91F25 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = YKYB5YMSRP;
 					};
 					EC01A8971C12883C00F91F25 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -598,8 +599,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YZDisplayViewControllerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iThinker.YZDi;
+				PRODUCT_BUNDLE_IDENTIFIER = iThinker.11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -612,8 +614,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = YZDisplayViewControllerDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iThinker.YZDi;
+				PRODUCT_BUNDLE_IDENTIFIER = iThinker.11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

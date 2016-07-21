@@ -33,11 +33,7 @@
         
     });
     
-    /* 方式一 
-    
-   
-    
-    /*  方式二 */
+    /*  设置标题渐变：标题填充模式 */
     [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor) {
         // 标题填充模式
         *titleColorGradientStyle = YZTitleColorGradientStyleFill;

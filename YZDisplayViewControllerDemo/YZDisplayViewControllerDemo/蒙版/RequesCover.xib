@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
@@ -11,27 +10,20 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.png" translatesAutoresizingMaskIntoConstraints="NO" id="q3w-xR-gii">
-                    <rect key="frame" x="87" y="233.5" width="200" height="200"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="200" id="4aF-nu-Q2d"/>
-                        <constraint firstAttribute="width" constant="200" id="yAU-D3-swq"/>
-                    </constraints>
-                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前正在加载ing...." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rI-4l-Mr7">
+                    <rect key="frame" x="115.5" y="323.5" width="144" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="q3w-xR-gii" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kiC-OL-sak"/>
-                <constraint firstItem="q3w-xR-gii" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xRq-wE-Mza"/>
+                <constraint firstItem="6rI-4l-Mr7" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dbE-BY-ZFP"/>
+                <constraint firstItem="6rI-4l-Mr7" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="fuk-ih-ad0"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <connections>
-                <outlet property="animView" destination="q3w-xR-gii" id="UdY-9i-RVn"/>
-            </connections>
         </view>
     </objects>
-    <resources>
-        <image name="1.png" width="500" height="500"/>
-    </resources>
 </document>

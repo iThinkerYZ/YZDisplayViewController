@@ -46,7 +46,7 @@
     /****** 标题渐变 ******/
     // 推荐方式(设置标题颜色渐变) // 默认RGB样式
     [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor) {
-        *norColor = [UIColor greenColor];
+        *norColor = [UIColor blackColor];
         *selColor = [UIColor redColor];
     }];
 
@@ -73,7 +73,7 @@
     
     // 段子
     ChildViewController *wordVc2 = [[ChildViewController alloc] init];
-    wordVc2.title = @"M了个J";
+    wordVc2.title = @"iOS培训";
     [self addChildViewController:wordVc2];
     
     // 段子

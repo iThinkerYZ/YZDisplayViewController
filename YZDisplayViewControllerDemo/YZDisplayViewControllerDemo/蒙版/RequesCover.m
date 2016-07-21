@@ -23,17 +23,17 @@
 
 - (void)awakeFromNib
 {
-    NSMutableArray *images = [NSMutableArray array];
-    for (int i = 1; i <= 10; i++) {
-        NSString *imageName = [NSString stringWithFormat:@"%d",i];
-        UIImage *image = [UIImage imageNamed:imageName];
-        [images addObject:image];
-    }
-    
-    _animView.animationRepeatCount = MAXFLOAT;
-    _animView.animationImages = images;
-    _animView.animationDuration = 1;
-    [_animView startAnimating];
+//    NSMutableArray *images = [NSMutableArray array];
+//    for (int i = 1; i <= 10; i++) {
+//        NSString *imageName = [NSString stringWithFormat:@"%d",i];
+//        UIImage *image = [UIImage imageNamed:imageName];
+//        [images addObject:image];
+//    }
+//    
+//    _animView.animationRepeatCount = MAXFLOAT;
+//    _animView.animationImages = images;
+//    _animView.animationDuration = 1;
+//    [_animView startAnimating];
 }
 
 @end

@@ -641,7 +641,6 @@ static NSString * const ID = @"CONTENTCELL";
         
         // 左边颜色
         leftLabel.textColor = leftColor;
-        NSLog(@"%f %f",rightSacle,leftScale);
         return;
     }
     
@@ -1119,7 +1118,6 @@ static NSString * const ID = @"CONTENTCELL";
     _endR = components[0];
     _endG = components[1];
     _endB = components[2];
-     NSLog(@"%f %f %f",components[0],components[1],components[2]);
 }
 
 

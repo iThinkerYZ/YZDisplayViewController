@@ -28,7 +28,6 @@
     }];
     
     // 字体缩放
-    
     // 推荐方式 (设置字体缩放)
     [self setUpTitleScale:^(CGFloat *titleScale) {
         // 字体缩放比例
