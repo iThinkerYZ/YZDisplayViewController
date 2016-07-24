@@ -43,7 +43,7 @@ typedef enum : NSUInteger {
 
 
 /***********************************【顶部标题样式】********************************/
-- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock;
+- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight,CGFloat *titleWidth))titleEffectBlock;
 
 
 /***********************************【下标样式】***********************************/

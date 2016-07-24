@@ -31,6 +31,12 @@ static NSString * const ID = @"CONTENTCELL";
 @property (nonatomic, assign) CGFloat titleHeight;
 
 /**
+ 标题宽度
+ */
+@property (nonatomic, assign) CGFloat titleWidth;
+
+
+/**
  正常标题颜色
  */
 @property (nonatomic, strong) UIColor *norColor;
@@ -263,6 +269,7 @@ static NSString * const ID = @"CONTENTCELL";
     return _titleLabels;
 }
 
+
 // 懒加载标题滚动视图
 - (UIScrollView *)titleScrollView
 {
@@ -374,6 +381,10 @@ static NSString * const ID = @"CONTENTCELL";
         self.norColor = norColor;
         self.selColor = selColor;
     }
+    
+    if (_titleColorGradientStyle == YZTitleColorGradientStyleFill && _titleWidth > 0) {
+        @throw [NSException exceptionWithName:@"YZ_ERROR" reason:@"标题颜色填充不需要设置标题宽度" userInfo:nil];
+    }
 }
 
 // 一次性设置所有遮盖属性
@@ -398,6 +409,7 @@ static NSString * const ID = @"CONTENTCELL";
 - (void)setUpTitleScale:(void(^)(CGFloat *titleScale))titleScaleBlock
 {
     _isShowTitleScale = YES;
+    
     if (_isShowUnderLine) {
         @throw [NSException exceptionWithName:@"YZ_Error" reason:@"当前框架下标和字体缩放不能一起用" userInfo:nil];
     }
@@ -405,6 +417,7 @@ static NSString * const ID = @"CONTENTCELL";
     if (titleScaleBlock) {
         titleScaleBlock(&_titleScale);
     }
+    
 }
 
 // 一次性设置所有下标属性
@@ -427,18 +440,23 @@ static NSString * const ID = @"CONTENTCELL";
 }
 
 // 一次性设置所有标题属性
-- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight))titleEffectBlock{
+- (void)setUpTitleEffect:(void(^)(UIColor **titleScrollViewColor,UIColor **norColor,UIColor **selColor,UIFont **titleFont,CGFloat *titleHeight,CGFloat *titleWidth))titleEffectBlock{
     UIColor *titleScrollViewColor;
     UIColor *norColor;
     UIColor *selColor;
     UIFont *titleFont;
     if (titleEffectBlock) {
-        titleEffectBlock(&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight);
+        titleEffectBlock(&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight,&_titleWidth);
         self.norColor = norColor;
         self.selColor = selColor;
         _titleScrollViewColor = titleScrollViewColor;
         _titleFont = titleFont;
     }
+    
+    if (_titleColorGradientStyle == YZTitleColorGradientStyleFill && _titleWidth > 0) {
+        @throw [NSException exceptionWithName:@"YZ_ERROR" reason:@"标题颜色填充不需要设置标题宽度" userInfo:nil];
+    }
+
 }
 
 
@@ -464,7 +482,8 @@ static NSString * const ID = @"CONTENTCELL";
         // 设置标题滚动视图frame
         // 计算尺寸
         CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
-        CGFloat titleY = _isfullScreen?contentY:0;
+        CGFloat titleY = self.navigationController.navigationBarHidden == NO ?YZNavBarH:20;
+        titleY = _isfullScreen?titleY:0;
         self.titleScrollView.frame = CGRectMake(0, titleY, contentW, titleH);
         
         // 设置内容滚动视图frame
@@ -492,7 +511,11 @@ static NSString * const ID = @"CONTENTCELL";
         // 没有子控制器，不需要设置标题
         if (self.childViewControllers.count == 0) return;
         
-        [self setUpTitleWidth];
+        if (_titleColorGradientStyle == YZTitleColorGradientStyleFill || _titleWidth == 0) { // 填充样式才需要这样
+            
+            [self setUpTitleWidth];
+        }
+
         
         [self setUpAllTitle];
         
@@ -556,7 +579,7 @@ static NSString * const ID = @"CONTENTCELL";
     NSUInteger count = self.childViewControllers.count;
     
     // 添加所有的标题
-    CGFloat labelW = 0;
+    CGFloat labelW = _titleWidth;
     CGFloat labelH = self.titleHeight;
     CGFloat labelX = 0;
     CGFloat labelY = 0;
@@ -577,12 +600,17 @@ static NSString * const ID = @"CONTENTCELL";
         // 设置按钮标题
         label.text = vc.title;
         
-        labelW = [self.titleWidths[i] floatValue];
-        
-        // 设置按钮位置
-        UILabel *lastLabel = [self.titleLabels lastObject];
-        
-        labelX = _titleMargin + CGRectGetMaxX(lastLabel.frame);
+        if (_titleColorGradientStyle == YZTitleColorGradientStyleFill || _titleWidth == 0) { // 填充样式才需要
+            labelW = [self.titleWidths[i] floatValue];
+            
+            // 设置按钮位置
+            UILabel *lastLabel = [self.titleLabels lastObject];
+            
+            labelX = _titleMargin + CGRectGetMaxX(lastLabel.frame);
+        } else {
+            
+            labelX = i * labelW;
+        }
         
         label.frame = CGRectMake(labelX, labelY, labelW, labelH);
         
@@ -936,7 +964,7 @@ static NSString * const ID = @"CONTENTCELL";
     
     // 计算下最大的标题视图滚动区域
     CGFloat maxOffsetX = self.titleScrollView.contentSize.width - YZScreenW + _titleMargin;
-    
+
     if (maxOffsetX < 0) {
         maxOffsetX = 0;
     }
@@ -966,7 +994,10 @@ static NSString * const ID = @"CONTENTCELL";
     [self.contentScrollView reloadData];
     
     // 重新设置标题
-    [self setUpTitleWidth];
+    if (_titleColorGradientStyle == YZTitleColorGradientStyleFill || _titleWidth == 0) {
+        
+        [self setUpTitleWidth];
+    }
     
     [self setUpAllTitle];
     

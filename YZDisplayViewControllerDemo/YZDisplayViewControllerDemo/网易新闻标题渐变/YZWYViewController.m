@@ -21,6 +21,11 @@
     // 添加所有子控制器
     [self setUpAllViewController];
     
+    [self setUpTitleEffect:^(UIColor *__autoreleasing *titleScrollViewColor, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor, UIFont *__autoreleasing *titleFont, CGFloat *titleHeight, CGFloat *titleWidth) {
+        *selColor = [UIColor greenColor];
+        *titleWidth = [UIScreen mainScreen].bounds.size.width / 4;
+    }];
+    
     // 标题渐变
     // *推荐方式(设置标题渐变)
     [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor) {
@@ -58,30 +63,30 @@
     wordVc4.title = @"吖了个峥";
     [self addChildViewController:wordVc4];
     
-    // 全部
-    ChildViewController *allVc = [[ChildViewController alloc] init];
-    allVc.title = @"全部";
-    [self addChildViewController:allVc];
-    
-    // 视频
-    ChildViewController *videoVc = [[ChildViewController alloc] init];
-    videoVc.title = @"视频";
-    [self addChildViewController:videoVc];
-    
-    // 声音
-    ChildViewController *voiceVc = [[ChildViewController alloc] init];
-    voiceVc.title = @"声音";
-    [self addChildViewController:voiceVc];
-    
-    // 图片
-    ChildViewController *pictureVc = [[ChildViewController alloc] init];
-    pictureVc.title = @"图片";
-    [self addChildViewController:pictureVc];
-    
-    // 段子
-    ChildViewController *wordVc = [[ChildViewController alloc] init];
-    wordVc.title = @"段子";
-    [self addChildViewController:wordVc];
+//    // 全部
+//    ChildViewController *allVc = [[ChildViewController alloc] init];
+//    allVc.title = @"全部";
+//    [self addChildViewController:allVc];
+//    
+//    // 视频
+//    ChildViewController *videoVc = [[ChildViewController alloc] init];
+//    videoVc.title = @"视频";
+//    [self addChildViewController:videoVc];
+//    
+//    // 声音
+//    ChildViewController *voiceVc = [[ChildViewController alloc] init];
+//    voiceVc.title = @"声音";
+//    [self addChildViewController:voiceVc];
+//    
+//    // 图片
+//    ChildViewController *pictureVc = [[ChildViewController alloc] init];
+//    pictureVc.title = @"图片";
+//    [self addChildViewController:pictureVc];
+//    
+//    // 段子
+//    ChildViewController *wordVc = [[ChildViewController alloc] init];
+//    wordVc.title = @"段子";
+//    [self addChildViewController:wordVc];
     
     
     
