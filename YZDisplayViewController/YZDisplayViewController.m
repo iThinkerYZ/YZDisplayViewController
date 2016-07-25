@@ -182,7 +182,7 @@ static NSString * const ID = @"CONTENTCELL";
     // 初始化标题高度
     _titleHeight = YZTitleScrollViewH;
     
-     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)setUp
@@ -291,7 +291,7 @@ static NSString * const ID = @"CONTENTCELL";
 - (UIScrollView *)contentScrollView
 {
     if (_contentScrollView == nil) {
-
+        
         // 创建布局
         YZFlowLayout *layout = [[YZFlowLayout alloc] init];
         
@@ -305,7 +305,8 @@ static NSString * const ID = @"CONTENTCELL";
         _contentScrollView.dataSource = self;
         // 注册cell
         [_contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
-        self.contentScrollView.backgroundColor = self.view.backgroundColor;
+        
+        _contentScrollView.backgroundColor = self.view.backgroundColor;
         [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
         
     }
@@ -381,8 +382,12 @@ static NSString * const ID = @"CONTENTCELL";
     UIColor *selColor;
     if (titleGradientBlock) {
         titleGradientBlock(&_titleColorGradientStyle,&norColor,&selColor);
-        self.norColor = norColor;
-        self.selColor = selColor;
+        if (norColor) {
+            self.norColor = norColor;
+        }
+        if (selColor) {
+            self.selColor = selColor;
+        }
     }
     
     if (_titleColorGradientStyle == YZTitleColorGradientStyleFill && _titleWidth > 0) {
@@ -431,7 +436,7 @@ static NSString * const ID = @"CONTENTCELL";
     if (_isShowTitleScale) {
         @throw [NSException exceptionWithName:@"YZ_Error" reason:@"当前框架下标和字体缩放不能一起用" userInfo:nil];
     }
-
+    
     UIColor *underLineColor;
     
     if (underLineBlock) {
@@ -450,16 +455,22 @@ static NSString * const ID = @"CONTENTCELL";
     UIFont *titleFont;
     if (titleEffectBlock) {
         titleEffectBlock(&titleScrollViewColor,&norColor,&selColor,&titleFont,&_titleHeight,&_titleWidth);
-        self.norColor = norColor;
-        self.selColor = selColor;
-        _titleScrollViewColor = titleScrollViewColor;
+        if (norColor) {
+            self.norColor = norColor;
+        }
+        if (selColor) {
+            self.selColor = selColor;
+        }
+        if (titleScrollViewColor) {
+            _titleScrollViewColor = titleScrollViewColor;
+        }
         _titleFont = titleFont;
     }
     
     if (_titleColorGradientStyle == YZTitleColorGradientStyleFill && _titleWidth > 0) {
         @throw [NSException exceptionWithName:@"YZ_ERROR" reason:@"标题颜色填充不需要设置标题宽度" userInfo:nil];
     }
-
+    
 }
 
 
@@ -471,28 +482,41 @@ static NSString * const ID = @"CONTENTCELL";
     if (_isInitial == NO) {
         self.selectIndex = self.selectIndex;
         
-        CGFloat contentY = self.navigationController.navigationBarHidden == NO ?YZNavBarH : [UIApplication sharedApplication].statusBarFrame.size.height;
-        CGFloat contentW = YZScreenW;
-        CGFloat contentH = YZScreenH - contentY;
+        _isInitial = YES;
         
-        // 设置整个内容的尺寸
-        if (self.contentView.yz_height == 0) {
-            // 没有设置内容尺寸，才需要设置内容尺寸
-            self.contentView.frame = CGRectMake(0, contentY, contentW, contentH);
+        CGFloat statusH = [UIApplication sharedApplication].statusBarFrame.size.height;
+        
+        CGFloat titleY = self.navigationController.navigationBarHidden == NO ?YZNavBarH:statusH;
+        
+        
+        
+        // 是否占据全屏
+        if (_isfullScreen) {
+            
+            // 整体contentView尺寸
+            self.contentView.frame = CGRectMake(0, 0, YZScreenW, YZScreenH);
+            
+            // 顶部标题View尺寸
+            self.titleScrollView.frame = CGRectMake(0, titleY, YZScreenW, self.titleHeight);
+            
+            // 顶部内容View尺寸
+            self.contentScrollView.frame = self.contentView.bounds;
+            
+            return;
         }
         
-        // 设置标题滚动视图frame
-        // 计算尺寸
-        CGFloat titleH = _titleHeight?_titleHeight:YZTitleScrollViewH;
-        CGFloat titleY = self.navigationController.navigationBarHidden == NO ?YZNavBarH:20;
-        titleY = _isfullScreen?titleY:0;
-        self.titleScrollView.frame = CGRectMake(0, titleY, contentW, titleH);
+        if (self.contentView.frame.size.height == 0) {
+            self.contentView.frame = CGRectMake(0, titleY, YZScreenW, YZScreenH - titleY);
+        }
         
-        // 设置内容滚动视图frame
-        CGFloat contentScrollY = CGRectGetMaxY(self.titleScrollView.frame);
-        self.contentScrollView.frame = _isfullScreen?CGRectMake(0, 0, contentW, YZScreenH) :CGRectMake(0, contentScrollY, contentW, self.contentView.yz_height - contentScrollY);
+        // 顶部标题View尺寸
+        self.titleScrollView.frame = CGRectMake(0, 0, YZScreenW, self.titleHeight);
         
-        _isInitial = YES;
+        // 顶部内容View尺寸
+        CGFloat contentY = CGRectGetMaxY(self.titleScrollView.frame);
+        CGFloat contentH = self.contentView.yz_height - contentY;
+        self.contentScrollView.frame = CGRectMake(0, contentY, YZScreenW, contentH);
+        
     }
     
 }
@@ -513,7 +537,7 @@ static NSString * const ID = @"CONTENTCELL";
             
             [self setUpTitleWidth];
         }
-
+        
         
         [self setUpAllTitle];
         
@@ -677,7 +701,7 @@ static NSString * const ID = @"CONTENTCELL";
         CGFloat offsetDelta = offsetX - _lastOffsetX;
         
         if (offsetDelta > 0) { // 往右边
-    
+            
             rightLabel.fillColor = self.selColor;
             rightLabel.progress = rightSacle;
             
@@ -685,7 +709,7 @@ static NSString * const ID = @"CONTENTCELL";
             leftLabel.progress = rightSacle;
             
         } else if(offsetDelta < 0){ // 往左边
-
+            
             rightLabel.textColor = self.norColor;
             rightLabel.fillColor = self.selColor;
             rightLabel.progress = rightSacle;
@@ -751,7 +775,7 @@ static NSString * const ID = @"CONTENTCELL";
     
     self.underLine.yz_width += underLineWidth;
     self.underLine.yz_x += underLineTransformX;
-
+    
 }
 
 // 设置遮盖偏移
@@ -841,7 +865,7 @@ static NSString * const ID = @"CONTENTCELL";
 
 - (void)selectLabel:(UILabel *)label
 {
-
+    
     for (YZDisplayTitleLabel *labelView in self.titleLabels) {
         
         if (label == labelView) continue;
@@ -917,7 +941,7 @@ static NSString * const ID = @"CONTENTCELL";
         self.coverView.yz_x = label.yz_x - border;
     }];
     
-
+    
     
 }
 
@@ -931,20 +955,20 @@ static NSString * const ID = @"CONTENTCELL";
     
     self.underLine.yz_y = label.yz_height - underLineH;
     self.underLine.yz_height = underLineH;
-
+    
     
     // 最开始不需要动画
     if (self.underLine.yz_x == 0) {
         self.underLine.yz_width = titleBounds.size.width;
         
-        self.underLine.yz_centerX = label.yz_centerX;
+        self.underLine.yz_x = label.yz_x;
         return;
     }
     
     // 点击时候需要动画
     [UIView animateWithDuration:0.25 animations:^{
         self.underLine.yz_width = titleBounds.size.width;
-        self.underLine.yz_centerX = label.yz_centerX;
+        self.underLine.yz_x = label.yz_x;
     }];
     
 }
@@ -955,14 +979,14 @@ static NSString * const ID = @"CONTENTCELL";
     
     // 设置标题滚动区域的偏移量
     CGFloat offsetX = label.center.x - YZScreenW * 0.5;
-
+    
     if (offsetX < 0) {
         offsetX = 0;
     }
     
     // 计算下最大的标题视图滚动区域
     CGFloat maxOffsetX = self.titleScrollView.contentSize.width - YZScreenW + _titleMargin;
-
+    
     if (maxOffsetX < 0) {
         maxOffsetX = 0;
     }
