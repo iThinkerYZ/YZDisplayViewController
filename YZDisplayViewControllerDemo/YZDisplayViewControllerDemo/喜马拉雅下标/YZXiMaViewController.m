@@ -34,7 +34,7 @@
     }];
  
     // 推荐方式（设置下标）
-    [self setUpUnderLineEffect:^(BOOL *isUnderLineDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor) {
+    [self setUpUnderLineEffect:^(BOOL *isUnderLineDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor,BOOL *isUnderLineEqualTitleWidth) {
         // 标题填充模式
         *underLineColor = [UIColor redColor];
     }];

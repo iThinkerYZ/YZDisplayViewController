@@ -31,13 +31,17 @@
     [self setUpTitleGradient:^(YZTitleColorGradientStyle *titleColorGradientStyle, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor) {
         
     }];
+    
+    [self setUpUnderLineEffect:^(BOOL *isUnderLineDelayScroll, CGFloat *underLineH, UIColor *__autoreleasing *underLineColor,BOOL *isUnderLineEqualTitleWidth) {
+        *isUnderLineEqualTitleWidth = YES;
+    }];
         
     // 字体缩放
     // 推荐方式 (设置字体缩放)
-    [self setUpTitleScale:^(CGFloat *titleScale) {
-        // 字体缩放比例
-        *titleScale = 1.3;
-    }];
+//    [self setUpTitleScale:^(CGFloat *titleScale) {
+//        // 字体缩放比例
+//        *titleScale = 1.3;
+//    }];
 }
 
 // 添加所有子控制器

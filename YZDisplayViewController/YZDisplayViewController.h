@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
 
 
 /***********************************【下标样式】***********************************/
-- (void)setUpUnderLineEffect:(void(^)(BOOL *isUnderLineDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock;
+- (void)setUpUnderLineEffect:(void(^)(BOOL *isUnderLineDelayScroll,CGFloat *underLineH,UIColor **underLineColor, BOOL *isUnderLineEqualTitleWidth))underLineBlock;
 
 
 /**********************************【字体缩放】************************************/

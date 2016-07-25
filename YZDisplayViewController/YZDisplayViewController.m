@@ -20,6 +20,10 @@ static NSString * const ID = @"CONTENTCELL";
     UIColor *_selColor;
 }
 /**
+ *  下标宽度是否等于标题宽度
+ */
+@property (nonatomic, assign) BOOL isUnderLineEqualTitleWidth;
+/**
  标题滚动视图背景颜色
  */
 @property (nonatomic, strong) UIColor *titleScrollViewColor;
@@ -429,7 +433,7 @@ static NSString * const ID = @"CONTENTCELL";
 }
 
 // 一次性设置所有下标属性
-- (void)setUpUnderLineEffect:(void(^)(BOOL *isUnderLineDelayScroll,CGFloat *underLineH,UIColor **underLineColor))underLineBlock
+- (void)setUpUnderLineEffect:(void(^)(BOOL *isUnderLineDelayScroll,CGFloat *underLineH,UIColor **underLineColor,BOOL *isUnderLineEqualTitleWidth))underLineBlock
 {
     _isShowUnderLine = YES;
     
@@ -440,7 +444,7 @@ static NSString * const ID = @"CONTENTCELL";
     UIColor *underLineColor;
     
     if (underLineBlock) {
-        underLineBlock(&_isDelayScroll,&_underLineH,&underLineColor);
+        underLineBlock(&_isDelayScroll,&_underLineH,&underLineColor,&_isUnderLineEqualTitleWidth);
         
         _underLineColor = underLineColor;
     }
@@ -959,16 +963,24 @@ static NSString * const ID = @"CONTENTCELL";
     
     // 最开始不需要动画
     if (self.underLine.yz_x == 0) {
-        self.underLine.yz_width = titleBounds.size.width;
+        if (_isUnderLineEqualTitleWidth) {
+            self.underLine.yz_width = titleBounds.size.width;
+        } else {
+            self.underLine.yz_width = label.yz_width;
+        }
         
-        self.underLine.yz_x = label.yz_x;
+        self.underLine.yz_centerX = label.yz_centerX;
         return;
     }
     
     // 点击时候需要动画
     [UIView animateWithDuration:0.25 animations:^{
-        self.underLine.yz_width = titleBounds.size.width;
-        self.underLine.yz_x = label.yz_x;
+        if (_isUnderLineEqualTitleWidth) {
+            self.underLine.yz_width = titleBounds.size.width;
+        } else {
+            self.underLine.yz_width = label.yz_width;
+        }
+        self.underLine.yz_centerX = label.yz_centerX;
     }];
     
 }
