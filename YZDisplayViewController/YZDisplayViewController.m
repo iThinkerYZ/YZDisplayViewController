@@ -303,6 +303,9 @@ static NSString * const ID = @"CONTENTCELL";
         _contentScrollView.bounces = NO;
         _contentScrollView.delegate = self;
         _contentScrollView.dataSource = self;
+        // 注册cell
+        [_contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
+        self.contentScrollView.backgroundColor = self.view.backgroundColor;
         [self.contentView insertSubview:contentScrollView belowSubview:self.titleScrollView];
         
     }
@@ -499,10 +502,6 @@ static NSString * const ID = @"CONTENTCELL";
     [super viewWillAppear:animated];
     
     if (_isInitial == NO) {
-        
-        // 注册cell
-        [self.contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
-        self.contentScrollView.backgroundColor = self.view.backgroundColor;
         
         // 初始化
         [self setUp];
@@ -938,14 +937,14 @@ static NSString * const ID = @"CONTENTCELL";
     if (self.underLine.yz_x == 0) {
         self.underLine.yz_width = titleBounds.size.width;
         
-        self.underLine.yz_x = label.yz_x;
+        self.underLine.yz_centerX = label.yz_centerX;
         return;
     }
     
     // 点击时候需要动画
     [UIView animateWithDuration:0.25 animations:^{
         self.underLine.yz_width = titleBounds.size.width;
-        self.underLine.yz_x = label.yz_x;
+        self.underLine.yz_centerX = label.yz_centerX;
     }];
     
 }
