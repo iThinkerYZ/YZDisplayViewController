@@ -280,7 +280,7 @@ static NSString * const ID = @"CONTENTCELL";
     if (_titleScrollView == nil) {
         
         UIScrollView *titleScrollView = [[UIScrollView alloc] init];
-        
+        titleScrollView.scrollsToTop = NO;
         titleScrollView.backgroundColor = _titleScrollViewColor?_titleScrollViewColor:[UIColor colorWithWhite:1 alpha:0.7];
         
         [self.contentView addSubview:titleScrollView];
@@ -307,6 +307,7 @@ static NSString * const ID = @"CONTENTCELL";
         _contentScrollView.bounces = NO;
         _contentScrollView.delegate = self;
         _contentScrollView.dataSource = self;
+        _contentScrollView.scrollsToTop = NO;
         // 注册cell
         [_contentScrollView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ID];
         
