@@ -706,10 +706,11 @@ static NSString * const ID = @"CONTENTCELL";
         CGFloat offsetDelta = offsetX - _lastOffsetX;
         
         if (offsetDelta > 0) { // 往右边
-            
+            rightLabel.textColor = self.norColor;
             rightLabel.fillColor = self.selColor;
             rightLabel.progress = rightSacle;
             
+            leftLabel.textColor = self.selColor;
             leftLabel.fillColor = self.norColor;
             leftLabel.progress = rightSacle;
             
@@ -1059,6 +1060,13 @@ static NSString * const ID = @"CONTENTCELL";
     
     vc.view.frame = CGRectMake(0, 0, self.contentScrollView.yz_width, self.contentScrollView.yz_height);
     
+    CGFloat bottom = self.tabBarController == nil?0:49;
+    CGFloat top = _isfullScreen?CGRectGetMaxY(self.titleScrollView.frame):0;
+    if ([vc isKindOfClass:[UITableViewController class]]) {
+        UITableViewController *tableViewVc = (UITableViewController *)vc;
+        tableViewVc.tableView.contentInset = UIEdgeInsetsMake(top, 0, bottom, 0);
+    }
+    
     [cell.contentView addSubview:vc.view];
     
     return cell;
@@ -1104,6 +1112,9 @@ static NSString * const ID = @"CONTENTCELL";
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     _isAniming = NO;
+    
+
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

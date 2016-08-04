@@ -10,13 +10,13 @@ Pod::Spec.new do |s|
 
 
   s.name         = "YZDisplayViewController"
-  s.version      = "1.0.5"
+  s.version      = "1.0.6"
   s.summary      = "Title Bar Gradient with the User to drag for ios."
   s.homepage     = "https://github.com/iThinkerYZ"
   s.license      = "MIT"
   s.author             = { "iThinkerYZ" => "690423479@qq.com" }
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/iThinkerYZ/YZDisplayViewController.git", :tag => "1.0.5" }
+  s.source       = { :git => "https://github.com/iThinkerYZ/YZDisplayViewController.git", :tag => "1.0.6" }
 
   s.source_files  =  "YZDisplayViewController/*.{h,m}"
 
