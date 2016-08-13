@@ -22,7 +22,8 @@
     [self setUpAllViewController];
     
     [self setUpTitleEffect:^(UIColor *__autoreleasing *titleScrollViewColor, UIColor *__autoreleasing *norColor, UIColor *__autoreleasing *selColor, UIFont *__autoreleasing *titleFont, CGFloat *titleHeight, CGFloat *titleWidth) {
-        *selColor = [UIColor greenColor];
+        *norColor = [UIColor lightGrayColor];
+        *selColor = [UIColor blackColor];
         *titleWidth = [UIScreen mainScreen].bounds.size.width / 4;
     }];
     

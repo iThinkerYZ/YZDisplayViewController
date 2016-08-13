@@ -189,17 +189,6 @@ static NSString * const ID = @"CONTENTCELL";
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
-- (void)setUp
-{
-    if (_isShowTitleGradient && _titleColorGradientStyle == YZTitleColorGradientStyleRGB) {
-        
-        // 初始化颜色渐变
-        if (_endR == 0 && _endG == 0 && _endB == 0) {
-            _endR = 1;
-        }
-    }
-}
-
 #pragma mark - 懒加载
 
 - (UIFont *)titleFont
@@ -531,10 +520,7 @@ static NSString * const ID = @"CONTENTCELL";
     [super viewWillAppear:animated];
     
     if (_isInitial == NO) {
-        
-        // 初始化
-        [self setUp];
-        
+                
         // 没有子控制器，不需要设置标题
         if (self.childViewControllers.count == 0) return;
         
