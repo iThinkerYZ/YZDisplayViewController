@@ -1103,6 +1103,16 @@ static NSString * const ID = @"CONTENTCELL";
     
 }
 
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (self.dragingFollow) {
+        // 获取角标
+        NSInteger i = scrollView.contentOffset.x / YZScreenW;
+        [self setLabelTitleCenter:self.titleLabels[i]];
+    }
+    
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // 点击和动画的时候不需要设置
