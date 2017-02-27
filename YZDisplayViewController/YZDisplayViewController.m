@@ -546,6 +546,8 @@ static NSString * const ID = @"CONTENTCELL";
     
     NSArray *titles = [self.childViewControllers valueForKeyPath:@"title"];
     
+    [self.titleWidths removeAllObjects];
+    
     CGFloat totalWidth = 0;
     
     // 计算所有标题的宽度
