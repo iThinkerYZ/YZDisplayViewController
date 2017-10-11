@@ -30,6 +30,11 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) NSInteger selectIndex;
 
 /**
+    标题是否需要跟随拖动保持居中
+ */
+@property (nonatomic, assign) BOOL dragingFollow;
+
+/**
     如果_isfullScreen = Yes，这个方法就不好使。
  
     设置整体内容的frame,包含（标题滚动视图和内容滚动视图）
